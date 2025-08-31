@@ -246,8 +246,8 @@ local UserInputService = game:GetService("UserInputService")
 local Window = Rayfield:CreateWindow({
    Name = "EcoHub - CounterBlox V1",
    Icon = 0,
-   LoadingTitle = "Rayfield Interface Suite",
-   LoadingSubtitle = "by Sirius",
+   LoadingTitle = "Counter Blox carregando",
+   LoadingSubtitle = "by rip_sheldoohz",
    ShowText = "Rayfield",
    Theme = "Default",
    ToggleUIKeybind = "K",
@@ -258,12 +258,12 @@ local Window = Rayfield:CreateWindow({
    ConfigurationSaving = {
       Enabled = true,
       FolderName = nil,
-      FileName = "Big Hub"
+      FileName = "EcoHub"
    },
 
    Discord = {
-      Enabled = false,
-      Invite = "noinvitelink",
+      Enabled = true,
+      Invite = "https://discord.gg/abygGhvRCG",
       RememberJoins = true
    },
 
