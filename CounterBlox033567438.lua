@@ -66,7 +66,7 @@ local FOVSize = 300
 local SmoothnessFactor = 0.25
 local MaxWorldDistance = 2000
 local LockedTarget = nil
-local MiraModo = "Head" -- Head, Torso, ClosestPart
+local MiraModo = "Head"
 
 -- Parágrafo informativo
 CounterBloxTabAimbot1:CreateParagraph({
@@ -216,19 +216,15 @@ CounterBloxTabAimbot1:CreateSlider({
 local CounterBloxTabEsp = Window:CreateTab("ESP - Counter Blox")
 
 --ESP ARMAS
-CounterBloxTabEsp:CreateParagraph({
-    Title = "Sistema de ESP para Armas",
-    Content = "Ative este recurso para visualizar armas espalhadas no mapa, mesmo através das paredes, facilitando a coleta e localização durante a partida."
-})
+local player = game.Players.LocalPlayer
+local camera = workspace.CurrentCamera
+local RunService = game:GetService("RunService")
 
-local player = Players.LocalPlayer
-local camera = Workspace.CurrentCamera
 local MAX_DISTANCE = 300
-local UPDATE_INTERVAL = 0.1
 local espObjects = {}
-local lastUpdate = 0
 local espEnabled = false
 local espColor = Color3.fromRGB(255, 255, 255)
+local showLines = false
 
 local function isWeapon(obj)
     if obj.ClassName == "Tool" then return true end
@@ -241,7 +237,7 @@ local function getMainPart(obj)
     if obj.ClassName == "Tool" then
         return obj:FindFirstChild("Handle")
     elseif obj.ClassName == "Model" then
-        return obj.PrimaryPart or obj:FindFirstChild("Handle") or obj:FindFirstChildOfClass("Part") or obj:FindFirstChildOfClass("MeshPart")
+        return obj.PrimaryPart or obj:FindFirstChild("Handle") or obj:FindFirstChildOfClass("Part")
     elseif obj.ClassName == "Part" or obj.ClassName == "MeshPart" then
         return obj
     end
@@ -257,9 +253,9 @@ local function createWeaponESP(obj)
     gui.Adornee = mainPart
     gui.Size = UDim2.new(0, 80, 0, 22)
     gui.StudsOffset = Vector3.new(0, 0.5, 0)
-    gui.AlwaysOnTop = false
+    gui.AlwaysOnTop = true
     gui.Parent = obj
-    gui.Enabled = true
+    gui.Enabled = false
     
     local nameLabel = Instance.new("TextLabel")
     nameLabel.Size = UDim2.new(1, 0, 0.65, 0)
@@ -269,8 +265,8 @@ local function createWeaponESP(obj)
     nameLabel.TextColor3 = espColor
     nameLabel.TextScaled = false
     nameLabel.TextSize = 10
-    nameLabel.Font = Enum.Font.SourceSans
-    nameLabel.TextStrokeTransparency = 0.2
+    nameLabel.Font = Enum.Font.SourceSansBold
+    nameLabel.TextStrokeTransparency = 0
     nameLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
     nameLabel.Parent = gui
     
@@ -279,21 +275,38 @@ local function createWeaponESP(obj)
     distanceLabel.Position = UDim2.new(0, 0, 0.65, 0)
     distanceLabel.BackgroundTransparency = 1
     distanceLabel.Text = "0m"
-    distanceLabel.TextColor3 = Color3.new(0.6, 0.6, 0.6)
+    distanceLabel.TextColor3 = Color3.new(0.8, 0.8, 0.8)
     distanceLabel.TextScaled = false
-    distanceLabel.TextSize = 7
+    distanceLabel.TextSize = 8
     distanceLabel.Font = Enum.Font.SourceSans
-    distanceLabel.TextStrokeTransparency = 0.4
+    distanceLabel.TextStrokeTransparency = 0
     distanceLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
     distanceLabel.Parent = gui
+
+    local line = nil
+    if Drawing then
+        pcall(function()
+            line = Drawing.new("Line")
+            line.Visible = false
+            line.Color = espColor
+            line.Thickness = 2
+            line.Transparency = 0.7
+        end)
+    end
     
     return {
         gui = gui,
         nameLabel = nameLabel,
         distanceLabel = distanceLabel,
+        line = line,
         object = obj,
-        mainPart = mainPart
+        mainPart = mainPart,
+        lastScreenPos = nil
     }
+end
+
+local function lerp(a, b, t)
+    return a + (b - a) * t
 end
 
 local function updateWeaponESP(espData)
@@ -315,14 +328,7 @@ local function updateWeaponESP(espData)
     
     if distance > MAX_DISTANCE then
         espData.gui.Enabled = false
-        return true
-    end
-    
-    local eyePos = player.Character.Head.Position
-    local objectPos = espData.mainPart.Position
-    
-    if not hasLineOfSight(eyePos, objectPos) then
-        espData.gui.Enabled = false
+        if espData.line then espData.line.Visible = false end
         return true
     end
     
@@ -330,19 +336,53 @@ local function updateWeaponESP(espData)
     espData.distanceLabel.Text = math.floor(distance) .. "m"
     espData.nameLabel.TextColor3 = espColor
     
-    local alpha = math.max(0.5, 1 - distance/MAX_DISTANCE)
-    espData.nameLabel.TextTransparency = 1 - alpha
-    espData.distanceLabel.TextTransparency = 1 - (alpha * 0.8)
+    -- Atualizar linha saindo BEM da parte inferior da tela
+    if espData.line and showLines and espEnabled then
+        pcall(function()
+            local screenPos, onScreen = camera:WorldToViewportPoint(objectPos)
+            if onScreen and screenPos.Z > 0 then
+                -- Ponto de origem EXATAMENTE no meio inferior da tela (bem embaixo)
+                local centerX = camera.ViewportSize.X / 2
+                local bottomY = camera.ViewportSize.Y - 5 -- Apenas 5 pixels da borda inferior (bem embaixo mesmo)
+                
+                -- Suavização da posição da linha
+                if espData.lastScreenPos then
+                    local smoothFactor = 0.2 -- Suavidade melhorada
+                    screenPos = Vector3.new(
+                        lerp(espData.lastScreenPos.X, screenPos.X, smoothFactor),
+                        lerp(espData.lastScreenPos.Y, screenPos.Y, smoothFactor),
+                        screenPos.Z
+                    )
+                end
+                espData.lastScreenPos = screenPos
+                
+                -- Configurar linha saindo da parte inferior central
+                espData.line.From = Vector2.new(centerX, bottomY)
+                espData.line.To = Vector2.new(screenPos.X, screenPos.Y)
+                espData.line.Color = espColor
+                espData.line.Thickness = 2
+                
+                -- Transparência baseada na distância
+                local transparencyValue = math.max(0.2, 1 - (distance / MAX_DISTANCE))
+                espData.line.Transparency = transparencyValue
+                espData.line.Visible = true
+            else
+                espData.line.Visible = false
+            end
+        end)
+    elseif espData.line then
+        espData.line.Visible = false
+    end
     
     return true
 end
 
+-- Escanear armas
 local function scanWeapons()
-    local debris = Workspace:FindFirstChild("Debris")
+    local debris = workspace:FindFirstChild("Debris")
     if not debris then return end
     
     for _, obj in pairs(debris:GetChildren()) do
-        local objId = tostring(obj)
         local alreadyExists = false
         
         for _, espData in pairs(espObjects) do
@@ -361,88 +401,87 @@ local function scanWeapons()
     end
 end
 
+-- Loop principal otimizado (60 FPS)
+local lastUpdate = 0
 local function mainUpdate()
     local currentTime = tick()
-    if currentTime - lastUpdate < UPDATE_INTERVAL then return end
+    if currentTime - lastUpdate < 0.016 then return end -- ~60 FPS
     lastUpdate = currentTime
     
+    -- Atualizar ESPs existentes
     for i = #espObjects, 1, -1 do
         local espData = espObjects[i]
         if not updateWeaponESP(espData) then
-            if espData.gui and espData.gui.Parent then
-                espData.gui:Destroy()
+            if espData.gui then
+                pcall(function() espData.gui:Destroy() end)
+            end
+            if espData.line then
+                pcall(function() espData.line:Remove() end)
             end
             table.remove(espObjects, i)
         end
     end
     
-    scanWeapons()
+    -- Escanear novas armas a cada 0.5 segundos
+    if currentTime % 0.5 < 0.016 then
+        scanWeapons()
+    end
 end
 
-local function clearAllESPs()
+-- Funções de controle
+local function toggleESP(enabled)
+    espEnabled = enabled
     for _, espData in pairs(espObjects) do
-        if espData.gui and espData.gui.Parent then
-            espData.gui:Destroy()
+        if espData.gui then
+            espData.gui.Enabled = enabled
         end
-    end
-    espObjects = {}
-    
-    for _, obj in pairs(Workspace:GetDescendants()) do
-        if obj.Name == "WeaponESP" then
-            pcall(function() obj:Destroy() end)
+        if espData.line then
+            espData.line.Visible = enabled and showLines
         end
     end
 end
 
-local function updateAllColors(newColor)
+local function toggleLines(enabled)
+    showLines = enabled
+    for _, espData in pairs(espObjects) do
+        if espData.line then
+            espData.line.Visible = enabled and espEnabled
+        end
+    end
+end
+
+local function updateColors(newColor)
     espColor = newColor
     for _, espData in pairs(espObjects) do
         if espData.nameLabel then
             espData.nameLabel.TextColor3 = newColor
         end
-    end
-end
-
-local function toggleESP(enabled)
-    espEnabled = enabled
-    
-    if enabled then
-        scanWeapons()
-    else
-        for _, espData in pairs(espObjects) do
-            if espData.gui then
-                espData.gui.Enabled = false
-            end
+        if espData.line then
+            espData.line.Color = newColor
         end
     end
 end
 
+local function clearAllESPs()
+    for _, espData in pairs(espObjects) do
+        if espData.gui then
+            pcall(function() espData.gui:Destroy() end)
+        end
+        if espData.line then
+            pcall(function() espData.line:Remove() end)
+        end
+    end
+    espObjects = {}
+end
+
+-- Conectar eventos
 local connection = RunService.Heartbeat:Connect(mainUpdate)
 
-scanWeapons()
-
-CounterBloxTabEsp:CreateToggle({
-    Name = "ESP ARMAS",
-    CurrentValue = false,
-    Flag = "Toggle1",
-    Callback = function(Value)
-        toggleESP(Value)
-    end,
-})
-
-CounterBloxTabEsp:CreateColorPicker({
-    Name = "ALTERAR COR ESP ARMAS",
-    Color = Color3.fromRGB(255, 255, 255),
-    Flag = "ColorPicker1",
-    Callback = function(Value)
-        updateAllColors(Value)
-    end
-})
-
-local debris = Workspace:FindFirstChild("Debris")
+-- Event listeners para novas armas
+local debris = workspace:FindFirstChild("Debris")
 if debris then
     debris.ChildAdded:Connect(function(child)
-        wait(0.05)
+        task.wait(0.1)
         if isWeapon(child) then
             local espData = createWeaponESP(child)
             if espData then
@@ -455,7 +494,10 @@ if debris then
         for i = #espObjects, 1, -1 do
             if espObjects[i].object == child then
                 if espObjects[i].gui then
-                    espObjects[i].gui:Destroy()
+                    pcall(function() espObjects[i].gui:Destroy() end)
+                end
+                if espObjects[i].line then
+                    pcall(function() espObjects[i].line:Remove() end)
                 end
                 table.remove(espObjects, i)
                 break
@@ -463,6 +505,67 @@ if debris then
         end
     end)
 end
+
+-- Interface do usuário
+CounterBloxTabEsp:CreateParagraph({
+    Title = "ESP de Armas - Linhas Inferiores",
+    Content = "Sistema com linhas saindo bem da parte inferior da tela (meio da tela, bem embaixo)."
+})
+
+CounterBloxTabEsp:CreateToggle({
+    Name = "ESP ARMAS",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        toggleESP(Value)
+    end,
+})
+
+CounterBloxTabEsp:CreateToggle({
+    Name = "LINHAS DA PARTE INFERIOR",
+    CurrentValue = false,
+    Flag = "Toggle2",
+    Callback = function(Value)
+        toggleLines(Value)
+    end,
+})
+
+CounterBloxTabEsp:CreateColorPicker({
+    Name = "COR ESP ARMAS",
+    Color = Color3.fromRGB(255, 255, 255),
+    Flag = "ColorPicker1",
+    Callback = function(Value)
+        updateColors(Value)
+    end
+})
+
+CounterBloxTabEsp:CreateSlider({
+    Name = "DISTÂNCIA MÁXIMA",
+    Range = {50, 500},
+    Increment = 10,
+    CurrentValue = 300,
+    Flag = "DistanceSlider",
+    Callback = function(Value)
+        MAX_DISTANCE = Value
+    end,
+})
+
+-- API Global
+_G.WeaponESP = {
+    Toggle = toggleESP,
+    ToggleLines = toggleLines,
+    SetColor = updateColors,
+    Clear = clearAllESPs,
+    SetDistance = function(dist) MAX_DISTANCE = dist end,
+    GetStats = function()
+        return {
+            weaponsTracked = #espObjects,
+            espEnabled = espEnabled,
+            linesEnabled = showLines,
+            maxDistance = MAX_DISTANCE
+        }
+    end
+}
 
 --ESP PLAYER
 CounterBloxTabEsp:CreateParagraph({
