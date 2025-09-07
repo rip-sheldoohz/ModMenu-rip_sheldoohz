@@ -3,50 +3,9 @@ local Lighting = game:GetService("Lighting")
 local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
 
-local player = Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
-
 local optimizationActive = true
 local totalOptimizations = 0
 local lastLogTime = 0
-local fps = 0
-local frameCount = 0
-local lastTime = tick()
-
-local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "OptimizerGUI"
-screenGui.ResetOnSpawn = false
-screenGui.Parent = playerGui
-
-local fpsLabel = Instance.new("TextLabel")
-fpsLabel.Name = "FPSLabel"
-fpsLabel.Parent = screenGui
-fpsLabel.BackgroundTransparency = 1
-fpsLabel.Position = UDim2.new(0, 10, 0, 10)
-fpsLabel.Size = UDim2.new(0, 300, 0, 50)
-fpsLabel.Font = Enum.Font.GothamBold
-fpsLabel.TextSize = 18
-fpsLabel.TextStrokeTransparency = 0
-fpsLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
-
-local function updateFPS()
-    frameCount = frameCount + 1
-    local currentTime = tick()
-    
-    if currentTime - lastTime >= 1 then
-        fps = frameCount
-        frameCount = 0
-        lastTime = currentTime
-    end
-end
-
-local function animateRGB()
-    local time = tick() * 2
-    local r = math.sin(time) * 0.5 + 0.5
-    local g = math.sin(time + 2) * 0.5 + 0.5
-    local b = math.sin(time + 4) * 0.5 + 0.5
-    return Color3.new(r, g, b)
-end
 
 local function removePlayerClothing(targetPlayer)
     pcall(function()
@@ -252,11 +211,6 @@ local function startOptimization()
 end
 
 RunService.RenderStepped:Connect(function()
-    updateFPS()
-    
-    fpsLabel.TextColor3 = animateRGB()
-    fpsLabel.Text = string.format("FPS: %d | Player: %s | Otimizado: %d", fps, player.Name, totalOptimizations)
-    
     if optimizationActive then
         for _, obj in pairs(Workspace:GetDescendants()) do
             pcall(function()
