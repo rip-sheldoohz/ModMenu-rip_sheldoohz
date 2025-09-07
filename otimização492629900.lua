@@ -2,12 +2,10 @@ local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
-local TweenService = game:GetService("TweenService")
 
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
--- Variáveis de controle
 local optimizationActive = true
 local totalOptimizations = 0
 local lastLogTime = 0
@@ -15,7 +13,6 @@ local fps = 0
 local frameCount = 0
 local lastTime = tick()
 
--- Criar GUI
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "OptimizerGUI"
 screenGui.ResetOnSpawn = false
@@ -32,7 +29,6 @@ fpsLabel.TextSize = 18
 fpsLabel.TextStrokeTransparency = 0
 fpsLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
 
--- Função para calcular FPS
 local function updateFPS()
     frameCount = frameCount + 1
     local currentTime = tick()
@@ -44,7 +40,6 @@ local function updateFPS()
     end
 end
 
--- Função para animar cor RGB
 local function animateRGB()
     local time = tick() * 2
     local r = math.sin(time) * 0.5 + 0.5
@@ -53,26 +48,67 @@ local function animateRGB()
     return Color3.new(r, g, b)
 end
 
--- Função para otimizar lighting
-local function optimizeLighting()
-    Lighting.GlobalShadows = false
-    Lighting.FogEnd = math.huge
-    Lighting.Brightness = 0
-    Lighting.Ambient = Color3.new(1, 1, 1)
-    Lighting.OutdoorAmbient = Color3.new(1, 1, 1)
-    Lighting.ShadowSoftness = 0
-    Lighting.EnvironmentDiffuseScale = 0
-    Lighting.EnvironmentSpecularScale = 0
-    Lighting.ClockTime = 12
-    
-    for _, effect in pairs(Lighting:GetChildren()) do
-        if not effect:IsA("Folder") then
-            effect:Destroy()
+local function removePlayerClothing(targetPlayer)
+    pcall(function()
+        local character = targetPlayer.Character
+        if character then
+            for _, item in pairs(character:GetChildren()) do
+                if item:IsA("Accessory") or 
+                   item:IsA("Hat") or
+                   item:IsA("Shirt") or
+                   item:IsA("Pants") or
+                   item:IsA("ShirtGraphic") then
+                    item:Destroy()
+                end
+            end
+            
+            local humanoid = character:FindFirstChild("Humanoid")
+            if humanoid then
+                humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
+            end
+            
+            local head = character:FindFirstChild("Head")
+            if head then
+                for _, item in pairs(head:GetChildren()) do
+                    if item:IsA("Decal") or 
+                       item:IsA("SpecialMesh") or
+                       item:IsA("SurfaceGui") then
+                        item:Destroy()
+                    end
+                end
+                head.BrickColor = BrickColor.new("Light orange")
+            end
+            
+            for _, part in pairs(character:GetChildren()) do
+                if part:IsA("BasePart") then
+                    part.Material = Enum.Material.SmoothPlastic
+                    part.BrickColor = BrickColor.new("Light orange")
+                end
+            end
         end
-    end
+    end)
 end
 
--- Função para otimizar workspace
+local function optimizeLighting()
+    pcall(function()
+        Lighting.GlobalShadows = false
+        Lighting.FogEnd = math.huge
+        Lighting.Brightness = 0
+        Lighting.Ambient = Color3.new(1, 1, 1)
+        Lighting.OutdoorAmbient = Color3.new(1, 1, 1)
+        Lighting.ShadowSoftness = 0
+        Lighting.EnvironmentDiffuseScale = 0
+        Lighting.EnvironmentSpecularScale = 0
+        Lighting.ClockTime = 12
+        
+        for _, effect in pairs(Lighting:GetChildren()) do
+            if not effect:IsA("Folder") then
+                effect:Destroy()
+            end
+        end
+    end)
+end
+
 local function optimizeWorkspace()
     local removed = 0
     
@@ -129,32 +165,50 @@ local function optimizeWorkspace()
     return removed
 end
 
--- Função para otimizar terreno
 local function optimizeTerrain()
-    if Workspace:FindFirstChild("Terrain") then
-        local terrain = Workspace.Terrain
-        terrain.WaterWaveSize = 0
-        terrain.WaterTransparency = 1
-        terrain.WaterReflectance = 0
-        terrain.WaterWaveSpeed = 0
-        terrain.WaterColor = Color3.new(0, 0, 0)
-        
-        pcall(function()
+    pcall(function()
+        if Workspace:FindFirstChild("Terrain") then
+            local terrain = Workspace.Terrain
+            terrain.WaterWaveSize = 0
+            terrain.WaterTransparency = 1
+            terrain.WaterReflectance = 0
+            terrain.WaterWaveSpeed = 0
+            terrain.WaterColor = Color3.new(0, 0, 0)
             terrain.Decorations = false
-        end)
-    end
+        end
+    end)
 end
 
--- Função para limpar memória
 local function cleanupMemory()
     pcall(function()
         game:GetService("Debris"):ClearAllChildren()
+        collectgarbage("collect")
     end)
-    
-    collectgarbage("collect")
 end
 
--- Monitorar novos objetos
+local function optimizeAllPlayers()
+    for _, targetPlayer in pairs(Players:GetPlayers()) do
+        removePlayerClothing(targetPlayer)
+    end
+end
+
+Players.PlayerAdded:Connect(function(newPlayer)
+    newPlayer.CharacterAdded:Connect(function()
+        wait(1)
+        removePlayerClothing(newPlayer)
+    end)
+end)
+
+for _, existingPlayer in pairs(Players:GetPlayers()) do
+    if existingPlayer.Character then
+        removePlayerClothing(existingPlayer)
+    end
+    existingPlayer.CharacterAdded:Connect(function()
+        wait(1)
+        removePlayerClothing(existingPlayer)
+    end)
+end
+
 Workspace.DescendantAdded:Connect(function(obj)
     if not optimizationActive then return end
     
@@ -179,11 +233,11 @@ Workspace.DescendantAdded:Connect(function(obj)
     end)
 end)
 
--- Sistema principal
 local function startOptimization()
     optimizeLighting()
     local removed = optimizeWorkspace()
     optimizeTerrain()
+    optimizeAllPlayers()
     cleanupMemory()
     
     totalOptimizations = totalOptimizations + removed
@@ -195,15 +249,12 @@ local function startOptimization()
     end
 end
 
--- Atualizar GUI
 RunService.RenderStepped:Connect(function()
     updateFPS()
     
-    -- Atualizar texto com cor RGB
     fpsLabel.TextColor3 = animateRGB()
     fpsLabel.Text = string.format("FPS: %d | Player: %s | Otimizado: %d", fps, player.Name, totalOptimizations)
     
-    -- Otimização contínua sem spam
     if optimizationActive then
         for _, obj in pairs(Workspace:GetDescendants()) do
             pcall(function()
@@ -220,7 +271,6 @@ RunService.RenderStepped:Connect(function()
     end
 end)
 
--- Otimização periódica
 spawn(function()
     while optimizationActive do
         startOptimization()
@@ -228,6 +278,5 @@ spawn(function()
     end
 end)
 
--- Inicialização
 startOptimization()
 print("Otimização ativada com sucesso")
