@@ -174,7 +174,9 @@ local function optimizeTerrain()
             terrain.WaterReflectance = 0
             terrain.WaterWaveSpeed = 0
             terrain.WaterColor = Color3.new(0, 0, 0)
-            terrain.Decorations = false
+            pcall(function()
+                terrain.Decorations = false
+            end)
         end
     end)
 end
