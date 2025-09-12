@@ -10,7 +10,7 @@ local Window = OrionLib:MakeWindow({
 --Diversao
 local DiversaoTab = Window:MakeTab({
 	Name = "Diversao",
-	Icon = "rbxassetid://108763465205586",
+	Icon = "rbxassetid://",
 	PremiumOnly = false
 })
 
@@ -19,52 +19,122 @@ DiversaoTab:AddParagraph("Teleporte Rápido", "Escolha um destino para se teletr
 
 local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
+local RunService = game:GetService("RunService")
+
 local teleportTargets = {}
 local nameToInstance = {}
 
 local function scanWorkspace(folder)
-	for _, obj in ipairs(folder:GetChildren()) do
-		if obj:IsA("Folder") then
-			scanWorkspace(obj)
-		elseif obj:IsA("BasePart") or obj:IsA("Model") then
-			local uniqueName = obj:GetFullName()
-			table.insert(teleportTargets, uniqueName)
-			nameToInstance[uniqueName] = obj
-		end
-	end
+    for _, obj in ipairs(folder:GetChildren()) do
+        if obj:IsA("Folder") then
+            scanWorkspace(obj)
+        elseif obj:IsA("BasePart") or obj:IsA("Model") then
+            if not obj:IsDescendantOf(Players.LocalPlayer.Character or workspace) or 
+               (obj.Parent ~= Players.LocalPlayer.Character) then
+                
+                local displayName = obj.Name
+                local fullName = obj:GetFullName()
+                
+                if obj.Parent and obj.Parent ~= Workspace then
+                    displayName = obj.Parent.Name .. " - " .. obj.Name
+                end
+                
+                table.insert(teleportTargets, displayName)
+                nameToInstance[displayName] = obj
+            end
+        end
+    end
 end
 
 scanWorkspace(Workspace)
 
+table.sort(teleportTargets)
+
 DiversaoTab:AddDropdown({
-	Name = "Travel Brookhaven",
-	Default = "Escolher",
-	Options = teleportTargets,
-	Callback = function(Value)
-		local target = nameToInstance[Value]
-		local player = Players.LocalPlayer
-
-		if target and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-			local hrp = player.Character.HumanoidRootPart
-			local position
-
-			if target:IsA("Model") and target:FindFirstChild("PrimaryPart") then
-				position = target.PrimaryPart.Position
-			elseif target:IsA("Model") and target:GetPivot() then
-				position = target:GetPivot().Position
-			elseif target:IsA("BasePart") then
-				position = target.Position
-			end
-
-			if position then
-				hrp.CFrame = CFrame.new(position + Vector3.new(0, 5, 0))
-				print("[ecohub] teleportou para " .. Value)
-			end
-		end
-	end
+    Name = "Travel Brookhaven",
+    Default = "Escolher",
+    Options = teleportTargets,
+    Callback = function(Value)
+        local target = nameToInstance[Value]
+        local player = Players.LocalPlayer
+        
+        if not target then
+            warn("[ecohub] Alvo não encontrado: " .. tostring(Value))
+            return
+        end
+        
+        if not player.Character then
+            warn("[ecohub] Personagem do jogador não encontrado")
+            return
+        end
+        
+        local hrp = player.Character:FindFirstChild("HumanoidRootPart")
+        if not hrp then
+            warn("[ecohub] HumanoidRootPart não encontrado")
+            return
+        end
+        
+        local position
+        
+        if target:IsA("Model") then
+            if target.PrimaryPart then
+                position = target.PrimaryPart.Position
+            else
+                local success, pivot = pcall(function()
+                    return target:GetPivot()
+                end)
+                if success and pivot then
+                    position = pivot.Position
+                else
+                    local firstPart = target:FindFirstChildOfClass("BasePart")
+                    if firstPart then
+                        position = firstPart.Position
+                    end
+                end
+            end
+        elseif target:IsA("BasePart") then
+            position = target.Position
+        end
+        
+        if position then
+            local offset = Vector3.new(0, 5, 0)
+            
+            if target:IsA("BasePart") then
+                local size = target.Size
+                offset = Vector3.new(0, math.max(5, size.Y/2 + 3), 0)
+            end
+            
+            local success, err = pcall(function()
+                hrp.CFrame = CFrame.new(position + offset)
+            end)
+            
+            if success then
+                print("[ecohub] Teleportado para: " .. Value)
+                
+                RunService.Heartbeat:Wait()
+                
+                local newPosition = hrp.Position
+                local distance = (newPosition - (position + offset)).Magnitude
+                
+                if distance < 10 then
+                    print("[ecohub] Teleporte bem-sucedido!")
+                else
+                    warn("[ecohub] Teleporte pode ter falido - distância: " .. tostring(distance))
+                end
+            else
+                warn("[ecohub] Erro no teleporte: " .. tostring(err))
+            end
+        else
+            warn("[ecohub] Não foi possível determinar a posição do alvo: " .. Value)
+        end
+    end
 })
 
 --Travel Jogadores
+DiversaoTab:AddParagraph(
+    "Teleporte para Jogadores",
+    "Use esta ferramenta para escolher um jogador específico e se teleportar instantaneamente até a localização dele no jogo."
+)
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -116,11 +186,6 @@ local function teleportToPlayer(selectedName)
     localCharacter.HumanoidRootPart.CFrame = CFrame.new(targetPos + Vector3.new(0, 5, 0))
 end
 
-DiversaoTab:AddParagraph(
-    "Sistema de Teleporte para Jogadores",
-    "Use esta ferramenta para escolher um jogador específico e se teleportar instantaneamente até a localização dele no jogo."
-)
-
 updatePlayerList()
 
 dropdown = DiversaoTab:AddDropdown({
@@ -151,12 +216,395 @@ LocalPlayer.CharacterAdded:Connect(function()
     updatePlayerList()
 end)
 
---Tirar Safe-Zone
+--Travel JobGivers
 DiversaoTab:AddParagraph(
-    "Sistema de Remoção Automática de Safe-Zones",
-    "Ative esta opção para remover automaticamente todos os objetos que não são safe-zones dentro da pasta ComplexAdZones no Workspace em tempo real."
+    "Teleporte Rápido para JobGivers",
+    "Selecione um ponto de JobGiver para se teletransportar instantaneamente até sua localização dentro do mapa."
 )
 
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+
+local teleportTargets = {}
+local nameToInstance = {}
+
+local function scanJobGivers()
+    teleportTargets = {}
+    nameToInstance = {}
+    
+    local jobGiversFolder = Workspace:FindFirstChild("JobGivers")
+    if jobGiversFolder then
+        for _, obj in ipairs(jobGiversFolder:GetChildren()) do
+            if obj:IsA("BasePart") or obj:IsA("Model") then
+                local displayName = obj.Name
+                table.insert(teleportTargets, displayName)
+                nameToInstance[displayName] = obj
+            end
+        end
+        
+        if #teleportTargets == 0 then
+            table.insert(teleportTargets, "Nenhum JobGiver encontrado")
+        else
+            table.sort(teleportTargets)
+        end
+    else
+        print("[ecohub] Pasta JobGivers não encontrada no Workspace.")
+        table.insert(teleportTargets, "JobGivers não encontrado")
+    end
+end
+
+scanJobGivers()
+
+local dropdown = DiversaoTab:AddDropdown({
+    Name = "Travel JobGivers",
+    Default = "",
+    Options = teleportTargets,
+    Callback = function(selectedName)
+        if selectedName == "Nenhum JobGiver encontrado" or selectedName == "JobGivers não encontrado" then
+            return
+        end
+        
+        local target = nameToInstance[selectedName]
+        if target and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local hrp = LocalPlayer.Character.HumanoidRootPart
+            local targetPosition
+            
+            if target:IsA("Model") then
+                if target.PrimaryPart then
+                    targetPosition = target.PrimaryPart.Position
+                else
+                    local success, result = pcall(function()
+                        return target:GetPivot().Position
+                    end)
+                    
+                    if success then
+                        targetPosition = result
+                    else
+                        local firstPart = target:FindFirstChildOfClass("BasePart")
+                        if firstPart then
+                            targetPosition = firstPart.Position
+                        end
+                    end
+                end
+            elseif target:IsA("BasePart") then
+                targetPosition = target.Position
+            end
+            
+            if targetPosition then
+                local success, err = pcall(function()
+                    hrp.CFrame = CFrame.new(targetPosition + Vector3.new(0, 5, 0))
+                end)
+                
+                if success then
+                    print("[ecohub] teleportou para " .. selectedName)
+                else
+                    warn("[ecohub] Erro ao teleportar: " .. tostring(err))
+                end
+            else
+                warn("[ecohub] Não foi possível determinar a posição para teleporte.")
+            end
+        else
+            warn("[ecohub] Jogador ou alvo inválido para teleporte.")
+        end
+    end
+})
+
+local function setupJobGiversWatcher()
+    local jobGiversFolder = Workspace:FindFirstChild("JobGivers")
+    if jobGiversFolder then
+        jobGiversFolder.ChildAdded:Connect(function()
+            scanJobGivers()
+            dropdown:Refresh(teleportTargets, true)
+        end)
+        
+        jobGiversFolder.ChildRemoved:Connect(function()
+            scanJobGivers()
+            dropdown:Refresh(teleportTargets, true)
+        end)
+    else
+        print("[ecohub] Pasta JobGivers não encontrada no Workspace para conectar eventos.")
+    end
+end
+
+--Vehicles
+DiversaoTab:AddParagraph(
+    "Teleporte Rápido para Carros",
+    "Selecione um carro para se teletransportar instantaneamente até sua localização dentro do mapa."
+)
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+
+local teleportTargets = {}
+local nameToInstance = {}
+
+local function scanVehicles()
+    teleportTargets = {}
+    nameToInstance = {}
+    
+    local vehiclesFolder = Workspace:FindFirstChild("Vehicles")
+    if vehiclesFolder then
+        for _, obj in ipairs(vehiclesFolder:GetChildren()) do
+            if obj:IsA("BasePart") or obj:IsA("Model") then
+                local ownerName = "Desconhecido"
+                
+                local humanoidRootPart = obj:FindFirstChild("HumanoidRootPart")
+                if humanoidRootPart then
+                    local bodyVelocity = humanoidRootPart:FindFirstChild("BodyVelocity")
+                    if bodyVelocity and bodyVelocity:GetAttribute("Owner") then
+                        ownerName = bodyVelocity:GetAttribute("Owner")
+                    end
+                end
+                
+                if not ownerName or ownerName == "Desconhecido" then
+                    local vehicleScript = obj:FindFirstChildOfClass("Script") or obj:FindFirstChildOfClass("LocalScript")
+                    if vehicleScript and vehicleScript:GetAttribute("Owner") then
+                        ownerName = vehicleScript:GetAttribute("Owner")
+                    end
+                end
+                
+                if not ownerName or ownerName == "Desconhecido" then
+                    local stringValue = obj:FindFirstChildOfClass("StringValue")
+                    if stringValue and stringValue.Name == "Owner" then
+                        ownerName = stringValue.Value
+                    end
+                end
+                
+                if not ownerName or ownerName == "Desconhecido" then
+                    local objectValue = obj:FindFirstChildOfClass("ObjectValue")
+                    if objectValue and objectValue.Name == "Owner" and objectValue.Value then
+                        ownerName = objectValue.Value.Name
+                    end
+                end
+                
+                -- Formato bem simples: só "carro - nome do usuário"
+                local displayName = "carro - " .. ownerName
+                table.insert(teleportTargets, displayName)
+                nameToInstance[displayName] = obj
+            end
+        end
+        
+        if #teleportTargets == 0 then
+            table.insert(teleportTargets, "Nenhum Carro encontrado")
+        else
+            table.sort(teleportTargets)
+        end
+    else
+        print("[ecohub] Pasta Vehicles não encontrada no Workspace.")
+        table.insert(teleportTargets, "Carros não encontrado")
+    end
+end
+
+scanVehicles()
+
+local dropdown = DiversaoTab:AddDropdown({
+    Name = "Travel Carro",
+    Default = "",
+    Options = teleportTargets,
+    Callback = function(selectedName)
+        if selectedName == "Nenhum Carro encontrado" or selectedName == "Carros não encontrado" then
+            return
+        end
+        
+        local target = nameToInstance[selectedName]
+        if target and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local hrp = LocalPlayer.Character.HumanoidRootPart
+            local targetPosition
+            
+            if target:IsA("Model") then
+                if target.PrimaryPart then
+                    targetPosition = target.PrimaryPart.Position
+                else
+                    local success, result = pcall(function()
+                        return target:GetPivot().Position
+                    end)
+                    
+                    if success then
+                        targetPosition = result
+                    else
+                        local firstPart = target:FindFirstChildOfClass("BasePart")
+                        if firstPart then
+                            targetPosition = firstPart.Position
+                        end
+                    end
+                end
+            elseif target:IsA("BasePart") then
+                targetPosition = target.Position
+            end
+            
+            if targetPosition then
+                local success, err = pcall(function()
+                    hrp.CFrame = CFrame.new(targetPosition + Vector3.new(0, 5, 0))
+                end)
+                
+                if success then
+                    print("[ecohub] teleportou para " .. selectedName)
+                else
+                    warn("[ecohub] Erro ao teleportar: " .. tostring(err))
+                end
+            else
+                warn("[ecohub] Não foi possível determinar a posição para teleporte.")
+            end
+        else
+            warn("[ecohub] Jogador ou alvo inválido para teleporte.")
+        end
+    end
+})
+
+local function setupVehiclesWatcher()
+    local vehiclesFolder = Workspace:FindFirstChild("Vehicles")
+    if vehiclesFolder then
+        vehiclesFolder.ChildAdded:Connect(function()
+            scanVehicles()
+            dropdown:Refresh(teleportTargets, true)
+        end)
+        
+        vehiclesFolder.ChildRemoved:Connect(function()
+            scanVehicles()
+            dropdown:Refresh(teleportTargets, true)
+        end)
+    else
+        print("[ecohub] Pasta Vehicles não encontrada no Workspace para conectar eventos.")
+    end
+end
+
+setupVehiclesWatcher()
+
+task.spawn(function()
+    while true do
+        task.wait(2)
+        scanVehicles()
+        dropdown:Refresh(teleportTargets, true)
+    end
+end)
+
+--AdTimeSpent 
+DiversaoTab:AddParagraph(
+    "Teleporte Rápido para AdTimeSpent",
+    "Selecione um item do AdTimeSpent para se teletransportar instantaneamente até sua localização."
+)
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+
+local teleportTargets = {}
+local nameToInstance = {}
+
+local function scanAdTimeSpent()
+    teleportTargets = {}
+    nameToInstance = {}
+    
+    local adTimeSpentFolder = Workspace:FindFirstChild("AdTimeSpent")
+    if adTimeSpentFolder then
+        for _, obj in ipairs(adTimeSpentFolder:GetChildren()) do
+            if obj:IsA("BasePart") or obj:IsA("Model") then
+                local displayName = obj.Name
+                table.insert(teleportTargets, displayName)
+                nameToInstance[displayName] = obj
+            end
+        end
+        
+        if #teleportTargets == 0 then
+            table.insert(teleportTargets, "Nenhum item encontrado")
+        else
+            table.sort(teleportTargets)
+        end
+    else
+        print("[ecohub] Pasta AdTimeSpent não encontrada no Workspace.")
+        table.insert(teleportTargets, "AdTimeSpent não encontrado")
+    end
+end
+
+scanAdTimeSpent()
+
+local dropdown = DiversaoTab:AddDropdown({
+    Name = "Travel AdTimeSpent",
+    Default = "",
+    Options = teleportTargets,
+    Callback = function(selectedName)
+        if selectedName == "Nenhum item encontrado" or selectedName == "AdTimeSpent não encontrado" then
+            return
+        end
+        
+        local target = nameToInstance[selectedName]
+        if target and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local hrp = LocalPlayer.Character.HumanoidRootPart
+            local targetPosition
+            
+            if target:IsA("Model") then
+                if target.PrimaryPart then
+                    targetPosition = target.PrimaryPart.Position
+                else
+                    local success, result = pcall(function()
+                        return target:GetPivot().Position
+                    end)
+                    
+                    if success then
+                        targetPosition = result
+                    else
+                        local firstPart = target:FindFirstChildOfClass("BasePart")
+                        if firstPart then
+                            targetPosition = firstPart.Position
+                        end
+                    end
+                end
+            elseif target:IsA("BasePart") then
+                targetPosition = target.Position
+            end
+            
+            if targetPosition then
+                local success, err = pcall(function()
+                    hrp.CFrame = CFrame.new(targetPosition + Vector3.new(0, 5, 0))
+                end)
+                
+                if success then
+                    print("[ecohub] teleportou para " .. selectedName)
+                else
+                    warn("[ecohub] Erro ao teleportar: " .. tostring(err))
+                end
+            else
+                warn("[ecohub] Não foi possível determinar a posição para teleporte.")
+            end
+        else
+            warn("[ecohub] Jogador ou alvo inválido para teleporte.")
+        end
+    end
+})
+
+local function setupAdTimeSpentWatcher()
+    local adTimeSpentFolder = Workspace:FindFirstChild("AdTimeSpent")
+    if adTimeSpentFolder then
+        adTimeSpentFolder.ChildAdded:Connect(function()
+            scanAdTimeSpent()
+            dropdown:Refresh(teleportTargets, true)
+        end)
+        
+        adTimeSpentFolder.ChildRemoved:Connect(function()
+            scanAdTimeSpent()
+            dropdown:Refresh(teleportTargets, true)
+        end)
+    else
+        print("[ecohub] Pasta AdTimeSpent não encontrada no Workspace para conectar eventos.")
+    end
+end
+
+setupAdTimeSpentWatcher()
+
+task.spawn(function()
+    while true do
+        task.wait(2)
+        scanAdTimeSpent()
+        dropdown:Refresh(teleportTargets, true)
+    end
+end)
+
+--Sistema Avançado
+DiversaoTab:AddParagraph("Sistema Avançado", "Clique nos botões abaixo para se divertir")
+
+--anti-safe zone
 local Workspace = game:GetService("Workspace")
 local toggleFlag = false
 
@@ -214,11 +662,7 @@ else
     print("[ecohub] Pasta ComplexAdZones não encontrada no Workspace para conexão do evento.")
 end
 
---Travel MusicZones
-DiversaoTab:AddParagraph(
-    "Sistema de Remoção Automática",
-    "Ative esta opção para remover automaticamente todos os objetos dentro da pasta MusicZones no Workspace em tempo real."
-)
+--anti-musica
 
 local Workspace = game:GetService("Workspace")
 local toggleFlag = false
@@ -275,85 +719,6 @@ else
     print("[ecohub] Pasta MusicZones não encontrada no Workspace para conexão do evento.")
 end
 
---Travel JobGivers
-DiversaoTab:AddParagraph(
-    "Teleporte Rápido para JobGivers",
-    "Selecione um ponto de JobGiver para se teletransportar instantaneamente até sua localização dentro do mapa."
-)
-
-local Players = game:GetService("Players")
-local Workspace = game:GetService("Workspace")
-local LocalPlayer = Players.LocalPlayer
-
-local teleportTargets = {}
-local nameToInstance = {}
-
-local function scanJobGivers()
-    teleportTargets = {}
-    nameToInstance = {}
-
-    local jobGiversFolder = Workspace:FindFirstChild("JobGivers")
-    if jobGiversFolder then
-        for _, obj in ipairs(jobGiversFolder:GetChildren()) do
-            if obj:IsA("BasePart") or obj:IsA("Model") then
-                local displayName = obj.Name
-                table.insert(teleportTargets, displayName)
-                nameToInstance[displayName] = obj
-            end
-        end
-    else
-        print("[ecohub] Pasta JobGivers não encontrada no Workspace.")
-    end
-end
-
-scanJobGivers()
-
-local dropdown = DiversaoTab:AddDropdown({
-    Name = "Travel JobGivers",
-    Default = "",
-    Options = teleportTargets,
-    Callback = function(selectedName)
-        local target = nameToInstance[selectedName]
-        if target and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            local hrp = LocalPlayer.Character.HumanoidRootPart
-            local targetPosition
-
-            if target:IsA("Model") then
-                if target.PrimaryPart then
-                    targetPosition = target.PrimaryPart.Position
-                else
-                    targetPosition = target:GetModelCFrame().p
-                end
-            elseif target:IsA("BasePart") then
-                targetPosition = target.Position
-            end
-
-            if targetPosition then
-                hrp.CFrame = CFrame.new(targetPosition + Vector3.new(0, 5, 0))
-                print("[ecohub] teleportou para " .. selectedName)
-            else
-                warn("[ecohub] Não foi possível determinar a posição para teleporte.")
-            end
-        else
-            warn("[ecohub] Jogador ou alvo inválido para teleporte.")
-        end
-    end
-})
-
-local jobGiversFolder = Workspace:FindFirstChild("JobGivers")
-if jobGiversFolder then
-    jobGiversFolder.ChildAdded:Connect(function()
-        scanJobGivers()
-        dropdown:Refresh(teleportTargets, true)
-    end)
-    jobGiversFolder.ChildRemoved:Connect(function()
-        scanJobGivers()
-        dropdown:Refresh(teleportTargets, true)
-    end)
-else
-    print("[ecohub] Pasta JobGivers não encontrada no Workspace para conectar eventos.")
-end
-
 --Anti-ban
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -372,11 +737,6 @@ local banTriggerWords = {
     "barrier", "wall", "invisible", "block", "fence", 
     "border", "limit", "red", "force", "field"
 }
-
-DiversaoTab:AddParagraph(
-    "Anti-Barreira Brookhaven", 
-    "Remove as barreiras vermelhas invisíveis do mapa automaticamente"
-)
 
 local function checkBarrierPart(obj)
     if not obj or not obj.Parent or processedObjects[obj] then
@@ -468,11 +828,7 @@ DiversaoTab:AddToggle({
     end
 })
 
-DiversaoTab:AddParagraph(
-    "Auto Teleport Morte", 
-    "Teleporta automaticamente para onde você morreu"
-)
-
+--Anti-ban #2
 local function saveDeathPosition()
     if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
         lastDeathPosition = LocalPlayer.Character.HumanoidRootPart.Position
@@ -544,6 +900,74 @@ if LocalPlayer.Character then
 end
 
 LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
+
+--anti-afk
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+
+local antiAfkEnabled = false
+local antiAfkConnection
+
+local function startAntiAfk()
+    if antiAfkConnection then
+        antiAfkConnection:Disconnect()
+    end
+    
+    antiAfkConnection = task.spawn(function()
+        while antiAfkEnabled do
+            task.wait(1)
+            
+            if antiAfkEnabled and LocalPlayer.Character then
+                local humanoid = LocalPlayer.Character:FindFirstChild("Humanoid")
+                local rootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                
+                if humanoid and rootPart then
+                    for i = 1, 10 do
+                        if not antiAfkEnabled then break end
+                        
+                        local randomDirection = Vector3.new(
+                            math.random(-10, 10),
+                            0,
+                            math.random(-10, 10)
+                        ).Unit
+                        
+                        local targetPosition = rootPart.Position + (randomDirection * 3)
+                        humanoid:MoveTo(targetPosition)
+                        
+                        task.wait(0.5)
+                    end
+                    
+                    print("[ecohub] Anti-AFK - 10 movimentos feitos")
+                end
+            end
+        end
+    end)
+end
+
+local function stopAntiAfk()
+    antiAfkEnabled = false
+    if antiAfkConnection then
+        antiAfkConnection:Disconnect()
+        antiAfkConnection = nil
+    end
+    print("[ecohub] Anti-AFK desativado")
+end
+
+DiversaoTab:AddToggle({
+    Name = "Anti-AFK",
+    Default = false,
+    Callback = function(Value)
+        antiAfkEnabled = Value
+        
+        if Value then
+            print("[ecohub] Anti-AFK ligado")
+            startAntiAfk()
+        else
+            stopAntiAfk()
+        end
+    end
+})
 
 --Status
 local Players = game:GetService("Players")
