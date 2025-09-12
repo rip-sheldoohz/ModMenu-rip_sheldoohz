@@ -1515,4 +1515,525 @@ Workspace.DescendantRemoving:Connect(function(obj)
     end
 end)
 
---em breve
+--LocalPlayer
+local localplayerTab = Window:MakeTab({
+	Name = "Local Player",
+	Icon = "rbxassetid://",
+	PremiumOnly = false
+})
+
+--Speed
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local speedEnabled = false
+local currentSpeed = 16
+
+localplayerTab:AddParagraph("Velocidade", "Controle sua velocidade de movimento no jogo")
+
+localplayerTab:AddToggle({
+    Name = "Ativar Velocidade",
+    Default = false,
+    Callback = function(Value)
+        speedEnabled = Value
+        
+        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
+            if speedEnabled then
+                LocalPlayer.Character.Humanoid.WalkSpeed = currentSpeed
+                print("[ecohub] Velocidade ativada: " .. currentSpeed)
+            else
+                LocalPlayer.Character.Humanoid.WalkSpeed = 16
+                print("[ecohub] Velocidade desativada (16)")
+            end
+        end
+    end
+})
+
+localplayerTab:AddSlider({
+    Name = "Velocidade",
+    Min = 16,
+    Max = 5000,
+    Default = 16,
+    Color = Color3.fromRGB(255, 255, 0),
+    Increment = 1,
+    ValueName = "velocidade",
+    Callback = function(Value)
+        currentSpeed = Value
+        
+        if speedEnabled and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
+            LocalPlayer.Character.Humanoid.WalkSpeed = currentSpeed
+            print("[ecohub] Velocidade ajustada para: " .. currentSpeed)
+        end
+    end
+})
+
+--Jump boost
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local jumpEnabled = false
+local currentJumpPower = 50
+
+localplayerTab:AddParagraph("Jump Boost", "Controle a altura do seu pulo no jogo")
+
+localplayerTab:AddToggle({
+    Name = "Ativar Jump Boost",
+    Default = false,
+    Callback = function(Value)
+        jumpEnabled = Value
+        
+        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
+            if jumpEnabled then
+                LocalPlayer.Character.Humanoid.JumpPower = currentJumpPower
+                print("[ecohub] Jump Boost ativado: " .. currentJumpPower)
+            else
+                LocalPlayer.Character.Humanoid.JumpPower = 50
+                print("[ecohub] Jump Boost desativado (50)")
+            end
+        end
+    end
+})
+
+localplayerTab:AddSlider({
+    Name = "Altura do Pulo",
+    Min = 50,
+    Max = 1000,
+    Default = 50,
+    Color = Color3.fromRGB(0, 255, 0),
+    Increment = 5,
+    ValueName = "altura",
+    Callback = function(Value)
+        currentJumpPower = Value
+        
+        if jumpEnabled and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
+            LocalPlayer.Character.Humanoid.JumpPower = currentJumpPower
+            print("[ecohub] Altura do pulo ajustada para: " .. currentJumpPower)
+        end
+    end
+})
+
+--Fly
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+
+local flyEnabled = false
+local flySpeed = 50
+local bodyVelocity
+local bodyAngularVelocity
+local flyConnection
+
+local function startFly()
+    if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        local rootPart = LocalPlayer.Character.HumanoidRootPart
+        
+        bodyVelocity = Instance.new("BodyVelocity")
+        bodyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+        bodyVelocity.Velocity = Vector3.new(0, 0, 0)
+        bodyVelocity.Parent = rootPart
+        
+        bodyAngularVelocity = Instance.new("BodyAngularVelocity")
+        bodyAngularVelocity.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
+        bodyAngularVelocity.AngularVelocity = Vector3.new(0, 0, 0)
+        bodyAngularVelocity.Parent = rootPart
+        
+        flyConnection = RunService.Heartbeat:Connect(function()
+            if flyEnabled and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                local rootPart = LocalPlayer.Character.HumanoidRootPart
+                local camera = workspace.CurrentCamera
+                local moveVector = Vector3.new(0, 0, 0)
+                
+                if UserInputService:IsKeyDown(Enum.KeyCode.W) then
+                    moveVector = moveVector + camera.CFrame.LookVector
+                end
+                if UserInputService:IsKeyDown(Enum.KeyCode.S) then
+                    moveVector = moveVector - camera.CFrame.LookVector
+                end
+                if UserInputService:IsKeyDown(Enum.KeyCode.A) then
+                    moveVector = moveVector - camera.CFrame.RightVector
+                end
+                if UserInputService:IsKeyDown(Enum.KeyCode.D) then
+                    moveVector = moveVector + camera.CFrame.RightVector
+                end
+                if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
+                    moveVector = moveVector + Vector3.new(0, 1, 0)
+                end
+                if UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then
+                    moveVector = moveVector - Vector3.new(0, 1, 0)
+                end
+                
+                if bodyVelocity then
+                    bodyVelocity.Velocity = moveVector * flySpeed
+                end
+            end
+        end)
+    end
+end
+
+local function stopFly()
+    if bodyVelocity then
+        bodyVelocity:Destroy()
+        bodyVelocity = nil
+    end
+    if bodyAngularVelocity then
+        bodyAngularVelocity:Destroy()
+        bodyAngularVelocity = nil
+    end
+    if flyConnection then
+        flyConnection:Disconnect()
+        flyConnection = nil
+    end
+end
+
+localplayerTab:AddParagraph("Fly System", "Voe pelo mapa usando WASD + Space + Shift")
+
+localplayerTab:AddToggle({
+    Name = "Ativar Fly",
+    Default = false,
+    Callback = function(Value)
+        flyEnabled = Value
+        
+        if flyEnabled then
+            startFly()
+            print("[ecohub] Fly ativado - Use WASD, Space e Shift para voar")
+        else
+            stopFly()
+            print("[ecohub] Fly desativado")
+        end
+    end
+})
+
+localplayerTab:AddSlider({
+    Name = "Velocidade do Voo",
+    Min = 10,
+    Max = 5000,
+    Default = 50,
+    Color = Color3.fromRGB(0, 191, 255),
+    Increment = 5,
+    ValueName = "velocidade",
+    Callback = function(Value)
+        flySpeed = Value
+        print("[ecohub] Velocidade do voo ajustada para: " .. flySpeed)
+    end
+})
+
+--Noclip
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+
+local noclipEnabled = false
+local noclipConnection
+
+local function setNoclip(enabled)
+    if LocalPlayer.Character then
+        for _, part in pairs(LocalPlayer.Character:GetDescendants()) do
+            if part:IsA("BasePart") and part.Parent ~= workspace.CurrentCamera then
+                part.CanCollide = not enabled
+            end
+        end
+    end
+end
+
+local function startNoclip()
+    noclipConnection = RunService.Stepped:Connect(function()
+        if noclipEnabled then
+            setNoclip(true)
+        end
+    end)
+end
+
+local function stopNoclip()
+    if noclipConnection then
+        noclipConnection:Disconnect()
+        noclipConnection = nil
+    end
+    setNoclip(false)
+end
+
+localplayerTab:AddParagraph("Noclip System", "Atravesse paredes e objetos sem obstáculos")
+
+localplayerTab:AddToggle({
+    Name = "Ativar Noclip",
+    Default = false,
+    Callback = function(Value)
+        noclipEnabled = Value
+        
+        if noclipEnabled then
+            startNoclip()
+            print("[ecohub] Noclip ativado - Atravesse qualquer parede")
+        else
+            stopNoclip()
+            print("[ecohub] Noclip desativado")
+        end
+    end
+})
+
+--Sit anywhere 
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+localplayerTab:AddParagraph("Sit Anywhere", "Sente em qualquer lugar, até mesmo no ar")
+
+localplayerTab:AddButton({
+    Name = "Sentar no Ar",
+    Callback = function()
+        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
+            local humanoid = LocalPlayer.Character.Humanoid
+            local rootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+            
+            if humanoid and rootPart then
+                local invisibleSeat = Instance.new("Seat")
+                invisibleSeat.Name = "InvisibleSeat"
+                invisibleSeat.Size = Vector3.new(2, 0.5, 2)
+                invisibleSeat.Material = Enum.Material.ForceField
+                invisibleSeat.BrickColor = BrickColor.new("Really blue")
+                invisibleSeat.Transparency = 1
+                invisibleSeat.Anchored = true
+                invisibleSeat.CanCollide = true
+                invisibleSeat.CFrame = rootPart.CFrame - Vector3.new(0, 2.5, 0)
+                invisibleSeat.Parent = workspace
+                
+                humanoid.Sit = true
+                humanoid:Sit()
+                
+                print("[ecohub] Sentou no ar!")
+            end
+        end
+    end
+})
+
+--posição
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local savedPositions = {}
+local positionNames = {}
+
+local function updateDropdown()
+    if #positionNames == 0 then
+        positionNames = {"Nenhuma posição salva"}
+    end
+    if dropdown then
+        dropdown:Refresh(positionNames, true)
+    end
+end
+
+localplayerTab:AddParagraph("Sistema de Posições", "Salve e teleporte para suas posições favoritas")
+
+localplayerTab:AddTextbox({
+    Name = "Nome da Posição",
+    Default = "",
+    TextDisappear = true,
+    Callback = function(Value)
+        if Value ~= "" and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local rootPart = LocalPlayer.Character.HumanoidRootPart
+            
+            savedPositions[Value] = rootPart.CFrame
+            
+            local found = false
+            for i, name in ipairs(positionNames) do
+                if name == Value then
+                    found = true
+                    break
+                end
+            end
+            
+            if not found then
+                if positionNames[1] == "Nenhuma posição salva" then
+                    positionNames = {}
+                end
+                table.insert(positionNames, Value)
+                table.sort(positionNames)
+            end
+            
+            updateDropdown()
+            print("[ecohub] Posição '" .. Value .. "' salva!")
+        end
+    end
+})
+
+dropdown = localplayerTab:AddDropdown({
+    Name = "Teleportar para Posição",
+    Default = "",
+    Options = {"Nenhuma posição salva"},
+    Callback = function(selectedName)
+        if selectedName == "Nenhuma posição salva" or selectedName == "" then
+            return
+        end
+        
+        if savedPositions[selectedName] and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            LocalPlayer.Character.HumanoidRootPart.CFrame = savedPositions[selectedName]
+            print("[ecohub] Teleportado para: " .. selectedName)
+        end
+    end
+})
+
+localplayerTab:AddButton({
+    Name = "Limpar Todas Posições",
+    Callback = function()
+        savedPositions = {}
+        positionNames = {"Nenhuma posição salva"}
+        updateDropdown()
+        print("[ecohub] Todas as posições foram apagadas!")
+    end
+})
+
+--Copiar Skins
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local playerList = {}
+
+local function updatePlayerList()
+    playerList = {}
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer then
+            table.insert(playerList, player.Name)
+        end
+    end
+    
+    if #playerList == 0 then
+        playerList = {"Nenhum jogador encontrado"}
+    else
+        table.sort(playerList)
+    end
+    
+    if playerDropdown then
+        playerDropdown:Refresh(playerList, true)
+    end
+end
+
+local function copyAndApplyPlayerSkin(playerName)
+    local targetPlayer = Players:FindFirstChild(playerName)
+    if not targetPlayer or not targetPlayer.Character then
+        print("[ecohub] Jogador não encontrado ou sem personagem")
+        return
+    end
+    
+    if not LocalPlayer.Character then
+        print("[ecohub] Personagem não encontrado")
+        return
+    end
+    
+    local targetCharacter = targetPlayer.Character
+    local character = LocalPlayer.Character
+    
+    for _, item in pairs(character:GetChildren()) do
+        if item:IsA("Accessory") or item:IsA("Hat") then
+            item:Destroy()
+        elseif item:IsA("Shirt") or item:IsA("Pants") or item:IsA("ShirtGraphic") then
+            item:Destroy()
+        end
+    end
+    
+    task.wait(0.1)
+    
+    local targetHumanoid = targetCharacter:FindFirstChildOfClass("Humanoid")
+    local myHumanoid = character:FindFirstChildOfClass("Humanoid")
+    
+    if targetHumanoid and myHumanoid then
+        local targetDescription = Players:GetHumanoidDescriptionFromUserId(targetPlayer.UserId)
+        pcall(function()
+            myHumanoid:ApplyDescription(targetDescription)
+        end)
+        
+        task.wait(0.5)
+        
+        pcall(function()
+            if targetHumanoid.BodyColors then
+                if not myHumanoid.BodyColors then
+                    Instance.new("BodyColors", myHumanoid)
+                end
+                myHumanoid.BodyColors.HeadColor = targetHumanoid.BodyColors.HeadColor
+                myHumanoid.BodyColors.LeftArmColor = targetHumanoid.BodyColors.LeftArmColor
+                myHumanoid.BodyColors.LeftLegColor = targetHumanoid.BodyColors.LeftLegColor
+                myHumanoid.BodyColors.RightArmColor = targetHumanoid.BodyColors.RightArmColor
+                myHumanoid.BodyColors.RightLegColor = targetHumanoid.BodyColors.RightLegColor
+                myHumanoid.BodyColors.TorsoColor = targetHumanoid.BodyColors.TorsoColor
+            end
+        end)
+    end
+    
+    for _, part in pairs(targetCharacter:GetChildren()) do
+        if part:IsA("BasePart") and part.Name ~= "HumanoidRootPart" and character:FindFirstChild(part.Name) then
+            local myPart = character[part.Name]
+            if myPart:IsA("BasePart") then
+                myPart.BrickColor = part.BrickColor
+                myPart.Material = part.Material
+                
+                for _, child in pairs(part:GetChildren()) do
+                    if child:IsA("Decal") or child:IsA("Texture") or child:IsA("SurfaceGui") then
+                        local existing = myPart:FindFirstChild(child.Name)
+                        if existing then
+                            existing:Destroy()
+                        end
+                        local newChild = child:Clone()
+                        newChild.Parent = myPart
+                    end
+                end
+            end
+        elseif part:IsA("Accessory") or part:IsA("Hat") then
+            local newAccessory = part:Clone()
+            if newAccessory.Handle then
+                newAccessory.Parent = character
+            end
+        elseif part:IsA("Shirt") then
+            local newShirt = part:Clone()
+            newShirt.Parent = character
+        elseif part:IsA("Pants") then
+            local newPants = part:Clone()
+            newPants.Parent = character
+        elseif part:IsA("ShirtGraphic") then
+            local newShirtGraphic = part:Clone()
+            newShirtGraphic.Parent = character
+        end
+    end
+    
+    print("[ecohub] Skin completa de " .. playerName .. " aplicada!")
+end
+
+localplayerTab:AddParagraph("Sistema de Skins", "Copie e aplique skins de outros jogadores do servidor")
+
+playerDropdown = localplayerTab:AddDropdown({
+    Name = "Selecionar Jogador",
+    Default = "",
+    Options = {"Nenhum jogador encontrado"},
+    Callback = function(Value)
+        print("[ecohub] Jogador selecionado: " .. Value)
+    end
+})
+
+localplayerTab:AddButton({
+    Name = "Aplicar Skin",
+    Callback = function()
+        local selectedPlayer = playerDropdown.Value or ""
+        
+        if selectedPlayer ~= "" and selectedPlayer ~= "Nenhum jogador encontrado" then
+            copyAndApplyPlayerSkin(selectedPlayer)
+        else
+            print("[ecohub] Selecione um jogador primeiro!")
+        end
+    end
+})
+
+Players.PlayerAdded:Connect(function()
+    task.wait(0.5)
+    updatePlayerList()
+end)
+
+Players.PlayerRemoving:Connect(function()
+    task.wait(0.5)
+    updatePlayerList()
+end)
+
+task.spawn(function()
+    while true do
+        task.wait(1)
+        updatePlayerList()
+    end
+end)
+
+updatePlayerList()
