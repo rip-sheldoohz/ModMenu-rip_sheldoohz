@@ -29,7 +29,7 @@ local Window = Luna:CreateWindow({
     }
 })
 
---Evento Normal
+--Evento configuração
 local ConfigEventoTab = Window:CreateTab({
     Name = "Configuração",
     Icon = "settings",
