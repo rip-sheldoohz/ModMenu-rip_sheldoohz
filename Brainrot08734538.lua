@@ -1,75 +1,34 @@
-local Luna = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/luna", true))()
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/jensonhirst/Orion/main/source')))()
 
-local Window = Luna:CreateWindow({
-    Name = "EcoHub - Roube Um Brainrot",
-    Subtitle = nil,
-    LogoID = "82795327169782",
-    LoadingEnabled = true,
-    LoadingTitle = "Otimização Carregando...",
-    LoadingSubtitle = "by rip_sheldoohz",
-
-    ConfigSettings = {
-        RootFolder = nil,
-        ConfigFolder = "EcoHub"
-    },
-
-    KeySystem = false,
-    KeySettings = {
-        Title = "EcoHub - System Key",
-        Subtitle = "Key System",
-        Note = "",
-        SaveInRoot = false,
-        SaveKey = true,
-        Key = {"BrainrotV1"},
-        SecondAction = {
-            Enabled = true,
-            Type = "Link",
-            Parameter = "https://discord.gg/CuycQDvxMt"
-        }
-    }
+local Window = OrionLib:MakeWindow({
+    Name = "EcoHub - Brainrot Otimização", 
+    HidePremium = false, 
+    SaveConfig = true, 
+    ConfigFolder = "EcoHubBrainrot"
 })
 
---Evento configuração
-local ConfigEventoTab = Window:CreateTab({
-    Name = "Configuração",
-    Icon = "settings",
-    ImageSource = "Material",
-    ShowTitle = true
+--Local Player
+local LocalPlayerTab = Window:MakeTab({
+	Name = "Local Player",
+	PremiumOnly = false
 })
 
 --Bypass
-local Label = ConfigEventoTab:CreateLabel({
-    Text = "STATUS: MAIS OU MENOS (PODE TER TRAVAMENTOS & MUITO LAG)",
-    Style = 3
-})
+LocalPlayerTab:AddLabel("System Bypass - Roube Um Brainrot")
 
-local Paragraph = ConfigEventoTab:CreateParagraph({
-    Title = "Bypass System",
-    Text = "Sistema avançado de bypass e proteção anti-detecção"
-})
-
-local Toggle = ConfigEventoTab:CreateToggle({
+LocalPlayerTab:AddToggle({
     Name = "Bypass",
-    Description = "Mantenha-se invisível ao sistema anti-cheat",
-    CurrentValue = true,
+    Default = true,
+    Save = true,
+    Flag = "bypass_toggle",
     Callback = function(Value)
         if Value then
-            print("[EcoHub] Sistema de proteção ativado")
-            print("[EcoHub] Painel protegido contra detecção")
-            print("[EcoHub] Anti-cheat bypass iniciado")
-            
             local function obfuscateName()
                 local chars = {"Game", "Ui", "System", "Tool", "Helper", "Manager", "Handler", "Controller", "Service", "Module", "Core", "Main"}
                 local nums = tostring(math.random(1000, 9999))
                 local extras = {"_" .. tostring(tick()):sub(-3), "_Secure", "_Protected", "_Hidden"}
                 return chars[math.random(#chars)] .. nums .. extras[math.random(#extras)]
             end
-
-            print("[EcoHub] Nomes aleatórios gerados para proteção")
-
-            local guiName = obfuscateName()
-            local mainFrameName = obfuscateName()
-            local scriptName = obfuscateName()
 
             local function safeGetService(serviceName)
                 local success, service = pcall(function()
@@ -91,8 +50,6 @@ local Toggle = ConfigEventoTab:CreateToggle({
                 CoreGui = safeGetService("CoreGui"),
                 HttpService = safeGetService("HttpService")
             }
-            
-            print("[EcoHub] " .. tostring(#Services) .. " serviços carregados com segurança")
 
             if not Services.Players then
                 return
@@ -103,22 +60,12 @@ local Toggle = ConfigEventoTab:CreateToggle({
                 return
             end
 
-            local mouse = player:GetMouse()
-            local camera = workspace.CurrentCamera
-
-            local isMobile = false
-            pcall(function()
-                if Services.GuiService and Services.UserInputService then
-                    isMobile = Services.GuiService:IsTenFootInterface() or Services.UserInputService.TouchEnabled
-                end
-            end)
-
             local function safeDestroy(obj)
                 pcall(function()
                     if obj and obj.Parent then
                         if obj.ClassName == "LocalScript" or obj.ClassName == "Script" or obj.ClassName == "ModuleScript" then
                             obj.Disabled = true
-                            wait(0.1)
+                            task.wait(0.1)
                         end
                         obj:Destroy()
                     end
@@ -126,7 +73,6 @@ local Toggle = ConfigEventoTab:CreateToggle({
             end
 
             local function cleanupDetection()
-                print("[EcoHub] Iniciando remoção de sistemas de detecção")
                 local detectores = {
                     "anticheat", "ac", "detection", "monitor", "guard", "security",
                     "detector", "scanner", "watcher", "tracker", "observer", "logger",
@@ -141,16 +87,14 @@ local Toggle = ConfigEventoTab:CreateToggle({
                 }
                 
                 local function containsSuspicious(name, wordList)
-                    pcall(function()
-                        if name and type(name) == "string" and wordList then
-                            local lowerName = string.lower(name)
-                            for i = 1, #wordList do
-                                if wordList[i] and string.find(lowerName, string.lower(wordList[i]), 1, true) then
-                                    return true
-                                end
+                    if name and type(name) == "string" and wordList then
+                        local lowerName = string.lower(name)
+                        for i = 1, #wordList do
+                            if wordList[i] and string.find(lowerName, string.lower(wordList[i]), 1, true) then
+                                return true
                             end
                         end
-                    end)
+                    end
                     return false
                 end
                 
@@ -160,7 +104,7 @@ local Toggle = ConfigEventoTab:CreateToggle({
                     local descendants = game:GetDescendants()
                     for i = 1, #descendants do
                         if i % 100 == 0 then
-                            wait(0.05)
+                            task.wait(0.05)
                         end
                         
                         local obj = descendants[i]
@@ -179,15 +123,9 @@ local Toggle = ConfigEventoTab:CreateToggle({
                 
                 for i = 1, #objectsToRemove do
                     if i % 3 == 0 then
-                        wait(0.1)
+                        task.wait(0.1)
                     end
                     safeDestroy(objectsToRemove[i])
-                end
-                
-                if #objectsToRemove > 0 then
-                    print("[EcoHub] " .. #objectsToRemove .. " objetos suspeitos eliminados")
-                else
-                    print("[EcoHub] Nenhum sistema de detecção encontrado")
                 end
                 
                 pcall(function()
@@ -210,10 +148,8 @@ local Toggle = ConfigEventoTab:CreateToggle({
             end
 
             task.spawn(function()
-                wait(3)
+                task.wait(3)
                 pcall(cleanupDetection)
-                print("[EcoHub] Sistema de proteção ativo")
-                print("[EcoHub] Verificação contínua habilitada")
             end)
 
             local lastMonitorCheck = tick()
@@ -242,7 +178,7 @@ local Toggle = ConfigEventoTab:CreateToggle({
                         
                         for i = 1, maxCheck do
                             if i % 25 == 0 then
-                                wait(0.03)
+                                task.wait(0.03)
                             end
                             
                             local obj = descendants[i]
@@ -262,11 +198,7 @@ local Toggle = ConfigEventoTab:CreateToggle({
                         
                         for i = 1, #suspiciousObjects do
                             safeDestroy(suspiciousObjects[i])
-                            wait(0.1)
-                        end
-                        
-                        if #suspiciousObjects > 0 then
-                            print("[EcoHub] " .. #suspiciousObjects .. " novos sistemas detectados e removidos")
+                            task.wait(0.1)
                         end
                     end)
                     
@@ -285,7 +217,7 @@ local Toggle = ConfigEventoTab:CreateToggle({
                     pcall(function()
                         if newPlayer then
                             task.spawn(function()
-                                wait(5)
+                                task.wait(5)
                                 
                                 pcall(function()
                                     if newPlayer.PlayerGui then
@@ -300,7 +232,6 @@ local Toggle = ConfigEventoTab:CreateToggle({
                                                        string.find(lowerGuiName, "detect", 1, true) or
                                                        string.find(lowerGuiName, "anti", 1, true) then
                                                         safeDestroy(gui)
-                                                        print("[EcoHub] GUI suspeita removida: " .. gui.Name)
                                                     end
                                                 end
                                             end)
@@ -315,936 +246,844 @@ local Toggle = ConfigEventoTab:CreateToggle({
             
             task.spawn(function()
                 while protectionActive do
-                    wait(10)
+                    task.wait(10)
                     pcall(function()
                         if player and player.PlayerGui then
                             for _, gui in pairs(player.PlayerGui:GetChildren()) do
-                                if gui.Name:find("Rayfield") or gui.Name:find("EcoHub") then
+                                if gui.Name:find("Orion") or gui.Name:find("EcoHub") then
                                     if gui:FindFirstChild("Main") then
                                         gui.Main.Visible = true
                                     end
                                 end
                             end
                         end
-                        print("[EcoHub] Painel protegido e funcionando")
                     end)
                 end
             end)
-            
-        else
-            print("[EcoHub] Sistema de bypass desativado")
         end
     end
 })
 
---Servidor Random
-local Label = ConfigEventoTab:CreateLabel({
-    Text = "Sistema de Servidor Funcionando",
-    Style = 2
-})
+--Anti-Afk
+LocalPlayerTab:AddParagraph("Sistema Anti-AFK","Ativa movimento automático para evitar AFK")
 
-local Paragraph = ConfigEventoTab:CreateParagraph({
-    Title = "Sistema de Troca de Servidor", 
-    Text = "Rejoin volta pro mesmo servidor. Procurar Servidor tenta achar outro servidor pra entrar com menos players."
-})
-
-local HttpService = game:GetService("HttpService")
-local TeleportService = game:GetService("TeleportService") 
+local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:FindFirstChildOfClass("Humanoid") or character:WaitForChild("Humanoid")
+local hrp = character:FindFirstChild("HumanoidRootPart") or character:WaitForChild("HumanoidRootPart")
 
-local function procurarServidor()
-    spawn(function()
-        local success, servers = pcall(function()
-            local url = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"
-            local response
-            
-            if syn and syn.request then
-                response = syn.request({Url = url, Method = "GET"})
-            elseif request then
-                response = request({Url = url, Method = "GET"})
-            elseif http and http.request then
-                response = http.request({Url = url, Method = "GET"})
-            else
-                return nil
-            end
-            
-            if response and response.Body then
-                local data = HttpService:JSONDecode(response.Body)
-                return data.data or {}
-            end
-            return {}
-        end)
-        
-        if success and servers and #servers > 0 then
-            local melhoresServidores = {}
-            
-            for _, server in pairs(servers) do
-                if server.id ~= game.JobId and server.playing > 0 and server.playing < server.maxPlayers then
-                    table.insert(melhoresServidores, {
-                        id = server.id,
-                        players = server.playing
-                    })
-                end
-            end
-            
-            if #melhoresServidores > 0 then
-                table.sort(melhoresServidores, function(a, b)
-                    return a.players < b.players
-                end)
-                
-                local melhorServidor = melhoresServidores[1]
-                print("Encontrado servidor com " .. melhorServidor.players .. " players")
-                
-                TeleportService:TeleportToPlaceInstance(game.PlaceId, melhorServidor.id, Players.LocalPlayer)
-            else
-                print("Nenhum servidor melhor encontrado, entrando em qualquer um")
-                TeleportService:Teleport(game.PlaceId, Players.LocalPlayer)
-            end
-        else
-            print("Erro ao buscar servidores, usando teleport normal")
-            TeleportService:Teleport(game.PlaceId, Players.LocalPlayer)
-        end
+local antiAfkEnabled = false
+local moveTask = nil
+
+local function updateRefs(char)
+    humanoid = char:FindFirstChildOfClass("Humanoid") or char:WaitForChild("Humanoid")
+    hrp = char:FindFirstChild("HumanoidRootPart") or char:WaitForChild("HumanoidRootPart")
+end
+
+player.CharacterAdded:Connect(function(char)
+    character = char
+    updateRefs(char)
+end)
+
+local function isMoving()
+    if hrp then
+        return hrp.Velocity.Magnitude > 0.1
+    end
+    return false
+end
+
+local function tryTeleportStep(moveVec)
+    if not hrp then return end
+    pcall(function()
+        hrp.CFrame = hrp.CFrame + (moveVec.Unit * 1)
     end)
 end
 
-local Button1 = ConfigEventoTab:CreateButton({
-    Name = "Rejoin",
-    Description = "Volta pro mesmo servidor",
-    Callback = function()
-        if game.JobId and game.JobId ~= "" then
-            TeleportService:TeleportToPlaceInstance(game.PlaceId, game.JobId, Players.LocalPlayer)
-        else
-            TeleportService:Teleport(game.PlaceId, Players.LocalPlayer)
-        end
-    end
-})
+local function startAntiAfk()
+    if moveTask then return end
+    moveTask = task.spawn(function()
+        while antiAfkEnabled do
+            if humanoid and hrp and humanoid.Parent then
+                local dir = math.random(1,4)
+                local moveVec
+                if dir == 1 then moveVec = Vector3.new(1,0,0)
+                elseif dir == 2 then moveVec = Vector3.new(-1,0,0)
+                elseif dir == 3 then moveVec = Vector3.new(0,0,1)
+                else moveVec = Vector3.new(0,0,-1) end
 
-local Button2 = ConfigEventoTab:CreateButton({
-    Name = "Procurar Servidor",
-    Description = "Acha servidor com menos players",
-    Callback = function()
-        procurarServidor()
-    end
-})
+                local t0 = tick()
+                while tick() - t0 < 1 and antiAfkEnabled do
+                    pcall(function() humanoid:Move(moveVec, true) end)
+                    RunService.Heartbeat:Wait()
+                end
 
---Configurar
-local MainPanel = Window.MainPanel or ConfigEventoTab
+                pcall(function() humanoid:Move(Vector3.new(0,0,0), true) end)
 
-local Label = ConfigEventoTab:CreateLabel({
-    Text = "Configurar Painel",
-    Style = 1
-})
+                if not isMoving() then
+                    pcall(function() humanoid:MoveTo(hrp.Position + moveVec * 3) end)
+                    local t1 = tick()
+                    while tick() - t1 < 0.8 and not isMoving() and antiAfkEnabled do
+                        RunService.Heartbeat:Wait()
+                    end
+                    if not isMoving() then
+                        tryTeleportStep(moveVec)
+                    end
+                end
 
-local Bind = ConfigEventoTab:CreateBind({
-    Name = "Interface Bind",
-    Description = nil,
-    CurrentBind = "K",
-    HoldToInteract = false,
-    Callback = function()
-        if MainPanel then
-            if type(MainPanel.SetVisible) == "function" and type(MainPanel.IsVisible) == "function" then
-                MainPanel:SetVisible(not MainPanel:IsVisible())
-            elseif MainPanel.Visible ~= nil then
-                MainPanel.Visible = not MainPanel.Visible
+                task.wait(0.15)
             else
-                print("Painel não suporta método ou propriedade para visibilidade.")
+                task.wait(0.5)
             end
-        else
-            print("Painel não encontrado.")
         end
-    end,
-    OnChangedCallback = function(Bind)
-        Window.Bind = Bind
-    end,
-})
+        moveTask = nil
+    end)
+end
 
---Evento Script
-local EventoScriptTab = Window:CreateTab({
-    Name = "Evento Script Premium",
-    Icon = "code",
-    ImageSource = "Material",
-    ShowTitle = true
-})
-
---Lennon Hub
-local Label = EventoScriptTab:CreateLabel({
-    Text = "Status: Lennon Hub Online",
-    Style = 2
-})
-
-local Paragraph = EventoScriptTab:CreateParagraph({
-    Title = "Informações do Script",
-    Text = "Este script ativa o Lennon Hub, uma ferramenta avançada de automação e otimização. Certifique-se de estar em um ambiente compatível antes de executar."
-})
-
-local Button = EventoScriptTab:CreateButton({
-    Name = "Ativar Lennon Hub",
-    Description = "Executa o script premium do Lennon Hub.",
-    Callback = function()
-        Luna:Notification({
-            Title = "EcoHub - Script",
-            Icon = "terminal",
-            ImageSource = "Material",
-            Content = "Executando Lennon Hub... Aguarde"
-        })
-
-        local success, err = pcall(function()
-            loadstring(game:HttpGet("https://pastefy.app/MJw2J4T6/raw"))()
-        end)
-
-        if success then
-            Luna:Notification({
-                Title = "EcoHub - Sucesso",
-                Icon = "check_circle",
-                ImageSource = "Material",
-                Content = "Lennon Hub ativado com sucesso"
-            })
-        else
-            Luna:Notification({
-                Title = "EcoHub - Erro",
-                Icon = "error",
-                ImageSource = "Material",
-                Content = "Falha ao executar o script: " .. tostring(err)
-            })
-        end
-    end
-})
-
---Miranda Hub
-local Label = EventoScriptTab:CreateLabel({
-    Text = "Status: Miranda Hub Online",
-    Style = 2
-})
-
-local Paragraph = EventoScriptTab:CreateParagraph({
-    Title = "Informações do Script",
-    Text = "Este botão executa o Miranda Hub, um script poderoso focado em automação, otimização e melhorias de gameplay. Use com responsabilidade."
-})
-
-local Button = EventoScriptTab:CreateButton({
-    Name = "Ativar Miranda Hub",
-    Description = "Executa o script premium do Miranda Hub.",
-    Callback = function()
-        Luna:Notification({
-            Title = "EcoHub - Script",
-            Icon = "terminal",
-            ImageSource = "Material",
-            Content = "Executando Miranda Hub... Aguarde"
-        })
-
-        local success, err = pcall(function()
-            loadstring(game:HttpGet("https://pastefy.app/JJVhs3rK/raw"))()
-        end)
-
-        if success then
-            Luna:Notification({
-                Title = "EcoHub - Sucesso",
-                Icon = "check_circle",
-                ImageSource = "Material",
-                Content = "Miranda Hub ativado com sucesso"
-            })
-        else
-            Luna:Notification({
-                Title = "EcoHub - Erro",
-                Icon = "error",
-                ImageSource = "Material",
-                Content = "Falha ao executar o script: " .. tostring(err)
-            })
-        end
-    end
-})
-
---Evento Status
-local EventoStatusTab = Window:CreateTab({
-    Name = "Status do Evento",
-    Icon = "timeline",
-    ImageSource = "Material",
-    ShowTitle = true
-})
-
-
---Status Jogador
-local tempoInicio = tick()
-local rodando = true
-
-local player = game.Players.LocalPlayer
-local username = player.Name
-local displayName = player.DisplayName
-local userId = player.UserId
-local accountAge = player.AccountAge
-
-local function obterTempoFormatado(segundos)
-    local horas = math.floor(segundos / 3600)
-    local minutos = math.floor((segundos % 3600) / 60)
-    local segs = segundos % 60
-
-    if horas > 0 then
-        return string.format("%dh %dm %ds", horas, minutos, segs)
-    elseif minutos > 0 then
-        return string.format("%dm %ds", minutos, segs)
-    else
-        return string.format("%ds", segs)
+local function stopAntiAfk()
+    antiAfkEnabled = false
+    if humanoid then
+        pcall(function() humanoid:Move(Vector3.new(0,0,0), true) end)
     end
 end
 
-local statusParagraph = EventoStatusTab:CreateParagraph({
-    Title = "Status do Jogador",
-    Text = "Carregando status..."
+LocalPlayerTab:AddToggle({
+    Name = "Anti-AFK (NEW)",
+    Default = false,
+    Callback = function(Value)
+        antiAfkEnabled = Value
+        if Value then
+            startAntiAfk()
+        else
+            stopAntiAfk()
+        end
+    end
 })
 
-task.spawn(function()
-    while rodando do
-        local tempoDeUso = math.floor(tick() - tempoInicio)
+--Evento Normal
+local NormalTab = Window:MakeTab({
+	Name = "Evento Normal",
+	PremiumOnly = false
+})
 
-        local statusTexto = string.format(
-            "Tempo de Uso: %s\nUsuário: %s\nNome Exibido: %s\nID do Usuário: %d\nIdade da Conta: %d dias\nServidor: %s\nJogadores Online: %d/%d",
-            obterTempoFormatado(tempoDeUso),
-            username,
-            displayName,
-            userId,
-            accountAge,
-            game.JobId ~= "" and game.JobId or "Privado/Desconhecido",
-            #game.Players:GetPlayers(),
-            game.Players.MaxPlayers
-        )
+NormalTab:AddParagraph(
+    "Gerenciador Workspace -- Evento Normal", 
+    "Descrição: remove coisas dentro da pasta (Folder)"
+)
 
-        statusParagraph:Set({
-            Title = "Status do Jogador",
-            Text = statusTexto
-        })
+--Remover Audio
+NormalTab:AddToggle({
+    Name = "Remover Sounds",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            local ws = game:GetService("Workspace")
+            local folder = ws:FindFirstChild("Sounds")
+            
+            if folder and folder:IsA("Folder") then
+                for _, obj in ipairs(folder:GetChildren()) do
+                    obj:Destroy()
+                end
+                print("[EcoHub] Objetos removidos da pasta: Sounds")
+            else
+                print("[EcoHub] Pasta não encontrada: Sounds")
+            end
+        end
+    end
+})
+
+NormalTab:AddToggle({
+    Name = "Remover ToolsAdds",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            local ws = game:GetService("Workspace")
+            local folder = ws:FindFirstChild("ToolsAdds")
+            
+            if folder and folder:IsA("Folder") then
+                for _, obj in ipairs(folder:GetChildren()) do
+                    obj:Destroy()
+                end
+                print("[EcoHub] Objetos removidos da pasta: ToolsAdds")
+            else
+                print("[EcoHub] Pasta não encontrada: ToolsAdds")
+            end
+        end
+    end
+})
+
+--ESP
+local ESPTab = Window:MakeTab({
+	Name = "ESP",
+	Icon = "rbxassetid://",
+	PremiumOnly = false
+})
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+
+ESPTab:AddParagraph(
+    "ESP Jogadores Brookhaven",
+    "ESP com melhor performance, linhas limpas e sem travamentos."
+)
+
+local espEnabled = false
+local maxDistance = 200
+local espObjects = {}
+local updateConnection
+local lastFullUpdate = 0
+local updateInterval = 0.05
+
+local localHRP
+
+local function getTeamColor(player)
+    if player.Team and player.Team.TeamColor then
+        return player.Team.TeamColor.Color
+    else
+        -- Cor padrão se não houver time
+        return Color3.fromRGB(255, 255, 255)
+    end
+end
+
+local function createESP(player)
+    if espObjects[player] or not player.Character or player == LocalPlayer then 
+        return 
+    end
+    
+    local character = player.Character
+    local humanoid = character:FindFirstChild("Humanoid")
+    local hrp = character:FindFirstChild("HumanoidRootPart")
+    
+    if not hrp or not humanoid then 
+        return 
+    end
+
+    local teamColor = getTeamColor(player)
+
+    -- Removido o quadrado (BoxHandleAdornment)
+    
+    local outline = Instance.new("SelectionBox")
+    outline.Adornee = hrp
+    outline.Color3 = teamColor
+    outline.LineThickness = 0.05
+    outline.Transparency = 0.2
+    outline.Parent = hrp
+
+    local billboard = Instance.new("BillboardGui")
+    billboard.Adornee = hrp
+    billboard.Size = UDim2.new(0, 120, 0, 40)
+    billboard.StudsOffset = Vector3.new(0, 3.5, 0)
+    billboard.AlwaysOnTop = true
+    billboard.Parent = hrp
+
+    local nameLabel = Instance.new("TextLabel")
+    nameLabel.BackgroundTransparency = 1
+    nameLabel.TextColor3 = teamColor
+    nameLabel.Font = Enum.Font.GothamBold
+    nameLabel.TextSize = 10  -- Tamanho pequeno para o nome
+    nameLabel.Size = UDim2.new(1, 0, 0.5, 0)
+    nameLabel.Position = UDim2.new(0, 0, 0, 0)
+    nameLabel.Text = player.Name
+    nameLabel.TextStrokeTransparency = 0.3
+    nameLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+    nameLabel.TextXAlignment = Enum.TextXAlignment.Center
+    nameLabel.Parent = billboard
+
+    local distanceLabel = Instance.new("TextLabel")
+    distanceLabel.BackgroundTransparency = 1
+    distanceLabel.TextColor3 = teamColor
+    distanceLabel.Font = Enum.Font.Gotham
+    distanceLabel.TextSize = 8  -- Tamanho pequeno para a distância
+    distanceLabel.Size = UDim2.new(1, 0, 0.5, 0)
+    distanceLabel.Position = UDim2.new(0, 0, 0.5, 0)
+    distanceLabel.Text = "0m"
+    distanceLabel.TextStrokeTransparency = 0.3
+    distanceLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+    distanceLabel.TextXAlignment = Enum.TextXAlignment.Center
+    distanceLabel.Parent = billboard
+
+    local line = Instance.new("Beam")
+    local attachment0 = Instance.new("Attachment")
+    local attachment1 = Instance.new("Attachment")
+    
+    attachment0.Parent = hrp
+    attachment1.Parent = localHRP or LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    
+    line.Attachment0 = attachment0
+    line.Attachment1 = attachment1
+    line.Color = ColorSequence.new(teamColor)
+    line.Transparency = NumberSequence.new(0.7)
+    line.Width0 = 0.1
+    line.Width1 = 0.1
+    line.FaceCamera = true
+    line.Parent = hrp
+
+    espObjects[player] = {
+        outline = outline,
+        nameLabel = nameLabel,
+        distanceLabel = distanceLabel,
+        billboard = billboard,
+        line = line,
+        attachment0 = attachment0,
+        attachment1 = attachment1,
+        player = player,
+        lastDistance = 0,
+        lastUpdate = 0
+    }
+end
+
+local function destroyESP(player)
+    local data = espObjects[player]
+    if data then
+        pcall(function()
+            if data.outline then data.outline:Destroy() end
+            if data.billboard then data.billboard:Destroy() end
+            if data.line then data.line:Destroy() end
+            if data.attachment0 then data.attachment0:Destroy() end
+            if data.attachment1 then data.attachment1:Destroy() end
+        end)
+        espObjects[player] = nil
+    end
+end
+
+local function updateESP()
+    if not espEnabled then return end
+    
+    if LocalPlayer.Character then
+        localHRP = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    end
+    
+    if not localHRP then return end
+    
+    local currentTime = tick()
+    
+    if currentTime - lastFullUpdate < updateInterval then
+        return
+    end
+    lastFullUpdate = currentTime
+    
+    for player, data in pairs(espObjects) do
+        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local hrp = player.Character.HumanoidRootPart
+            local distance = (hrp.Position - localHRP.Position).Magnitude
+            local roundedDistance = math.floor(distance)
+            
+            -- Atualizar cor do time
+            local teamColor = getTeamColor(player)
+            data.outline.Color3 = teamColor
+            data.nameLabel.TextColor3 = teamColor
+            data.distanceLabel.TextColor3 = teamColor
+            data.line.Color = ColorSequence.new(teamColor)
+            
+            if math.abs(roundedDistance - data.lastDistance) > 2 or currentTime - data.lastUpdate > 0.5 then
+                data.lastDistance = roundedDistance
+                data.lastUpdate = currentTime
+                
+                if distance <= maxDistance then
+                    local transparency = math.min(0.8, 0.3 + (distance / 400))
+                    data.outline.Transparency = transparency * 0.6
+                    
+                    data.distanceLabel.Text = roundedDistance .. "m"
+                    
+                    data.outline.Visible = true
+                    data.billboard.Enabled = true
+                    data.line.Enabled = true
+                else
+                    data.outline.Visible = false
+                    data.billboard.Enabled = false
+                    data.line.Enabled = false
+                end
+            end
+        else
+            destroyESP(player)
+        end
+    end
+end
+
+local function startESP()
+    if updateConnection then
+        updateConnection:Disconnect()
+    end
+    
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player.Character then
+            createESP(player)
+        end
+    end
+    
+    updateConnection = RunService.Heartbeat:Connect(updateESP)
+end
+
+local function stopESP()
+    if updateConnection then
+        updateConnection:Disconnect()
+        updateConnection = nil
+    end
+    
+    for player, _ in pairs(espObjects) do
+        destroyESP(player)
+    end
+    espObjects = {}
+end
+
+ESPTab:AddToggle({
+    Name = "Ativar ESP",
+    Default = false,
+    Callback = function(value)
+        espEnabled = value
+        if espEnabled then
+            startESP()
+        else
+            stopESP()
+        end
+    end
+})
+
+ESPTab:AddSlider({
+    Name = "Distancia Maxima",
+    Min = 50,
+    Max = 500,
+    Default = 200,
+    Color = Color3.fromRGB(255,255,255),
+    Increment = 25,
+    ValueName = "metros",
+    Callback = function(value)
+        maxDistance = value
+    end    
+})
+
+ESPTab:AddSlider({
+    Name = "Taxa de Atualizacao",
+    Min = 0.02,
+    Max = 0.2,
+    Default = 0.05,
+    Color = Color3.fromRGB(100, 255, 100),
+    Increment = 0.01,
+    ValueName = "segundos",
+    Callback = function(value)
+        updateInterval = value
+    end    
+})
+
+Players.PlayerAdded:Connect(function(player)
+    if player ~= LocalPlayer then
+        local function onCharacterAdded()
+            wait(1)
+            if espEnabled then
+                createESP(player)
+            end
+        end
         
-        task.wait(1)
+        player.CharacterAdded:Connect(onCharacterAdded)
+        if player.Character then
+            onCharacterAdded()
+        end
     end
 end)
 
---Status Evento
-local tempoInicio = tick()
-local rodando = true
+Players.PlayerRemoving:Connect(function(player)
+    destroyESP(player)
+end)
 
-local player = game.Players.LocalPlayer
-local workspace = game.Workspace
-
-local function obterTempoFormatado(segundos)
-    local horas = math.floor(segundos / 3600)
-    local minutos = math.floor((segundos % 3600) / 60)
-    local segs = segundos % 60
-
-    if horas > 0 then
-        return string.format("%dh %dm %ds", horas, minutos, segs)
-    elseif minutos > 0 then
-        return string.format("%dm %ds", minutos, segs)
-    else
-        return string.format("%ds", segs)
-    end
-end
-
-local function verificarEventos()
-    local eventsFolder = workspace:FindFirstChild("Events")
-    local statusEventos = {}
-    
-    if not eventsFolder then
-        return {"Pasta Events não encontrada na Workspace"}
-    end
-    
-    local children = eventsFolder:GetChildren()
-    
-    if #children == 0 then
-        return {"Pasta Events está vazia"}
-    end
-    
-    for _, objeto in ipairs(children) do
-        local tipoObjeto = ""
-        local info = ""
-        
-        if objeto:IsA("Model") then
-            tipoObjeto = "Model"
-            local parts = {}
-            local scripts = {}
-            
-            for _, child in ipairs(objeto:GetDescendants()) do
-                if child:IsA("Part") or child:IsA("MeshPart") then
-                    table.insert(parts, child.Name)
-                elseif child:IsA("Script") or child:IsA("LocalScript") then
-                    table.insert(scripts, child.Name)
-                end
-            end
-            
-            info = string.format("Parts: %d | Scripts: %d", #parts, #scripts)
-            
-        elseif objeto:IsA("Folder") then
-            tipoObjeto = "Folder"
-            local childCount = #objeto:GetChildren()
-            info = string.format("Itens: %d", childCount)
-            
-        elseif objeto:IsA("Part") or objeto:IsA("MeshPart") then
-            tipoObjeto = "Part"
-            info = string.format("Pos: %.1f,%.1f,%.1f", objeto.Position.X, objeto.Position.Y, objeto.Position.Z)
-            
-        elseif objeto:IsA("Script") or objeto:IsA("LocalScript") then
-            tipoObjeto = "Script"
-            info = "Ativo: " .. (objeto.Enabled and "Sim" or "Nao")
-            
-        else
-            tipoObjeto = objeto.ClassName
-            info = "Tipo desconhecido"
-        end
-        
-        table.insert(statusEventos, string.format("[%s] %s\n   %s", tipoObjeto, objeto.Name, info))
-    end
-    
-    return statusEventos
-end
-
-local statusParagraph = EventoStatusTab:CreateParagraph({
-    Title = "Status dos Eventos",
-    Text = "Carregando informações dos eventos..."
-})
-
-task.spawn(function()
-    while rodando do
-        local tempoDeUso = math.floor(tick() - tempoInicio)
-        local eventosInfo = verificarEventos()
-        
-        local statusTexto = string.format(
-            "Tempo de Verificação: %s\nJogador: %s\n\nEVENTOS ATIVOS:\n\n%s",
-            obterTempoFormatado(tempoDeUso),
-            player.DisplayName or player.Name,
-            table.concat(eventosInfo, "\n\n")
-        )
-
-        statusParagraph:Set({
-            Title = "Status dos Eventos - Roube um Brainrot",
-            Text = statusTexto
-        })
-        
-        task.wait(2)
+LocalPlayer.CharacterAdded:Connect(function()
+    wait(2)
+    if espEnabled then
+        startESP()
     end
 end)
 
-local function pararMonitoramento()
-    rodando = false
-end
-
---Evento Otimização
-local OtimizacaoTab = Window:CreateTab({
-    Name = "Evento Otimização",
-    Icon = "speed",
-    ImageSource = "Material",
-    ShowTitle = true
-})
-
-local Label = OtimizacaoTab:CreateLabel({
-    Text = "STATUS: ONLINE",
-    Style = 2
-})
-
---Remover Áudio
-local Paragraph = OtimizacaoTab:CreateParagraph({
-    Title = "Gerenciador de Áudio",
-    Text = "Remove todos os sons localizados na pasta 'Sounds' da Workspace, ajudando a melhorar o desempenho e a concentração durante o jogo."
-})
-
-local isSoundsRemovalActive = false
-
-local Toggle = OtimizacaoTab:CreateToggle({
-    Name = "Remover Sounds (NEW)",
-    Description = nil,
-    CurrentValue = false,
-    Callback = function(state)
-        local ws = game:GetService("Workspace")
-        local folderName = "Sounds"
-        isSoundsRemovalActive = state
-        
-        if state then
-            spawn(function()
-                while isSoundsRemovalActive do
-                    local folder = ws:FindFirstChild(folderName)
-                    if folder and folder:IsA("Folder") then
-                        for i, obj in pairs(folder:GetChildren()) do
-                            if not isSoundsRemovalActive then break end
-                            if i % 10 == 0 then
-                                wait(0.1)
-                            end
-                            pcall(function()
-                                print("[EcoHub] Removido: " .. obj.Name .. " (" .. obj.ClassName .. ")")
-                                obj:Destroy()
-                            end)
-                        end
-                    end
-                    wait(1)
-                end
-            end)
-        end
-    end
-})
-
---Remover GalaxySpinWheels
-local Paragraph = OtimizacaoTab:CreateParagraph({
-    Title = "Gerenciador de GalaxySpinWheels",
-    Text = "Remove automaticamente todos os objetos encontrados dentro da pasta 'GalaxySpinWheels' na Workspace para melhorar o desempenho e evitar distrações."
-})
-
-local isGalaxyRemovalActive = false
-
-local Toggle = OtimizacaoTab:CreateToggle({
-    Name = "Remover GalaxySpinWheels (NEW)",
-    Description = nil,
-    CurrentValue = false,
-    Callback = function(state)
-        local ws = game:GetService("Workspace")
-        local folderName = "GalaxySpinWheels"
-        isGalaxyRemovalActive = state
-        
-        if state then
-            spawn(function()
-                while isGalaxyRemovalActive do
-                    local folder = ws:FindFirstChild(folderName)
-                    if folder and folder:IsA("Folder") then
-                        for i, obj in pairs(folder:GetChildren()) do
-                            if not isGalaxyRemovalActive then break end
-                            if i % 10 == 0 then
-                                wait(0.1)
-                            end
-                            pcall(function()
-                                print("[EcoHub] Removido: " .. obj.Name .. " (" .. obj.ClassName .. ")")
-                                obj:Destroy()
-                            end)
-                        end
-                    end
-                    wait(1)
-                end
-            end)
-        end
-    end
-})
-
---Remover Road
-local Paragraph = OtimizacaoTab:CreateParagraph({
-    Title = "Gerenciador de Estradas",
-    Text = "Remove todos os objetos presentes na pasta 'Road' da Workspace para otimizar o desempenho do jogo e reduzir elementos visuais desnecessários."
-})
-
-local isRoadRemovalActive = false
-
-local Toggle = OtimizacaoTab:CreateToggle({
-    Name = "Remover Road (NEW)",
-    Description = nil,
-    CurrentValue = false,
-    Callback = function(state)
-        local ws = game:GetService("Workspace")
-        local folderName = "Road"
-        isRoadRemovalActive = state
-        
-        if state then
-            spawn(function()
-                while isRoadRemovalActive do
-                    local folder = ws:FindFirstChild(folderName)
-                    if folder and folder:IsA("Folder") then
-                        for i, obj in pairs(folder:GetChildren()) do
-                            if not isRoadRemovalActive then break end
-                            if i % 10 == 0 then
-                                wait(0.1)
-                            end
-                            pcall(function()
-                                print("[EcoHub] Removido: " .. obj.Name .. " (" .. obj.ClassName .. ")")
-                                obj:Destroy()
-                            end)
-                        end
-                    end
-                    wait(1)
-                end
-            end)
-        end
-    end
-})
-
---PathfindingRegions
-local Paragraph = OtimizacaoTab:CreateParagraph({
-    Title = "Gerenciador de PathfindingRegions",
-    Text = "Remove todos os objetos presentes na pasta 'PathfindingRegions' da Workspace para otimizar o desempenho do jogo e reduzir elementos desnecessários."
-})
-
-local isPathfindingRemovalActive = false
-
-local Toggle = OtimizacaoTab:CreateToggle({
-    Name = "Remover PathfindingRegions (NEW)",
-    Description = nil,
-    CurrentValue = false,
-    Callback = function(state)
-        local ws = game:GetService("Workspace")
-        local folderName = "PathfindingRegions"
-        isPathfindingRemovalActive = state
-        
-        if state then
-            spawn(function()
-                while isPathfindingRemovalActive do
-                    local folder = ws:FindFirstChild(folderName)
-                    if folder and folder:IsA("Folder") then
-                        for i, obj in pairs(folder:GetChildren()) do
-                            if not isPathfindingRemovalActive then break end
-                            if i % 10 == 0 then
-                                wait(0.1)
-                            end
-                            pcall(function()
-                                print("[EcoHub] Removido: " .. obj.Name .. " (" .. obj.ClassName .. ")")
-                                obj:Destroy()
-                            end)
-                        end
-                    end
-                    wait(1)
-                end
-            end)
-        end
-    end
-})
-
---Events
-local Paragraph = OtimizacaoTab:CreateParagraph({
-    Title = "Gerenciador de Events",
-    Text = "Remove todos os objetos presentes na pasta 'Events' da Workspace para otimizar o desempenho do jogo e reduzir elementos desnecessários."
-})
-
-local isEventsRemovalActive = false
-
-local Toggle = OtimizacaoTab:CreateToggle({
-    Name = "Remover Events (NEW)",
-    Description = nil,
-    CurrentValue = false,
-    Callback = function(state)
-        local ws = game:GetService("Workspace")
-        local folderName = "Events"
-        isEventsRemovalActive = state
-        
-        if state then
-            spawn(function()
-                while isEventsRemovalActive do
-                    local folder = ws:FindFirstChild(folderName)
-                    if folder and folder:IsA("Folder") then
-                        for i, obj in pairs(folder:GetChildren()) do
-                            if not isEventsRemovalActive then break end
-                            if i % 10 == 0 then
-                                wait(0.1)
-                            end
-                            pcall(function()
-                                print("[EcoHub] Removido: " .. obj.Name .. " (" .. obj.ClassName .. ")")
-                                obj:Destroy()
-                            end)
-                        end
-                    end
-                    wait(1)
-                end
-            end)
-        else
-            print("[EcoHub] Remoção de Events desativada")
-        end
-    end
-})
-
---Otimização V2 - Versão Otimizada
-local Paragraph = OtimizacaoTab:CreateParagraph({
-    Title = "Otimização Visual do Mapa",
-    Text = "Remove todas as texturas aplicadas aos objetos dentro da pasta 'Map' na Workspace e substitui por uma textura estilo Minecraft, melhorando o desempenho e dando um visual mais limpo ao jogo."
-})
-
-local Toggle = OtimizacaoTab:CreateToggle({
-    Name = "Aplica Otimização Visual (NEW)",
-    Description = nil,
-    CurrentValue = false,
-    Callback = function(state)
-        local ws = game:GetService("Workspace")
-        local RunService = game:GetService("RunService")
-        local folderName = "Map"
-        local processedObjects = {}
-        local connection
-        
-        if state then
-            connection = RunService.Heartbeat:Connect(function()
-                local folder = ws:FindFirstChild(folderName)
-                if not folder then return end
-                
-                local descendants = folder:GetDescendants()
-                local batchSize = 5
-                local processed = 0
-                
-                for _, obj in ipairs(descendants) do
-                    if processed >= batchSize then break end
-                    if processedObjects[obj] then continue end
-                    
-                    local success = pcall(function()
-                        if obj:IsA("AnimationController") then
-                            obj:Destroy()
-                        elseif obj:IsA("MeshPart") then
-                            obj.TextureID = "rbxassetid://9479481323"
-                            obj.RenderFidelity = Enum.RenderFidelity.Performance
-                            obj.CastShadow = false
-                        elseif obj:IsA("Part") then
-                            obj.CastShadow = false
-                            obj.Material = Enum.Material.Granite
-                            
-                            for _, child in ipairs(obj:GetChildren()) do
-                                if child:IsA("Texture") or child:IsA("Decal") then
-                                    child:Destroy()
-                                end
-                            end
-
-                            local newTexture = Instance.new("Texture")
-                            newTexture.Texture = "rbxassetid://9479481323"
-                            newTexture.Face = Enum.NormalId.Top
-                            newTexture.StudsPerTileU = 4
-                            newTexture.StudsPerTileV = 4
-                            newTexture.Parent = obj
-                        elseif obj:IsA("SurfaceAppearance") or obj:IsA("ParticleEmitter") or 
-                               obj:IsA("Trail") or obj:IsA("Beam") then
-                            obj:Destroy()
-                        elseif obj:IsA("Sound") then
-                            obj.Volume = 0
-                        elseif obj:IsA("Light") then
-                            obj.Enabled = false
-                        end
-                    end)
-                    
-                    if success then
-                        processedObjects[obj] = true
-                        processed = processed + 1
-                    end
-                end
-            end)
-        else
-            if connection then
-                connection:Disconnect()
-                connection = nil
+-- Atualizar cores quando jogadores mudarem de time
+Players.PlayerAdded:Connect(function(player)
+    local function onTeamChanged()
+        if espObjects[player] and espEnabled then
+            local teamColor = getTeamColor(player)
+            local data = espObjects[player]
+            if data then
+                data.outline.Color3 = teamColor
+                data.nameLabel.TextColor3 = teamColor
+                data.distanceLabel.TextColor3 = teamColor
+                data.line.Color = ColorSequence.new(teamColor)
             end
-            processedObjects = {}
+        end
+    end
+    
+    player:GetPropertyChangedSignal("Team"):Connect(onTeamChanged)
+end)
+
+NormalTab:AddToggle({
+    Name = "Remover PathfindingRegions",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            local ws = game:GetService("Workspace")
+            local folder = ws:FindFirstChild("PathfindingRegions")
+            
+            if folder and folder:IsA("Folder") then
+                for _, obj in ipairs(folder:GetChildren()) do
+                    obj:Destroy()
+                end
+                print("[EcoHub] Objetos removidos da pasta: PathfindingRegions")
+            else
+                print("[EcoHub] Pasta não encontrada: PathfindingRegions")
+            end
         end
     end
 })
 
-local Toggle2 = OtimizacaoTab:CreateToggle({
-    Name = "Aplica Otimização Brainrot (NEW)",
-    Description = nil,
-    CurrentValue = false,
-    Callback = function(state)
-        local ws = game:GetService("Workspace")
-        local RunService = game:GetService("RunService")
-        local folderName = "RenderedMovingAnimals"
-        local connection
-        local processedObjects = {}
-        
-        if state then
-            connection = RunService.Heartbeat:Connect(function()
-                local folder = ws:FindFirstChild(folderName)
-                if not folder then return end
-                
-                local descendants = folder:GetDescendants()
-                local batchSize = 3
-                local processed = 0
-                
-                for _, obj in ipairs(descendants) do
-                    if processed >= batchSize then break end
-                    if processedObjects[obj] then continue end
-                    
-                    local success = pcall(function()
-                        if obj:IsA("MeshPart") then
-                            obj.TextureID = ""
-                            obj.MeshId = ""
-                            obj.RenderFidelity = Enum.RenderFidelity.Performance
-                            obj.CastShadow = false
-                            obj.Material = Enum.Material.SmoothPlastic
-                            obj.Reflectance = 0
-                        elseif obj:IsA("Part") then
-                            obj.CastShadow = false
-                            obj.Material = Enum.Material.SmoothPlastic
-                            obj.Reflectance = 0
-                        elseif obj:IsA("Decal") or obj:IsA("Texture") or obj:IsA("SurfaceAppearance") or
-                               obj:IsA("ParticleEmitter") or obj:IsA("Trail") or obj:IsA("Beam") then
-                            obj:Destroy()
-                        elseif obj:IsA("Light") then
-                            obj.Enabled = false
-                        elseif obj:IsA("Sound") then
-                            obj.Volume = 0
-                        end
-                    end)
-                    
-                    if success then
-                        processedObjects[obj] = true
-                        processed = processed + 1
-                    end
+NormalTab:AddToggle({
+    Name = "Remover Events",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            local ws = game:GetService("Workspace")
+            local folder = ws:FindFirstChild("Events")
+            
+            if folder and folder:IsA("Folder") then
+                for _, obj in ipairs(folder:GetChildren()) do
+                    obj:Destroy()
                 end
-            end)
-        else
-            if connection then
-                connection:Disconnect()
-                connection = nil
+                print("[EcoHub] Objetos removidos da pasta: Events")
+            else
+                print("[EcoHub] Pasta não encontrada: Events")
             end
-            processedObjects = {}
         end
     end
 })
 
-local Toggle3 = OtimizacaoTab:CreateToggle({
-    Name = "Aplica Otimização Base (NEW)",
-    Description = nil,
-    CurrentValue = false,
-    Callback = function(state)
-        local ws = game:GetService("Workspace")
-        local RunService = game:GetService("RunService")
-        local folderName = "Plots"
-        local connection
-        local processedObjects = {}
-        
-        if state then
-            connection = RunService.Heartbeat:Connect(function()
-                local folder = ws:FindFirstChild(folderName)
-                if not folder or not folder:IsA("Folder") then return end
-                
-                local batchSize = 4
-                local processed = 0
-                
-                for _, model in ipairs(folder:GetChildren()) do
-                    if processed >= batchSize then break end
-                    if not model:IsA("Model") then continue end
-                    
-                    local descendants = model:GetDescendants()
-                    
-                    for _, obj in ipairs(descendants) do
-                        if processed >= batchSize then break end
-                        if processedObjects[obj] then continue end
-                        
-                        local success = pcall(function()
-                            if obj:IsA("MeshPart") then
-                                obj.TextureID = ""
-                                obj.MeshId = ""
-                                obj.RenderFidelity = Enum.RenderFidelity.Performance
-                                obj.CastShadow = false
-                                obj.Material = Enum.Material.SmoothPlastic
-                                obj.Reflectance = 0
-                                obj.TopSurface = Enum.SurfaceType.Smooth
-                                obj.BottomSurface = Enum.SurfaceType.Smooth
-                            elseif obj:IsA("Part") then
-                                obj.CastShadow = false
-                                obj.Material = Enum.Material.SmoothPlastic
-                                obj.Reflectance = 0
-                                obj.TopSurface = Enum.SurfaceType.Smooth
-                                obj.BottomSurface = Enum.SurfaceType.Smooth
-                            elseif obj:IsA("Texture") or obj:IsA("Decal") or obj:IsA("SurfaceAppearance") or
-                                   obj:IsA("ParticleEmitter") or obj:IsA("Trail") or obj:IsA("Beam") or
-                                   obj:IsA("Sound") then
-                                obj:Destroy()
-                            elseif obj:IsA("Light") then
-                                obj.Enabled = false
-                            end
-                        end)
-                        
-                        if success then
-                            processedObjects[obj] = true
-                            processed = processed + 1
-                        end
+NormalTab:AddToggle({
+    Name = "Remover SonsAnon (UPDATE)",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            local ws = game:GetService("Workspace")
+            local folder = ws:FindFirstChild("SonsAnon")
+            if folder and folder:IsA("Folder") then
+                for _, obj in ipairs(folder:GetChildren()) do
+                    obj:Destroy()
+                end
+                print("[EcoHub] Objetos removidos da pasta: SonsAnon")
+            else
+                print("[EcoHub] Pasta não encontrada: SonsAnon")
+            end
+        end
+    end
+})
+
+NormalTab:AddToggle({
+    Name = "Remover RainWeather (UPDATE)",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            local ws = game:GetService("Workspace")
+            local folder = ws:FindFirstChild("RainWeather")
+            if folder and folder:IsA("Folder") then
+                for _, obj in ipairs(folder:GetChildren()) do
+                    obj:Destroy()
+                end
+            end
+        end
+    end
+})
+
+NormalTab:AddToggle({
+    Name = "Remover Road (UPDATE)",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            local ws = game:GetService("Workspace")
+            local folder = ws:FindFirstChild("Road")
+            if folder and folder:IsA("Folder") then
+                for _, obj in ipairs(folder:GetChildren()) do
+                    obj:Destroy()
+                end
+            end
+        end
+    end
+})
+
+NormalTab:AddToggle({
+    Name = "Remover Map (UPDATE)",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            local ws = game:GetService("Workspace")
+            local mapFolder = ws:FindFirstChild("Map")
+            if mapFolder and mapFolder:IsA("Folder") then
+                local objectsToRemove = {"Banners", "Nature", "Misc", "Fences", "DecorativeWall", "mexicanserver", "WallRoaches"}
+                for _, objectName in ipairs(objectsToRemove) do
+                    local obj = mapFolder:FindFirstChild(objectName)
+                    if obj then
+                        obj:Destroy()
                     end
                 end
-            end)
-        else
-            if connection then
-                connection:Disconnect()
-                connection = nil
             end
-            processedObjects = {}
+        end
+    end
+})
+
+NormalTab:AddLabel("Deseja Remover Roleta Galaxy")
+
+NormalTab:AddToggle({
+    Name = "Remover GalaxySpinWheels (UPDATE)",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            local ws = game:GetService("Workspace")
+            local folder = ws:FindFirstChild("GalaxySpinWheels")
+            if folder and folder:IsA("Folder") then
+                for _, obj in ipairs(folder:GetChildren()) do
+                    obj:Destroy()
+                end
+                print("[EcoHub] Objetos removidos da pasta: GalaxySpinWheels")
+            else
+                print("[EcoHub] Pasta não encontrada: GalaxySpinWheels")
+            end
         end
     end
 })
 
 --Evento Galaxy
-local EventoGalaxyTab = Window:CreateTab({
-    Name = "Evento Galaxy",
-    Icon = "blur_on",
-    ImageSource = "Material",
-    ShowTitle = true 
+local EventoGalaxyTab = Window:MakeTab({
+	Name = "Evento Galaxy",
+	PremiumOnly = false
 })
 
-local Label = EventoGalaxyTab:CreateLabel({
-    Text = "STATUS: ONLINE",
-    Style = 2
-})
+EventoGalaxyTab:AddParagraph(
+    "Gerenciador Workspace -- Evento Galaxy", 
+    "Descrição: remove coisas dentro da pasta (Folder)"
+)
 
---Galaxy
-local Paragraph = EventoGalaxyTab:CreateParagraph({
-    Title = "Gerenciador de Galaxy",
-    Text = "Remove todos os objetos das pastas GalaxyWeather e GalaxyMap para otimizar o jogo e reduzir lag."
-})
-
-local Toggle = EventoGalaxyTab:CreateToggle({
-    Name = "Remover GalaxyWeather (NEW)",
-    Description = nil,
-    CurrentValue = false,
-    Callback = function(state)
-        local ws = game:GetService("Workspace")
-        local folderName = "GalaxyWeather"
-        local isRunning = state
-
-        if state then
-            print("[EcoHub] Remoção de GalaxyWeather iniciada")
-            task.spawn(function()
-                while isRunning do
-                    local folder = ws:FindFirstChild(folderName)
-                    if folder and folder:IsA("Folder") then
-                        for i, obj in pairs(folder:GetChildren()) do
-                            if not isRunning then break end
-                            if i % 10 == 0 then task.wait(0.1) end
-                            pcall(function()
-                                obj:Destroy()
-                            end)
-                        end
-                    end
-                    task.wait(1)
+--GalaxyWeather
+EventoGalaxyTab:AddToggle({
+    Name = "Remover GalaxyWeather (UPDATE)",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            local ws = game:GetService("Workspace")
+            local folder = ws:FindFirstChild("GalaxyWeather")
+            if folder and folder:IsA("Folder") then
+                for _, obj in ipairs(folder:GetChildren()) do
+                    obj:Destroy()
                 end
-            end)
-        else
-            print("[EcoHub] Remoção de GalaxyWeather encerrada")
+                print("[EcoHub] Objetos removidos da pasta: GalaxyWeather")
+            else
+                print("[EcoHub] Pasta não encontrada: GalaxyWeather")
+            end
         end
     end
 })
 
-local Toggle = EventoGalaxyTab:CreateToggle({
-    Name = "Remover GalaxyMap (NEW)",
-    Description = nil,
-    CurrentValue = false,
-    Callback = function(state)
-        local ws = game:GetService("Workspace")
-        local folderName = "GalaxyMap"
-        local isRunning = state
-
-        if state then
-            print("[EcoHub] Remoção de GalaxyMap iniciada")
-            task.spawn(function()
-                while isRunning do
-                    local folder = ws:FindFirstChild(folderName)
-                    if folder and folder:IsA("Folder") then
-                        for i, obj in pairs(folder:GetChildren()) do
-                            if not isRunning then break end
-                            if i % 10 == 0 then task.wait(0.1) end
-
-                            pcall(function()
-                                if obj:IsA("Model") then
-                                    local parts = obj:GetDescendants()
-                                    local partCount = 0
-                                    for _, p in pairs(parts) do
-                                        if p:IsA("BasePart") then
-                                            partCount += 1
-                                        end
-                                    end
-
-                                    if partCount <= 3 then
-                                        obj:Destroy()
-                                        print("[EcoHub] Model pequeno removido: " .. obj.Name)
-                                    end
-                                end
-                            end)
-                        end
-                    end
-                    task.wait(1)
+--GalaxyMap
+EventoGalaxyTab:AddToggle({
+    Name = "Remover GalaxyMap (UPDATE)",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            local ws = game:GetService("Workspace")
+            local folder = ws:FindFirstChild("GalaxyMap")
+            if folder and folder:IsA("Folder") then
+                for _, obj in ipairs(folder:GetChildren()) do
+                    obj:Destroy()
                 end
-            end)
-        else
-            print("[EcoHub] Remoção de GalaxyMap encerrada")
+                print("[EcoHub] Objetos removidos da pasta: GalaxyMap")
+            else
+                print("[EcoHub] Pasta não encontrada: GalaxyMap")
+            end
         end
     end
 })
+
+--Evento Snow
+local EventoSnowTab = Window:MakeTab({
+	Name = "Evento Snow",
+	PremiumOnly = false
+})
+
+EventoSnowTab:AddParagraph(
+    "Gerenciador Workspace -- Evento Snow (NEVE)", 
+    "Descrição: remove coisas dentro da pasta (Folder)"
+)
+
+--StarfallWeather
+EventoSnowTab:AddToggle({
+    Name = "Remover StarfallWeather (UPDATE)",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            local ws = game:GetService("Workspace")
+            local folder = ws:FindFirstChild("StarfallWeather")
+            if folder and folder:IsA("Folder") then
+                for _, obj in ipairs(folder:GetChildren()) do
+                    obj:Destroy()
+                end
+                print("[EcoHub] Objetos removidos da pasta: StarfallWeather")
+            else
+                print("[EcoHub] Pasta não encontrada: StarfallWeather")
+            end
+        end
+    end
+})
+
+--SnowWeather
+EventoSnowTab:AddToggle({
+    Name = "Remover SnowWeather (UPDATE)",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            local ws = game:GetService("Workspace")
+            local folder = ws:FindFirstChild("SnowWeather")
+            if folder and folder:IsA("Folder") then
+                for _, obj in ipairs(folder:GetChildren()) do
+                    obj:Destroy()
+                end
+                print("[EcoHub] Objetos removidos da pasta: SnowWeather")
+            else
+                print("[EcoHub] Pasta não encontrada: SnowWeather")
+            end
+        end
+    end
+})
+
+--Piles
+EventoSnowTab:AddToggle({
+    Name = "Remover Piles (UPDATE)",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            local ws = game:GetService("Workspace")
+            local folder = ws:FindFirstChild("Piles")
+            if folder and folder:IsA("Folder") then
+                for _, obj in ipairs(folder:GetChildren()) do
+                    obj:Destroy()
+                end
+                print("[EcoHub] Objetos removidos da pasta: Piles")
+            else
+                print("[EcoHub] Pasta não encontrada: Piles")
+            end
+        end
+    end
+})
+
+local EventoScriptTab = Window:MakeTab({
+    Name = "Script Premium",
+    PremiumOnly = false
+})
+
+EventoScriptTab:AddLabel("Status: Lennon Hub Online")
+
+EventoScriptTab:AddParagraph("Informações do Script","Este script ativa o Lennon Hub, uma ferramenta avançada de automação e otimização. Certifique-se de estar em um ambiente compatível antes de executar.")
+
+EventoScriptTab:AddButton({
+    Name = "Ativar Lennon Hub",
+    Callback = function()
+        OrionLib:MakeNotification({
+            Name = "EcoHub - Script",
+            Content = "Executando Lennon Hub... Aguarde",
+            Image = "rbxassetid://4483345998",
+            Time = 3
+        })
+        
+        local success, err = pcall(function()
+            loadstring(game:HttpGet("https://pastefy.app/MJw2J4T6/raw"))()
+        end)
+        
+        if success then
+            OrionLib:MakeNotification({
+                Name = "EcoHub - Sucesso",
+                Content = "Lennon Hub ativado com sucesso",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        else
+            OrionLib:MakeNotification({
+                Name = "EcoHub - Erro",
+                Content = "Falha ao executar o script",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        end
+    end
+})
+
+EventoScriptTab:AddLabel("Status: Miranda Hub Online")
+
+EventoScriptTab:AddParagraph("Informações do Script","Este botão executa o Miranda Hub, um script poderoso focado em automação, otimização e melhorias de gameplay. Use com responsabilidade.")
+
+EventoScriptTab:AddButton({
+    Name = "Ativar Miranda Hub",
+    Callback = function()
+        OrionLib:MakeNotification({
+            Name = "EcoHub - Script",
+            Content = "Executando Miranda Hub... Aguarde",
+            Image = "rbxassetid://4483345998",
+            Time = 3
+        })
+        
+        local success, err = pcall(function()
+            loadstring(game:HttpGet("https://pastefy.app/JJVhs3rK/raw"))()
+        end)
+        
+        if success then
+            OrionLib:MakeNotification({
+                Name = "EcoHub - Sucesso",
+                Content = "Miranda Hub ativado com sucesso",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        else
+            OrionLib:MakeNotification({
+                Name = "EcoHub - Erro",
+                Content = "Falha ao executar o script",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        end
+    end
+})
+
+--Status (:
+local EventoStatusTab = Window:MakeTab({
+    Name = "Status",
+    PremiumOnly = false
+})
+
+local tempoInicio = tick()
+local player = game.Players.LocalPlayer
+
+local function obterTempoFormatado(segundos)
+    local horas = math.floor(segundos / 3600)
+    local minutos = math.floor((segundos % 3600) / 60)
+    local segs = math.floor(segundos % 60)
+    
+    if horas > 0 then
+        return horas .. "h " .. minutos .. "m " .. segs .. "s"
+    elseif minutos > 0 then
+        return minutos .. "m " .. segs .. "s"
+    else
+        return segs .. "s"
+    end
+end
+
+EventoStatusTab:AddLabel("Status do Jogador")
+
+local tempoLabel = EventoStatusTab:AddLabel("Tempo de Uso: Carregando...")
+local usuarioLabel = EventoStatusTab:AddLabel("Usuario: " .. player.Name)
+local nomeLabel = EventoStatusTab:AddLabel("Nome: " .. player.DisplayName)
+local idLabel = EventoStatusTab:AddLabel("ID: " .. player.UserId)
+local idadeLabel = EventoStatusTab:AddLabel("Idade: " .. player.AccountAge .. " dias")
+local playersLabel = EventoStatusTab:AddLabel("Jogadores: Carregando...")
+
+coroutine.wrap(function()
+    while true do
+        wait(1)
+        
+        local tempoDeUso = math.floor(tick() - tempoInicio)
+        local playersOnline = #game.Players:GetPlayers()
+        local maxPlayers = game.Players.MaxPlayers
+        
+        tempoLabel:Set("Tempo de Uso: " .. obterTempoFormatado(tempoDeUso))
+        playersLabel:Set("Jogadores: " .. playersOnline .. "/" .. maxPlayers)
+    end
+end)()
