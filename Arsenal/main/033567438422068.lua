@@ -1,821 +1,1623 @@
-local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/Rain-Design/Libraries/main/Shaman/Library.lua'))()
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
-local Window = Library:Window({
-    Text = "ARSENAL - ECO HUB"
+local Window = Rayfield:CreateWindow({
+   Name = "ARSENAL - ECOHUB",
+   Icon = 0, 
+   LoadingTitle = "ARSENAL CARREEGANDO...",
+   LoadingSubtitle = "by rip_sheldoohz",
+   ShowText = "EcoHub",
+   Theme = "Dark Blue", 
+
+   ToggleUIKeybind = "K", 
+
+   DisableRayfieldPrompts = false,
+   DisableBuildWarnings = false, 
+
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil, 
+      FileName = "Eco Hub"
+   },
+
+   Discord = {
+      Enabled = false,
+      Invite = "noinvitelink", 
+      RememberJoins = true 
+   },
+
+   KeySystem = false, 
+   KeySettings = {
+      Title = "Untitled",
+      Subtitle = "Key System",
+      Note = "No method of obtaining the key is provided", 
+      FileName = "Key", 
+      SaveKey = true, 
+      GrabKeyFromSite = false, 
+      Key = {"Hello"} 
+   }
 })
 
---PAGINA AIMBOT
-local AimbotTab = Window:Tab({
-    Text = "arsenal"
-})
+--Teste
+local systemTab = Window:CreateTab(
+	"Categoria Aimbot"
+)
 
---Categoria Aimbot
-local AimbotSection = AimbotTab:Section({
-    Text = "Categoria Aimbot"
-})
+--aimbot legit
+local Section = systemTab:CreateSection("AIM BOT LEGIT - ARSENAL")
 
---aimbot
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+
 local AimbotConfig = {
     MaxDistance = 150,
     SmoothFactor = 0.4,
     CheckInterval = 0.05,
     TargetPart = "Head",
-    TargetParts = {"Head", "UpperTorso", "Torso"}
+    TargetParts = {"Head", "UpperTorso", "Torso"},
+    TeamCheck = true,
+    WallCheck = true
 }
 
-_G.SilentAimbotEnabled = false
-_G.AimbotConnection = nil
-_G.LastTargetCheck = 0
+local AimbotState = {
+    Enabled = false,
+    Connection = nil,
+    LastTargetCheck = 0,
+    CurrentTarget = nil
+}
 
-local Toggle = AimbotSection:Toggle({
-    Text = "Aimbot Legit",
-    Callback = function(Value)
-        if Value then
-            _G.SilentAimbotEnabled = true
-            
-            local Players = game:GetService("Players")
-            local RunService = game:GetService("RunService")
-            local Camera = workspace.CurrentCamera
-            local LocalPlayer = Players.LocalPlayer
-            
-            local function isValidTarget(player)
-                if not player or player == LocalPlayer then
-                    return false
-                end
-                
-                if LocalPlayer.Team and player.Team and player.Team == LocalPlayer.Team then
-                    return false
-                end
-                
-                if not (player.Character and player.Character:FindFirstChild("Humanoid")) then
-                    return false
-                end
-                
-                if player.Character.Humanoid.Health <= 0 then
-                    return false
-                end
-                
-                return true
+local function isValidTarget(player)
+    if not player or player == LocalPlayer then
+        return false
+    end
+    
+    if AimbotConfig.TeamCheck and LocalPlayer.Team and player.Team and player.Team == LocalPlayer.Team then
+        return false
+    end
+    
+    if not (player.Character and player.Character:FindFirstChild("Humanoid")) then
+        return false
+    end
+    
+    if player.Character.Humanoid.Health <= 0 then
+        return false
+    end
+    
+    return true
+end
+
+local function getTargetPart(character)
+    if AimbotConfig.TargetPart == "Random" then
+        local availableParts = {}
+        for _, partName in ipairs(AimbotConfig.TargetParts) do
+            local part = character:FindFirstChild(partName)
+            if part then
+                table.insert(availableParts, part)
             end
+        end
+        if #availableParts > 0 then
+            return availableParts[math.random(1, #availableParts)]
+        end
+    else
+        local part = character:FindFirstChild(AimbotConfig.TargetPart)
+        if part then
+            return part
+        end
+        
+        for _, partName in ipairs(AimbotConfig.TargetParts) do
+            local fallbackPart = character:FindFirstChild(partName)
+            if fallbackPart then
+                return fallbackPart
+            end
+        end
+    end
+    return nil
+end
+
+local function hasLineOfSight(targetPosition)
+    if not AimbotConfig.WallCheck then
+        return true
+    end
+    
+    local rayOrigin = Camera.CFrame.Position
+    local rayDirection = (targetPosition - rayOrigin)
+    
+    local raycastParams = RaycastParams.new()
+    raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+    raycastParams.FilterDescendantsInstances = {LocalPlayer.Character, Camera}
+    raycastParams.IgnoreWater = true
+    
+    local raycastResult = workspace:Raycast(rayOrigin, rayDirection, raycastParams)
+    
+    if not raycastResult then
+        return true
+    end
+    
+    local hitPart = raycastResult.Instance
+    if hitPart and hitPart.Parent then
+        local hitPlayer = Players:GetPlayerFromCharacter(hitPart.Parent)
+        return hitPlayer ~= nil
+    end
+    
+    return false
+end
+
+local function getTargetUnderCrosshair()
+    local screenCenter = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+    local closestTarget = nil
+    local closestDistance = AimbotConfig.MaxDistance
+    
+    for _, player in pairs(Players:GetPlayers()) do
+        if isValidTarget(player) then
+            local targetPart = getTargetPart(player.Character)
             
-            local function getTargetPart(character)
-                if AimbotConfig.TargetPart == "Random" then
-                    local availableParts = {}
-                    for _, partName in ipairs(AimbotConfig.TargetParts) do
-                        local part = character:FindFirstChild(partName)
-                        if part then
-                            table.insert(availableParts, part)
+            if targetPart then
+                local partScreenPos, onScreen = Camera:WorldToViewportPoint(targetPart.Position)
+                
+                if onScreen and partScreenPos.Z > 0 then
+                    local partPos2D = Vector2.new(partScreenPos.X, partScreenPos.Y)
+                    local distanceFromCenter = (partPos2D - screenCenter).Magnitude
+                    
+                    if distanceFromCenter < closestDistance then
+                        if hasLineOfSight(targetPart.Position) then
+                            closestTarget = player
+                            closestDistance = distanceFromCenter
                         end
                     end
-                    if #availableParts > 0 then
-                        return availableParts[math.random(1, #availableParts)]
-                    end
+                end
+            end
+        end
+    end
+    
+    return closestTarget
+end
+
+local function smoothAim(targetPosition)
+    local currentCFrame = Camera.CFrame
+    local targetDirection = (targetPosition - currentCFrame.Position).Unit
+    local targetCFrame = CFrame.lookAt(currentCFrame.Position, currentCFrame.Position + targetDirection)
+    
+    Camera.CFrame = currentCFrame:Lerp(targetCFrame, AimbotConfig.SmoothFactor)
+end
+
+local function startAimbot()
+    if AimbotState.Connection then
+        AimbotState.Connection:Disconnect()
+    end
+    
+    AimbotState.Connection = RunService.Heartbeat:Connect(function()
+        if not AimbotState.Enabled then
+            return
+        end
+        
+        local currentTime = tick()
+        if currentTime - AimbotState.LastTargetCheck < AimbotConfig.CheckInterval then
+            if AimbotState.CurrentTarget and AimbotState.CurrentTarget.Character then
+                local targetPart = getTargetPart(AimbotState.CurrentTarget.Character)
+                if targetPart and hasLineOfSight(targetPart.Position) then
+                    smoothAim(targetPart.Position)
                 else
-                    local part = character:FindFirstChild(AimbotConfig.TargetPart)
-                    if part then
-                        return part
-                    end
-                    
-                    for _, partName in ipairs(AimbotConfig.TargetParts) do
-                        local fallbackPart = character:FindFirstChild(partName)
-                        if fallbackPart then
-                            return fallbackPart
-                        end
-                    end
+                    AimbotState.CurrentTarget = nil
                 end
-                return nil
             end
-            
-            local function hasLineOfSight(targetPosition)
-                local rayOrigin = Camera.CFrame.Position
-                local rayDirection = (targetPosition - rayOrigin).Unit * (targetPosition - rayOrigin).Magnitude
-                
-                local raycastParams = RaycastParams.new()
-                raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
-                raycastParams.FilterDescendantsInstances = {LocalPlayer.Character}
-                
-                local raycastResult = workspace:Raycast(rayOrigin, rayDirection, raycastParams)
-                
-                if not raycastResult then
-                    return true
-                end
-                
-                local hitPart = raycastResult.Instance
-                return hitPart and hitPart.Parent and Players:GetPlayerFromCharacter(hitPart.Parent)
+            return
+        end
+        
+        AimbotState.LastTargetCheck = currentTime
+        AimbotState.CurrentTarget = getTargetUnderCrosshair()
+        
+        if AimbotState.CurrentTarget and AimbotState.CurrentTarget.Character then
+            local targetPart = getTargetPart(AimbotState.CurrentTarget.Character)
+            if targetPart then
+                smoothAim(targetPart.Position)
             end
-            
-            local function getTargetUnderCrosshair()
-                local screenCenter = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
-                local closestTarget = nil
-                local closestDistance = math.huge
-                
-                for _, player in pairs(Players:GetPlayers()) do
-                    if isValidTarget(player) then
-                        local targetPart = getTargetPart(player.Character)
-                        
-                        if targetPart then
-                            local partScreenPos, onScreen = Camera:WorldToViewportPoint(targetPart.Position)
-                            
-                            if onScreen and partScreenPos.Z > 0 then
-                                local partPos2D = Vector2.new(partScreenPos.X, partScreenPos.Y)
-                                local distanceFromCenter = (partPos2D - screenCenter).Magnitude
-                                
-                                if distanceFromCenter < AimbotConfig.MaxDistance and distanceFromCenter < closestDistance then
-                                    if hasLineOfSight(targetPart.Position) then
-                                        closestTarget = player
-                                        closestDistance = distanceFromCenter
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-                
-                return closestTarget
-            end
-            
-            _G.AimbotConnection = RunService.Heartbeat:Connect(function()
-                if not _G.SilentAimbotEnabled then
-                    return
-                end
-                
-                local currentTime = tick()
-                if currentTime - _G.LastTargetCheck < AimbotConfig.CheckInterval then
-                    return
-                end
-                _G.LastTargetCheck = currentTime
-                
-                local target = getTargetUnderCrosshair()
-                if target and target.Character then
-                    local targetPart = getTargetPart(target.Character)
-                    
-                    if targetPart then
-                        local targetPosition = targetPart.Position
-                        local newCFrame = CFrame.lookAt(Camera.CFrame.Position, targetPosition)
-                        
-                        Camera.CFrame = Camera.CFrame:Lerp(newCFrame, AimbotConfig.SmoothFactor)
-                    end
-                end
-            end)
-            
-            print("[EcoHub] Aimbot Legit ativado - Alvo: " .. AimbotConfig.TargetPart)
-            
+        end
+    end)
+end
+
+local function stopAimbot()
+    if AimbotState.Connection then
+        AimbotState.Connection:Disconnect()
+        AimbotState.Connection = nil
+    end
+    AimbotState.CurrentTarget = nil
+    AimbotState.LastTargetCheck = 0
+end
+
+local Toggle = systemTab:CreateToggle({
+    Name = "Aimbot Legit",
+    CurrentValue = false,
+    Flag = "AimbotLegit_Toggle",
+    Callback = function(Value)
+        AimbotState.Enabled = Value
+        if Value then
+            startAimbot()
+            print("[EcoHub] Aimbot Legit ativado")
         else
-            _G.SilentAimbotEnabled = false
-            
-            if _G.AimbotConnection then
-                _G.AimbotConnection:Disconnect()
-                _G.AimbotConnection = nil
-            end
-            
-            _G.LastTargetCheck = 0
-            
+            stopAimbot()
             print("[EcoHub] Aimbot Legit desativado")
         end
-    end
+    end,
 })
 
-local dropdown = AimbotSection:Dropdown({
-    Text = "Parte do Corpo",
-    List = {"Head", "Torso", "Random"},
-    Flag = "TargetPart",
-    Callback = function(selectedPart)
-        if selectedPart == "Torso" then
-            AimbotConfig.TargetPart = "UpperTorso"
-        else
-            AimbotConfig.TargetPart = selectedPart
-        end
-        print("[EcoHub] Alvo alterado para: " .. selectedPart)
-    end
+local Dropdown = systemTab:CreateDropdown({
+    Name = "Parte do Corpo",
+    Options = {"Head", "UpperTorso", "Torso", "Random"},
+    CurrentOption = "Head",
+    Flag = "AimbotLegit_TargetPart",
+    Callback = function(Option)
+        AimbotConfig.TargetPart = Option
+        print("[EcoHub] Alvo: " .. Option)
+    end,
 })
 
-AimbotSection:Slider({
-    Text = "Suavidade",
-    Default = 40,
-    Minimum = 1,
-    Maximum = 100,
-    Flag = "Smoothness",
-    Callback = function(value)
-        AimbotConfig.SmoothFactor = value / 100
-        print("[EcoHub] Suavidade: " .. value .. "%")
-    end
-})
-
-AimbotSection:Slider({
-    Text = "Distância Máxima",
-    Default = 150,
-    Minimum = 50,
-    Maximum = 500,
-    Flag = "MaxDistance",
-    Callback = function(value)
-        AimbotConfig.MaxDistance = value
-        print("[EcoHub] Distância máxima: " .. value .. "px")
-    end
-})
-
---auto-aim
-local AimbotConfig = {
-    MaxDistance = 500,
-    SmoothFactor = 1.0,
-    CheckInterval = 0.01,
-    TargetPart = "Head",
-    TargetParts = {"Head", "UpperTorso", "Torso"},
-    FOV = 200,
-    PredictionEnabled = true,
-    PredictionMultiplier = 0.15,
-    WallCheck = false
-}
-
-_G.AutoAimEnabled = false
-_G.AutoAimConnection = nil
-_G.LastTargetCheck = 0
-_G.CurrentTarget = nil
-
-local Toggle = AimbotSection:Toggle({
-    Text = "Auto-Aim",
+local SmoothSlider = systemTab:CreateSlider({
+    Name = "Suavidade",
+    Range = {1, 100},
+    Increment = 1,
+    Suffix = "%",
+    CurrentValue = 40,
+    Flag = "AimbotLegit_Smoothness",
     Callback = function(Value)
-        if Value then
-            _G.AutoAimEnabled = true
-            
-            local Players = game:GetService("Players")
-            local RunService = game:GetService("RunService")
-            local Camera = workspace.CurrentCamera
-            local LocalPlayer = Players.LocalPlayer
-            
-            local function isValidTarget(player)
-                if not player or player == LocalPlayer then
-                    return false
-                end
-                
-                if LocalPlayer.Team and player.Team and player.Team == LocalPlayer.Team then
-                    return false
-                end
-                
-                if not (player.Character and player.Character:FindFirstChild("Humanoid")) then
-                    return false
-                end
-                
-                if player.Character.Humanoid.Health <= 0 then
-                    return false
-                end
-                
-                return true
-            end
-            
-            local function getTargetPart(character)
-                if AimbotConfig.TargetPart == "Random" then
-                    local availableParts = {}
-                    for _, partName in ipairs(AimbotConfig.TargetParts) do
-                        local part = character:FindFirstChild(partName)
-                        if part then
-                            table.insert(availableParts, part)
-                        end
-                    end
-                    if #availableParts > 0 then
-                        return availableParts[math.random(1, #availableParts)]
-                    end
-                else
-                    local part = character:FindFirstChild(AimbotConfig.TargetPart)
-                    if part then
-                        return part
-                    end
-                    
-                    for _, partName in ipairs(AimbotConfig.TargetParts) do
-                        local fallbackPart = character:FindFirstChild(partName)
-                        if fallbackPart then
-                            return fallbackPart
-                        end
-                    end
-                end
-                return nil
-            end
-            
-            local function hasLineOfSight(targetPosition)
-                if not AimbotConfig.WallCheck then
-                    return true
-                end
-                
-                local rayOrigin = Camera.CFrame.Position
-                local rayDirection = (targetPosition - rayOrigin).Unit * (targetPosition - rayOrigin).Magnitude
-                
-                local raycastParams = RaycastParams.new()
-                raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
-                raycastParams.FilterDescendantsInstances = {LocalPlayer.Character}
-                
-                local raycastResult = workspace:Raycast(rayOrigin, rayDirection, raycastParams)
-                
-                if not raycastResult then
-                    return true
-                end
-                
-                local hitPart = raycastResult.Instance
-                return hitPart and hitPart.Parent and Players:GetPlayerFromCharacter(hitPart.Parent)
-            end
-            
-            local function predictPosition(player, targetPart)
-                if not AimbotConfig.PredictionEnabled then
-                    return targetPart.Position
-                end
-                
-                local humanoidRootPart = player.Character:FindFirstChild("HumanoidRootPart")
-                if not humanoidRootPart then
-                    return targetPart.Position
-                end
-                
-                local velocity = humanoidRootPart.Velocity
-                local distance = (Camera.CFrame.Position - targetPart.Position).Magnitude
-                local timeToTarget = distance / 1000
-                
-                local prediction = velocity * timeToTarget * AimbotConfig.PredictionMultiplier
-                return targetPart.Position + prediction
-            end
-            
-            local function isInFOV(targetPosition)
-                local screenCenter = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
-                local targetScreenPos, onScreen = Camera:WorldToViewportPoint(targetPosition)
-                
-                if not onScreen or targetScreenPos.Z <= 0 then
-                    return false
-                end
-                
-                local targetPos2D = Vector2.new(targetScreenPos.X, targetScreenPos.Y)
-                local distance = (targetPos2D - screenCenter).Magnitude
-                
-                return distance <= AimbotConfig.FOV
-            end
-            
-            local function getNearestTarget()
-                local closestTarget = nil
-                local closestDistance = math.huge
-                
-                for _, player in pairs(Players:GetPlayers()) do
-                    if isValidTarget(player) then
-                        local targetPart = getTargetPart(player.Character)
-                        
-                        if targetPart then
-                            local targetPosition = predictPosition(player, targetPart)
-                            
-                            if isInFOV(targetPosition) and hasLineOfSight(targetPosition) then
-                                local distance = (Camera.CFrame.Position - targetPosition).Magnitude
-                                
-                                if distance < closestDistance then
-                                    closestTarget = player
-                                    closestDistance = distance
-                                end
-                            end
-                        end
-                    end
-                end
-                
-                return closestTarget
-            end
-            
-            local function smoothAim(targetPosition)
-                local currentCFrame = Camera.CFrame
-                local targetCFrame = CFrame.lookAt(currentCFrame.Position, targetPosition)
-                
-                if AimbotConfig.SmoothFactor >= 1 then
-                    Camera.CFrame = targetCFrame
-                else
-                    Camera.CFrame = currentCFrame:Lerp(targetCFrame, AimbotConfig.SmoothFactor)
-                end
-            end
-            
-            _G.AutoAimConnection = RunService.Heartbeat:Connect(function()
-                if not _G.AutoAimEnabled then
-                    return
-                end
-                
-                local currentTime = tick()
-                if currentTime - _G.LastTargetCheck < AimbotConfig.CheckInterval then
-                    if _G.CurrentTarget and _G.CurrentTarget.Character then
-                        local targetPart = getTargetPart(_G.CurrentTarget.Character)
-                        if targetPart then
-                            local predictedPosition = predictPosition(_G.CurrentTarget, targetPart)
-                            if isInFOV(predictedPosition) and hasLineOfSight(predictedPosition) then
-                                smoothAim(predictedPosition)
-                            else
-                                _G.CurrentTarget = nil
-                            end
-                        end
-                    end
-                    return
-                end
-                
-                _G.LastTargetCheck = currentTime
-                _G.CurrentTarget = getNearestTarget()
-                
-                if _G.CurrentTarget and _G.CurrentTarget.Character then
-                    local targetPart = getTargetPart(_G.CurrentTarget.Character)
-                    if targetPart then
-                        local predictedPosition = predictPosition(_G.CurrentTarget, targetPart)
-                        smoothAim(predictedPosition)
-                    end
-                end
-            end)
-            
-            print("[EcoHub] Auto-Aim ativado - FOV: " .. AimbotConfig.FOV .. " | Suavidade: " .. (AimbotConfig.SmoothFactor * 100) .. "%")
-            
-        else
-            _G.AutoAimEnabled = false
-            
-            if _G.AutoAimConnection then
-                _G.AutoAimConnection:Disconnect()
-                _G.AutoAimConnection = nil
-            end
-            
-            _G.LastTargetCheck = 0
-            _G.CurrentTarget = nil
-            
-            print("[EcoHub] Auto-Aim desativado")
-        end
-    end
+        AimbotConfig.SmoothFactor = Value / 100
+        print("[EcoHub] Suavidade: " .. Value .. "%")
+    end,
 })
 
-local dropdown = AimbotSection:Dropdown({
-    Text = "Parte do Corpo",
-    List = {"Head", "Torso", "Random"},
-    Flag = "TargetPart",
-    Callback = function(selectedPart)
-        if selectedPart == "Torso" then
-            AimbotConfig.TargetPart = "UpperTorso"
-        else
-            AimbotConfig.TargetPart = selectedPart
-        end
-        print("[EcoHub] Alvo alterado para: " .. selectedPart)
-    end
+local DistanceSlider = systemTab:CreateSlider({
+    Name = "Distância Máxima",
+    Range = {50, 500},
+    Increment = 10,
+    Suffix = "px",
+    CurrentValue = 150,
+    Flag = "AimbotLegit_MaxDistance",
+    Callback = function(Value)
+        AimbotConfig.MaxDistance = Value
+        print("[EcoHub] Distância: " .. Value .. "px")
+    end,
 })
 
-AimbotSection:Slider({
-    Text = "Suavidade",
-    Default = 100,
-    Minimum = 1,
-    Maximum = 100,
-    Flag = "Smoothness",
-    Callback = function(value)
-        AimbotConfig.SmoothFactor = value / 100
-        print("[EcoHub] Suavidade: " .. value .. "%")
-    end
+local TeamCheckToggle = systemTab:CreateToggle({
+    Name = "Verificar Time",
+    CurrentValue = true,
+    Flag = "AimbotLegit_TeamCheck",
+    Callback = function(Value)
+        AimbotConfig.TeamCheck = Value
+        print("[EcoHub] Verificar time: " .. (Value and "ativado" or "desativado"))
+    end,
 })
 
-AimbotSection:Slider({
-    Text = "Campo de Visão (FOV)",
-    Default = 200,
-    Minimum = 50,
-    Maximum = 1000,
-    Flag = "FOV",
-    Callback = function(value)
-        AimbotConfig.FOV = value
-        print("[EcoHub] FOV: " .. value .. "px")
-    end
-})
-
-AimbotSection:Slider({
-    Text = "Predição",
-    Default = 15,
-    Minimum = 0,
-    Maximum = 50,
-    Flag = "Prediction",
-    Callback = function(value)
-        AimbotConfig.PredictionMultiplier = value / 100
-        AimbotConfig.PredictionEnabled = value > 0
-        print("[EcoHub] Predição: " .. value .. "%")
-    end
-})
-
-AimbotSection:Toggle({
-    Text = "Verificar Paredes",
+local WallCheckToggle = systemTab:CreateToggle({
+    Name = "Verificar Paredes",
+    CurrentValue = true,
+    Flag = "AimbotLegit_WallCheck",
     Callback = function(Value)
         AimbotConfig.WallCheck = Value
-        local status = Value and "ativada" or "desativada"
-        print("[EcoHub] Verificação de paredes " .. status)
+        print("[EcoHub] Verificar paredes: " .. (Value and "ativado" or "desativado"))
+    end,
+})
+
+--auto aim 
+local Section = systemTab:CreateSection("AUTO AIM - ARSENAL")
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+
+local AimbotConfig = {
+    MaxDistance = 1000,
+    SmoothFactor = 0.15,
+    CheckInterval = 0.005,
+    TargetPart = "Head",
+    TargetParts = {"Head", "UpperTorso", "Torso", "HumanoidRootPart"},
+    FOV = 150,
+    PredictionEnabled = true,
+    PredictionMultiplier = 0.2,
+    WallCheck = true,
+    TeamCheck = true,
+    VisibilityCheck = true,
+    MouseHoldMode = false
+}
+
+local AimbotState = {
+    Enabled = false,
+    Connection = nil,
+    LastTargetCheck = 0,
+    CurrentTarget = nil,
+    MouseDown = false
+}
+
+local function isValidTarget(player)
+    if not player or player == LocalPlayer then
+        return false
     end
+    
+    if not player.Character or not player.Character:FindFirstChild("Humanoid") then
+        return false
+    end
+    
+    if player.Character.Humanoid.Health <= 0 then
+        return false
+    end
+    
+    if AimbotConfig.TeamCheck and LocalPlayer.Team and player.Team and player.Team == LocalPlayer.Team then
+        return false
+    end
+    
+    return true
+end
+
+local function getTargetPart(character)
+    if AimbotConfig.TargetPart == "Random" then
+        local availableParts = {}
+        for _, partName in ipairs(AimbotConfig.TargetParts) do
+            local part = character:FindFirstChild(partName)
+            if part then
+                table.insert(availableParts, part)
+            end
+        end
+        if #availableParts > 0 then
+            return availableParts[math.random(1, #availableParts)]
+        end
+    else
+        local part = character:FindFirstChild(AimbotConfig.TargetPart)
+        if part then
+            return part
+        end
+        
+        for _, partName in ipairs(AimbotConfig.TargetParts) do
+            local fallbackPart = character:FindFirstChild(partName)
+            if fallbackPart then
+                return fallbackPart
+            end
+        end
+    end
+    return nil
+end
+
+local function hasLineOfSight(targetPosition)
+    if not AimbotConfig.WallCheck then
+        return true
+    end
+    
+    local rayOrigin = Camera.CFrame.Position
+    local rayDirection = (targetPosition - rayOrigin)
+    
+    local raycastParams = RaycastParams.new()
+    raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+    raycastParams.FilterDescendantsInstances = {LocalPlayer.Character, Camera}
+    raycastParams.IgnoreWater = true
+    
+    local raycastResult = workspace:Raycast(rayOrigin, rayDirection, raycastParams)
+    
+    if not raycastResult then
+        return true
+    end
+    
+    local hitPart = raycastResult.Instance
+    if hitPart and hitPart.Parent then
+        local hitPlayer = Players:GetPlayerFromCharacter(hitPart.Parent)
+        return hitPlayer ~= nil
+    end
+    
+    return false
+end
+
+local function predictPosition(player, targetPart)
+    if not AimbotConfig.PredictionEnabled then
+        return targetPart.Position
+    end
+    
+    local humanoidRootPart = player.Character:FindFirstChild("HumanoidRootPart")
+    if not humanoidRootPart then
+        return targetPart.Position
+    end
+    
+    local velocity = humanoidRootPart.Velocity
+    local distance = (Camera.CFrame.Position - targetPart.Position).Magnitude
+    local timeToTarget = distance / 2000
+    
+    local prediction = velocity * timeToTarget * AimbotConfig.PredictionMultiplier
+    return targetPart.Position + prediction
+end
+
+local function isInFOV(targetPosition)
+    if not AimbotConfig.VisibilityCheck then
+        return true
+    end
+    
+    local screenCenter = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+    local targetScreenPos, onScreen = Camera:WorldToViewportPoint(targetPosition)
+    
+    if not onScreen or targetScreenPos.Z <= 0 then
+        return false
+    end
+    
+    local targetPos2D = Vector2.new(targetScreenPos.X, targetScreenPos.Y)
+    local distance = (targetPos2D - screenCenter).Magnitude
+    
+    return distance <= AimbotConfig.FOV
+end
+
+local function getNearestTarget()
+    local closestTarget = nil
+    local closestDistance = AimbotConfig.MaxDistance
+    
+    for _, player in pairs(Players:GetPlayers()) do
+        if isValidTarget(player) then
+            local targetPart = getTargetPart(player.Character)
+            
+            if targetPart then
+                local targetPosition = predictPosition(player, targetPart)
+                local distance = (Camera.CFrame.Position - targetPosition).Magnitude
+                
+                if distance <= AimbotConfig.MaxDistance and distance < closestDistance then
+                    if isInFOV(targetPosition) and hasLineOfSight(targetPosition) then
+                        closestTarget = player
+                        closestDistance = distance
+                    end
+                end
+            end
+        end
+    end
+    
+    return closestTarget
+end
+
+local function smoothAim(targetPosition)
+    local currentCFrame = Camera.CFrame
+    local targetDirection = (targetPosition - currentCFrame.Position).Unit
+    local targetCFrame = CFrame.lookAt(currentCFrame.Position, currentCFrame.Position + targetDirection)
+    
+    Camera.CFrame = currentCFrame:Lerp(targetCFrame, AimbotConfig.SmoothFactor)
+end
+
+local function startAimbot()
+    if AimbotState.Connection then
+        AimbotState.Connection:Disconnect()
+    end
+    
+    AimbotState.Connection = RunService.Heartbeat:Connect(function()
+        if not AimbotState.Enabled then
+            return
+        end
+        
+        if AimbotConfig.MouseHoldMode and not AimbotState.MouseDown then
+            return
+        end
+        
+        local currentTime = tick()
+        if currentTime - AimbotState.LastTargetCheck < AimbotConfig.CheckInterval then
+            if AimbotState.CurrentTarget and AimbotState.CurrentTarget.Character then
+                local targetPart = getTargetPart(AimbotState.CurrentTarget.Character)
+                if targetPart then
+                    local predictedPosition = predictPosition(AimbotState.CurrentTarget, targetPart)
+                    if isInFOV(predictedPosition) and hasLineOfSight(predictedPosition) then
+                        smoothAim(predictedPosition)
+                    else
+                        AimbotState.CurrentTarget = nil
+                    end
+                end
+            end
+            return
+        end
+        
+        AimbotState.LastTargetCheck = currentTime
+        AimbotState.CurrentTarget = getNearestTarget()
+        
+        if AimbotState.CurrentTarget and AimbotState.CurrentTarget.Character then
+            local targetPart = getTargetPart(AimbotState.CurrentTarget.Character)
+            if targetPart then
+                local predictedPosition = predictPosition(AimbotState.CurrentTarget, targetPart)
+                smoothAim(predictedPosition)
+            end
+        end
+    end)
+end
+
+local function stopAimbot()
+    if AimbotState.Connection then
+        AimbotState.Connection:Disconnect()
+        AimbotState.Connection = nil
+    end
+    AimbotState.CurrentTarget = nil
+    AimbotState.LastTargetCheck = 0
+end
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        AimbotState.MouseDown = true
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input, gameProcessed)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        AimbotState.MouseDown = false
+    end
+end)
+
+local Toggle = systemTab:CreateToggle({
+    Name = "Auto-Aim",
+    CurrentValue = false,
+    Flag = "AutoAim_Toggle",
+    Callback = function(Value)
+        AimbotState.Enabled = Value
+        if Value then
+            startAimbot()
+            print("[EcoHub] Auto-Aim ativado")
+        else
+            stopAimbot()
+            print("[EcoHub] Auto-Aim desativado")
+        end
+    end,
+})
+
+local Dropdown = systemTab:CreateDropdown({
+    Name = "Parte do Corpo",
+    Options = {"Head", "UpperTorso", "Torso", "Random"},
+    CurrentOption = "Head",
+    Flag = "TargetPart_Dropdown",
+    Callback = function(Option)
+        AimbotConfig.TargetPart = Option
+        print("[EcoHub] Alvo: " .. Option)
+    end,
+})
+
+local SmoothSlider = systemTab:CreateSlider({
+    Name = "Suavidade",
+    Range = {1, 100},
+    Increment = 1,
+    Suffix = "%",
+    CurrentValue = 15,
+    Flag = "Smoothness_Slider",
+    Callback = function(Value)
+        AimbotConfig.SmoothFactor = Value / 100
+        print("[EcoHub] Suavidade: " .. Value .. "%")
+    end,
+})
+
+local FOVSlider = systemTab:CreateSlider({
+    Name = "Campo de Visão",
+    Range = {50, 500},
+    Increment = 10,
+    Suffix = "px",
+    CurrentValue = 150,
+    Flag = "FOV_Slider",
+    Callback = function(Value)
+        AimbotConfig.FOV = Value
+        print("[EcoHub] FOV: " .. Value)
+    end,
+})
+
+local PredictionSlider = systemTab:CreateSlider({
+    Name = "Predição",
+    Range = {0, 100},
+    Increment = 1,
+    Suffix = "%",
+    CurrentValue = 20,
+    Flag = "Prediction_Slider",
+    Callback = function(Value)
+        AimbotConfig.PredictionMultiplier = Value / 100
+        AimbotConfig.PredictionEnabled = Value > 0
+        print("[EcoHub] Predição: " .. Value .. "%")
+    end,
+})
+
+local DistanceSlider = systemTab:CreateSlider({
+    Name = "Distância Máxima",
+    Range = {500, 5000},
+    Increment = 100,
+    Suffix = "studs",
+    CurrentValue = 1000,
+    Flag = "MaxDistance_Slider",
+    Callback = function(Value)
+        AimbotConfig.MaxDistance = Value
+        print("[EcoHub] Distância: " .. Value)
+    end,
+})
+
+local WallCheckToggle = systemTab:CreateToggle({
+    Name = "Verificar Paredes",
+    CurrentValue = true,
+    Flag = "WallCheck_Toggle",
+    Callback = function(Value)
+        AimbotConfig.WallCheck = Value
+        print("[EcoHub] Verificação de paredes: " .. (Value and "ativada" or "desativada"))
+    end,
+})
+
+local TeamCheckToggle = systemTab:CreateToggle({
+    Name = "Verificar Time",
+    CurrentValue = true,
+    Flag = "TeamCheck_Toggle",
+    Callback = function(Value)
+        AimbotConfig.TeamCheck = Value
+        print("[EcoHub] Verificação de time: " .. (Value and "ativada" or "desativada"))
+    end,
+})
+
+local MouseHoldToggle = systemTab:CreateToggle({
+    Name = "Só com Mouse Pressionado",
+    CurrentValue = false,
+    Flag = "MouseHold_Toggle",
+    Callback = function(Value)
+        AimbotConfig.MouseHoldMode = Value
+        print("[EcoHub] Modo mouse: " .. (Value and "ativado" or "desativado"))
+    end,
 })
 
 --aim assist
+local Section = systemTab:CreateSection("AIM ASSIST - ARSENAL")
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+local Mouse = LocalPlayer:GetMouse()
+
 local AimAssistConfig = {
-    AssistStrength = 0.3,
-    MagnetRadius = 100,
-    StickyRadius = 150,
-    SlowdownFactor = 0.6,
+    AssistStrength = 0.25,
+    MagnetRadius = 80,
+    StickyRadius = 120,
+    SlowdownFactor = 0.7,
     TargetPart = "Head",
-    TargetParts = {"Head", "UpperTorso", "Torso"},
-    RequireAiming = true,
-    MinimumDistance = 10,
-    MaximumDistance = 2000,
+    TargetParts = {"Head", "UpperTorso", "Torso", "HumanoidRootPart"},
+    RequireAiming = false,
+    MinimumDistance = 15,
+    MaximumDistance = 1500,
     SmoothTransition = true,
-    TrackingSpeed = 0.8
+    TrackingSpeed = 0.65,
+    TeamCheck = true,
+    MouseSensitivity = 2,
+    DeadZone = 5
 }
 
-_G.AimAssistEnabled = false
-_G.AimAssistConnection = nil
-_G.CurrentAssistTarget = nil
-_G.LastMousePosition = nil
-_G.MouseMoving = false
-_G.MouseMoveCheck = 0
+local AimAssistState = {
+    Enabled = false,
+    Connection = nil,
+    CurrentTarget = nil,
+    LastMousePosition = nil,
+    MouseMoving = false,
+    MouseMoveTime = 0,
+    IsAiming = false,
+    LastTargetCheck = 0
+}
 
-local Toggle = AimbotSection:Toggle({
-    Text = "Aim Assist",
-    Callback = function(Value)
-        if Value then
-            _G.AimAssistEnabled = true
-            
-            local Players = game:GetService("Players")
-            local RunService = game:GetService("RunService")
-            local UserInputService = game:GetService("UserInputService")
-            local Camera = workspace.CurrentCamera
-            local LocalPlayer = Players.LocalPlayer
-            local Mouse = LocalPlayer:GetMouse()
-            
-            local function isValidTarget(player)
-                if not player or player == LocalPlayer then
-                    return false
-                end
-                
-                if LocalPlayer.Team and player.Team and player.Team == LocalPlayer.Team then
-                    return false
-                end
-                
-                if not (player.Character and player.Character:FindFirstChild("Humanoid")) then
-                    return false
-                end
-                
-                if player.Character.Humanoid.Health <= 0 then
-                    return false
-                end
-                
-                return true
+local function isValidTarget(player)
+    if not player or player == LocalPlayer then
+        return false
+    end
+    
+    if not player.Character or not player.Character:FindFirstChild("Humanoid") then
+        return false
+    end
+    
+    if player.Character.Humanoid.Health <= 0 then
+        return false
+    end
+    
+    if AimAssistConfig.TeamCheck and LocalPlayer.Team and player.Team and player.Team == LocalPlayer.Team then
+        return false
+    end
+    
+    return true
+end
+
+local function getTargetPart(character)
+    if AimAssistConfig.TargetPart == "Random" then
+        local availableParts = {}
+        for _, partName in ipairs(AimAssistConfig.TargetParts) do
+            local part = character:FindFirstChild(partName)
+            if part then
+                table.insert(availableParts, part)
             end
-            
-            local function getTargetPart(character)
-                if AimAssistConfig.TargetPart == "Random" then
-                    local availableParts = {}
-                    for _, partName in ipairs(AimAssistConfig.TargetParts) do
-                        local part = character:FindFirstChild(partName)
-                        if part then
-                            table.insert(availableParts, part)
-                        end
-                    end
-                    if #availableParts > 0 then
-                        return availableParts[math.random(1, #availableParts)]
-                    end
-                else
-                    local part = character:FindFirstChild(AimAssistConfig.TargetPart)
-                    if part then
-                        return part
-                    end
-                    
-                    for _, partName in ipairs(AimAssistConfig.TargetParts) do
-                        local fallbackPart = character:FindFirstChild(partName)
-                        if fallbackPart then
-                            return fallbackPart
-                        end
-                    end
-                end
-                return nil
+        end
+        if #availableParts > 0 then
+            return availableParts[math.random(1, #availableParts)]
+        end
+    else
+        local part = character:FindFirstChild(AimAssistConfig.TargetPart)
+        if part then
+            return part
+        end
+        
+        for _, partName in ipairs(AimAssistConfig.TargetParts) do
+            local fallbackPart = character:FindFirstChild(partName)
+            if fallbackPart then
+                return fallbackPart
             end
+        end
+    end
+    return nil
+end
+
+local function updateMouseMovement()
+    local currentMousePos = Vector2.new(Mouse.X, Mouse.Y)
+    local currentTime = tick()
+    
+    if AimAssistState.LastMousePosition then
+        local mouseDelta = (currentMousePos - AimAssistState.LastMousePosition).Magnitude
+        if mouseDelta > AimAssistConfig.MouseSensitivity then
+            AimAssistState.MouseMoving = true
+            AimAssistState.MouseMoveTime = currentTime
+        end
+    end
+    
+    if currentTime - AimAssistState.MouseMoveTime > 0.15 then
+        AimAssistState.MouseMoving = false
+    end
+    
+    AimAssistState.LastMousePosition = currentMousePos
+end
+
+local function isPlayerAiming()
+    if not AimAssistConfig.RequireAiming then
+        return true
+    end
+    
+    local rightClick = UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)
+    return rightClick or AimAssistState.MouseMoving
+end
+
+local function getDistance3D(pos1, pos2)
+    return (pos1 - pos2).Magnitude
+end
+
+local function getDistance2D(pos1, pos2)
+    return (pos1 - pos2).Magnitude
+end
+
+local function getTargetInRadius(radius, prioritizeClosest)
+    local mousePos = Vector2.new(Mouse.X, Mouse.Y)
+    local bestTarget = nil
+    local bestScore = math.huge
+    
+    for _, player in pairs(Players:GetPlayers()) do
+        if isValidTarget(player) then
+            local targetPart = getTargetPart(player.Character)
             
-            local function detectMouseMovement()
-                local currentMousePos = Vector2.new(Mouse.X, Mouse.Y)
-                
-                if _G.LastMousePosition then
-                    local mouseDelta = (currentMousePos - _G.LastMousePosition).Magnitude
-                    _G.MouseMoving = mouseDelta > 2
-                    if _G.MouseMoving then
-                        _G.MouseMoveCheck = tick()
-                    end
-                else
-                    _G.MouseMoving = false
-                end
-                
-                _G.LastMousePosition = currentMousePos
-                
-                if tick() - _G.MouseMoveCheck > 0.1 then
-                    _G.MouseMoving = false
-                end
-            end
-            
-            local function isPlayerAiming()
-                if not AimAssistConfig.RequireAiming then
-                    return true
-                end
-                
-                return UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) or _G.MouseMoving
-            end
-            
-            local function getTargetInRadius(radius)
-                local mousePos = Vector2.new(Mouse.X, Mouse.Y)
-                local closestTarget = nil
-                local closestDistance = math.huge
-                
-                for _, player in pairs(Players:GetPlayers()) do
-                    if isValidTarget(player) then
-                        local targetPart = getTargetPart(player.Character)
-                        
-                        if targetPart then
-                            local targetScreenPos, onScreen = Camera:WorldToViewportPoint(targetPart.Position)
-                            
-                            if onScreen and targetScreenPos.Z > 0 then
-                                local targetPos2D = Vector2.new(targetScreenPos.X, targetScreenPos.Y)
-                                local distance = (targetPos2D - mousePos).Magnitude
-                                local worldDistance = (Camera.CFrame.Position - targetPart.Position).Magnitude
-                                
-                                if distance <= radius and worldDistance >= AimAssistConfig.MinimumDistance and worldDistance <= AimAssistConfig.MaximumDistance then
-                                    if distance < closestDistance then
-                                        closestTarget = player
-                                        closestDistance = distance
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-                
-                return closestTarget, closestDistance
-            end
-            
-            local function applyStickyAim(target)
-                if not target or not target.Character then
-                    return
-                end
-                
-                local targetPart = getTargetPart(target.Character)
-                if not targetPart then
-                    return
-                end
-                
+            if targetPart then
                 local targetScreenPos, onScreen = Camera:WorldToViewportPoint(targetPart.Position)
-                if not onScreen or targetScreenPos.Z <= 0 then
-                    return
-                end
                 
-                local targetPos2D = Vector2.new(targetScreenPos.X, targetScreenPos.Y)
-                local mousePos = Vector2.new(Mouse.X, Mouse.Y)
-                local direction = (targetPos2D - mousePos).Unit
-                local distance = (targetPos2D - mousePos).Magnitude
-                
-                if distance > 5 then
-                    local pullStrength = AimAssistConfig.AssistStrength * math.min(distance / 50, 1)
-                    local newDirection = direction * pullStrength
+                if onScreen and targetScreenPos.Z > 0 then
+                    local targetPos2D = Vector2.new(targetScreenPos.X, targetScreenPos.Y)
+                    local screenDistance = getDistance2D(targetPos2D, mousePos)
+                    local worldDistance = getDistance3D(Camera.CFrame.Position, targetPart.Position)
                     
-                    if AimAssistConfig.SmoothTransition then
-                        newDirection = newDirection * AimAssistConfig.TrackingSpeed
-                    end
-                    
-                    local currentCFrame = Camera.CFrame
-                    local targetDirection = (targetPart.Position - currentCFrame.Position).Unit
-                    local currentDirection = currentCFrame.LookVector
-                    
-                    local blendDirection = currentDirection:lerp(targetDirection, pullStrength * 0.5)
-                    local newCFrame = CFrame.lookAt(currentCFrame.Position, currentCFrame.Position + blendDirection)
-                    
-                    Camera.CFrame = newCFrame
-                end
-            end
-            
-            local function applySlowdown()
-                if _G.CurrentAssistTarget and _G.CurrentAssistTarget.Character then
-                    local targetPart = getTargetPart(_G.CurrentAssistTarget.Character)
-                    if targetPart then
-                        local targetScreenPos, onScreen = Camera:WorldToViewportPoint(targetPart.Position)
-                        if onScreen and targetScreenPos.Z > 0 then
-                            local targetPos2D = Vector2.new(targetScreenPos.X, targetScreenPos.Y)
-                            local mousePos = Vector2.new(Mouse.X, Mouse.Y)
-                            local distance = (targetPos2D - mousePos).Magnitude
-                            
-                            if distance <= AimAssistConfig.StickyRadius then
-                                Camera.CFrame = Camera.CFrame:lerp(Camera.CFrame, AimAssistConfig.SlowdownFactor)
-                            end
+                    if screenDistance <= radius and 
+                       worldDistance >= AimAssistConfig.MinimumDistance and 
+                       worldDistance <= AimAssistConfig.MaximumDistance then
+                        
+                        local score = prioritizeClosest and worldDistance or screenDistance
+                        if score < bestScore then
+                            bestTarget = player
+                            bestScore = score
                         end
                     end
                 end
             end
-            
-            _G.AimAssistConnection = RunService.Heartbeat:Connect(function()
-                if not _G.AimAssistEnabled then
-                    return
-                end
-                
-                detectMouseMovement()
-                
-                if not isPlayerAiming() then
-                    _G.CurrentAssistTarget = nil
-                    return
-                end
-                
-                local magnetTarget, magnetDistance = getTargetInRadius(AimAssistConfig.MagnetRadius)
-                local stickyTarget, stickyDistance = getTargetInRadius(AimAssistConfig.StickyRadius)
-                
-                if _G.CurrentAssistTarget and stickyTarget and _G.CurrentAssistTarget == stickyTarget then
-                    applyStickyAim(_G.CurrentAssistTarget)
-                    applySlowdown()
-                elseif magnetTarget then
-                    _G.CurrentAssistTarget = magnetTarget
-                    applyStickyAim(magnetTarget)
-                else
-                    _G.CurrentAssistTarget = nil
-                end
-            end)
-            
-            print("[EcoHub] Aim Assist ativado - Força: " .. (AimAssistConfig.AssistStrength * 100) .. "% | Raio: " .. AimAssistConfig.MagnetRadius .. "px")
-            
+        end
+    end
+    
+    return bestTarget, bestScore
+end
+
+local function calculateAssistVector(target)
+    if not target or not target.Character then
+        return Vector2.new(0, 0)
+    end
+    
+    local targetPart = getTargetPart(target.Character)
+    if not targetPart then
+        return Vector2.new(0, 0)
+    end
+    
+    local targetScreenPos, onScreen = Camera:WorldToViewportPoint(targetPart.Position)
+    if not onScreen or targetScreenPos.Z <= 0 then
+        return Vector2.new(0, 0)
+    end
+    
+    local targetPos2D = Vector2.new(targetScreenPos.X, targetScreenPos.Y)
+    local mousePos = Vector2.new(Mouse.X, Mouse.Y)
+    local direction = targetPos2D - mousePos
+    local distance = direction.Magnitude
+    
+    if distance <= AimAssistConfig.DeadZone then
+        return Vector2.new(0, 0)
+    end
+    
+    local normalizedDirection = direction.Unit
+    local assistStrength = AimAssistConfig.AssistStrength
+    
+    local distanceFactor = math.min(distance / 100, 1)
+    local finalStrength = assistStrength * distanceFactor
+    
+    return normalizedDirection * finalStrength
+end
+
+local function applyAimAssist(assistVector)
+    if assistVector.Magnitude < 0.001 then
+        return
+    end
+    
+    local currentCFrame = Camera.CFrame
+    local screenCenter = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+    local adjustedCenter = screenCenter + (assistVector * 50)
+    
+    local worldDirection = Camera:ScreenPointToRay(adjustedCenter.X, adjustedCenter.Y).Direction
+    local targetPosition = currentCFrame.Position + worldDirection
+    
+    local newCFrame = CFrame.lookAt(currentCFrame.Position, targetPosition)
+    
+    if AimAssistConfig.SmoothTransition then
+        Camera.CFrame = currentCFrame:Lerp(newCFrame, AimAssistConfig.TrackingSpeed * 0.016 * 60)
+    else
+        Camera.CFrame = newCFrame
+    end
+end
+
+local function applySlowdown()
+    if not AimAssistState.CurrentTarget or not AimAssistState.CurrentTarget.Character then
+        return
+    end
+    
+    local targetPart = getTargetPart(AimAssistState.CurrentTarget.Character)
+    if not targetPart then
+        return
+    end
+    
+    local targetScreenPos, onScreen = Camera:WorldToViewportPoint(targetPart.Position)
+    if not onScreen or targetScreenPos.Z <= 0 then
+        return
+    end
+    
+    local targetPos2D = Vector2.new(targetScreenPos.X, targetScreenPos.Y)
+    local mousePos = Vector2.new(Mouse.X, Mouse.Y)
+    local distance = getDistance2D(targetPos2D, mousePos)
+    
+    if distance <= AimAssistConfig.StickyRadius then
+        local slowdownStrength = 1 - ((distance / AimAssistConfig.StickyRadius) * (1 - AimAssistConfig.SlowdownFactor))
+        UserInputService.MouseDeltaSensitivity = slowdownStrength
+    else
+        UserInputService.MouseDeltaSensitivity = 1
+    end
+end
+
+local function startAimAssist()
+    if AimAssistState.Connection then
+        AimAssistState.Connection:Disconnect()
+    end
+    
+    AimAssistState.Connection = RunService.Heartbeat:Connect(function()
+        if not AimAssistState.Enabled then
+            return
+        end
+        
+        updateMouseMovement()
+        AimAssistState.IsAiming = isPlayerAiming()
+        
+        if not AimAssistState.IsAiming then
+            AimAssistState.CurrentTarget = nil
+            UserInputService.MouseDeltaSensitivity = 1
+            return
+        end
+        
+        local magnetTarget = getTargetInRadius(AimAssistConfig.MagnetRadius, false)
+        local stickyTarget = getTargetInRadius(AimAssistConfig.StickyRadius, true)
+        
+        if AimAssistState.CurrentTarget and stickyTarget and AimAssistState.CurrentTarget == stickyTarget then
+            local assistVector = calculateAssistVector(AimAssistState.CurrentTarget)
+            applyAimAssist(assistVector)
+            applySlowdown()
+        elseif magnetTarget then
+            AimAssistState.CurrentTarget = magnetTarget
+            local assistVector = calculateAssistVector(magnetTarget)
+            applyAimAssist(assistVector)
+            applySlowdown()
         else
-            _G.AimAssistEnabled = false
-            
-            if _G.AimAssistConnection then
-                _G.AimAssistConnection:Disconnect()
-                _G.AimAssistConnection = nil
-            end
-            
-            _G.CurrentAssistTarget = nil
-            _G.LastMousePosition = nil
-            _G.MouseMoving = false
-            _G.MouseMoveCheck = 0
-            
+            AimAssistState.CurrentTarget = nil
+            UserInputService.MouseDeltaSensitivity = 1
+        end
+    end)
+end
+
+local function stopAimAssist()
+    if AimAssistState.Connection then
+        AimAssistState.Connection:Disconnect()
+        AimAssistState.Connection = nil
+    end
+    
+    AimAssistState.CurrentTarget = nil
+    AimAssistState.LastMousePosition = nil
+    AimAssistState.MouseMoving = false
+    AimAssistState.MouseMoveTime = 0
+    UserInputService.MouseDeltaSensitivity = 1
+end
+
+local Toggle = systemTab:CreateToggle({
+    Name = "Aim Assist",
+    CurrentValue = false,
+    Flag = "AimAssist_Toggle",
+    Callback = function(Value)
+        AimAssistState.Enabled = Value
+        if Value then
+            startAimAssist()
+            print("[EcoHub] Aim Assist ativado")
+        else
+            stopAimAssist()
             print("[EcoHub] Aim Assist desativado")
         end
-    end
+    end,
 })
 
-local dropdown = AimbotSection:Dropdown({
-    Text = "Parte do Corpo",
-    List = {"Head", "Torso", "Random"},
-    Flag = "TargetPart",
-    Callback = function(selectedPart)
-        if selectedPart == "Torso" then
-            AimAssistConfig.TargetPart = "UpperTorso"
-        else
-            AimAssistConfig.TargetPart = selectedPart
-        end
-        print("[EcoHub] Alvo alterado para: " .. selectedPart)
-    end
+local Dropdown = systemTab:CreateDropdown({
+    Name = "Parte do Corpo",
+    Options = {"Head", "UpperTorso", "Torso", "Random"},
+    CurrentOption = "Head",
+    Flag = "AimAssist_TargetPart",
+    Callback = function(Option)
+        AimAssistConfig.TargetPart = Option
+        print("[EcoHub] Alvo: " .. Option)
+    end,
 })
 
-AimbotSection:Slider({
-    Text = "Força da Assistência",
-    Default = 30,
-    Minimum = 5,
-    Maximum = 100,
-    Flag = "AssistStrength",
-    Callback = function(value)
-        AimAssistConfig.AssistStrength = value / 100
-        print("[EcoHub] Força da assistência: " .. value .. "%")
-    end
+local StrengthSlider = systemTab:CreateSlider({
+    Name = "Força da Assistência",
+    Range = {5, 80},
+    Increment = 1,
+    Suffix = "%",
+    CurrentValue = 25,
+    Flag = "AimAssist_Strength",
+    Callback = function(Value)
+        AimAssistConfig.AssistStrength = Value / 100
+        print("[EcoHub] Força: " .. Value .. "%")
+    end,
 })
 
-AimbotSection:Slider({
-    Text = "Raio de Atração",
-    Default = 100,
-    Minimum = 30,
-    Maximum = 300,
-    Flag = "MagnetRadius",
-    Callback = function(value)
-        AimAssistConfig.MagnetRadius = value
-        print("[EcoHub] Raio de atração: " .. value .. "px")
-    end
+local MagnetRadiusSlider = systemTab:CreateSlider({
+    Name = "Raio de Atração",
+    Range = {30, 200},
+    Increment = 5,
+    Suffix = "px",
+    CurrentValue = 80,
+    Flag = "AimAssist_MagnetRadius",
+    Callback = function(Value)
+        AimAssistConfig.MagnetRadius = Value
+        print("[EcoHub] Raio atração: " .. Value)
+    end,
 })
 
-AimbotSection:Slider({
-    Text = "Raio de Aderência",
-    Default = 150,
-    Minimum = 50,
-    Maximum = 400,
-    Flag = "StickyRadius",
-    Callback = function(value)
-        AimAssistConfig.StickyRadius = value
-        print("[EcoHub] Raio de aderência: " .. value .. "px")
-    end
+local StickyRadiusSlider = systemTab:CreateSlider({
+    Name = "Raio de Aderência",
+    Range = {50, 300},
+    Increment = 10,
+    Suffix = "px",
+    CurrentValue = 120,
+    Flag = "AimAssist_StickyRadius",
+    Callback = function(Value)
+        AimAssistConfig.StickyRadius = Value
+        print("[EcoHub] Raio aderência: " .. Value)
+    end,
 })
 
-AimbotSection:Slider({
-    Text = "Desaceleração",
-    Default = 60,
-    Minimum = 10,
-    Maximum = 90,
-    Flag = "Slowdown",
-    Callback = function(value)
-        AimAssistConfig.SlowdownFactor = value / 100
-        print("[EcoHub] Desaceleração: " .. value .. "%")
-    end
+local TrackingSpeedSlider = systemTab:CreateSlider({
+    Name = "Velocidade de Tracking",
+    Range = {20, 100},
+    Increment = 1,
+    Suffix = "%",
+    CurrentValue = 65,
+    Flag = "AimAssist_TrackingSpeed",
+    Callback = function(Value)
+        AimAssistConfig.TrackingSpeed = Value / 100
+        print("[EcoHub] Velocidade tracking: " .. Value .. "%")
+    end,
 })
 
-AimbotSection:Toggle({
-    Text = "Requer Mira (Botão Direito)",
+local SlowdownSlider = systemTab:CreateSlider({
+    Name = "Desaceleração",
+    Range = {20, 95},
+    Increment = 1,
+    Suffix = "%",
+    CurrentValue = 70,
+    Flag = "AimAssist_Slowdown",
+    Callback = function(Value)
+        AimAssistConfig.SlowdownFactor = Value / 100
+        print("[EcoHub] Desaceleração: " .. Value .. "%")
+    end,
+})
+
+local MaxDistanceSlider = systemTab:CreateSlider({
+    Name = "Distância Máxima",
+    Range = {500, 3000},
+    Increment = 100,
+    Suffix = "studs",
+    CurrentValue = 1500,
+    Flag = "AimAssist_MaxDistance",
+    Callback = function(Value)
+        AimAssistConfig.MaximumDistance = Value
+        print("[EcoHub] Distância máxima: " .. Value)
+    end,
+})
+
+local RequireAimingToggle = systemTab:CreateToggle({
+    Name = "Requer Botão Direito",
+    CurrentValue = false,
+    Flag = "AimAssist_RequireAiming",
     Callback = function(Value)
         AimAssistConfig.RequireAiming = Value
-        local status = Value and "ativado" or "desativado"
-        print("[EcoHub] Requer mira " .. status)
+        print("[EcoHub] Requer mira: " .. (Value and "ativado" or "desativado"))
+    end,
+})
+
+local TeamCheckToggle = systemTab:CreateToggle({
+    Name = "Verificar Time",
+    CurrentValue = true,
+    Flag = "AimAssist_TeamCheck",
+    Callback = function(Value)
+        AimAssistConfig.TeamCheck = Value
+        print("[EcoHub] Verificar time: " .. (Value and "ativado" or "desativado"))
+    end,
+})
+
+--Adicionar circulo Verde na mira
+local Section = systemTab:CreateSection("CIRCULO VERDE - ARSENAL")
+
+local Players = game:GetService("Players")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+
+local CircleConfig = {
+    Enabled = false,
+    Color = Color3.fromRGB(0, 255, 0),
+    Size = 50,
+    Thickness = 2,
+    Transparency = 0.5,
+    Filled = false
+}
+
+local CircleState = {
+    Circle = nil,
+    Connection = nil
+}
+
+local function createCircle()
+    if CircleState.Circle then
+        CircleState.Circle:Remove()
+    end
+    
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "EcoHubCircle"
+    screenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+    screenGui.ResetOnSpawn = false
+    screenGui.IgnoreGuiInset = true
+    
+    local circle = Instance.new("Frame")
+    circle.Name = "Circle"
+    circle.Parent = screenGui
+    circle.BackgroundTransparency = 1
+    circle.Size = UDim2.new(0, CircleConfig.Size, 0, CircleConfig.Size)
+    circle.Position = UDim2.new(0.5, -CircleConfig.Size/2, 0.5, -CircleConfig.Size/2)
+    circle.AnchorPoint = Vector2.new(0, 0)
+    
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0.5, 0)
+    corner.Parent = circle
+    
+    local stroke = Instance.new("UIStroke")
+    stroke.Color = CircleConfig.Color
+    stroke.Thickness = CircleConfig.Thickness
+    stroke.Transparency = CircleConfig.Transparency
+    stroke.Parent = circle
+    
+    if CircleConfig.Filled then
+        circle.BackgroundColor3 = CircleConfig.Color
+        circle.BackgroundTransparency = 0.8
+    end
+    
+    CircleState.Circle = screenGui
+    return screenGui
+end
+
+local function updateCircle()
+    if not CircleState.Circle or not CircleConfig.Enabled then
+        return
+    end
+    
+    local circle = CircleState.Circle:FindFirstChild("Circle")
+    if circle then
+        circle.Size = UDim2.new(0, CircleConfig.Size, 0, CircleConfig.Size)
+        circle.Position = UDim2.new(0.5, -CircleConfig.Size/2, 0.5, -CircleConfig.Size/2)
+        
+        local stroke = circle:FindFirstChild("UIStroke")
+        if stroke then
+            stroke.Color = CircleConfig.Color
+            stroke.Thickness = CircleConfig.Thickness
+            stroke.Transparency = CircleConfig.Transparency
+        end
+        
+        if CircleConfig.Filled then
+            circle.BackgroundColor3 = CircleConfig.Color
+            circle.BackgroundTransparency = 0.8
+        else
+            circle.BackgroundTransparency = 1
+        end
+    end
+end
+
+local function startCircle()
+    if CircleConfig.Enabled then
+        createCircle()
+        print("[EcoHub] Círculo verde ativado")
+    else
+        if CircleState.Circle then
+            CircleState.Circle:Destroy()
+            CircleState.Circle = nil
+        end
+        print("[EcoHub] Círculo verde desativado")
+    end
+end
+
+local Toggle = systemTab:CreateToggle({
+    Name = "Ativar Círculo",
+    CurrentValue = false,
+    Flag = "CircleToggle",
+    Callback = function(Value)
+        CircleConfig.Enabled = Value
+        startCircle()
+    end,
+})
+
+local ColorPicker = systemTab:CreateColorPicker({
+    Name = "Cor do Círculo",
+    Color = Color3.fromRGB(0, 255, 0),
+    Flag = "CircleColor",
+    Callback = function(Value)
+        CircleConfig.Color = Value
+        updateCircle()
+        print("[EcoHub] Cor alterada")
     end
 })
 
---esp
-local WallhackerSection = AimbotTab:Section({
-    Text = "Categoria Wallhacker",
-	Side = "Right"
+local SizeSlider = systemTab:CreateSlider({
+    Name = "Tamanho",
+    Range = {10, 200},
+    Increment = 5,
+    Suffix = "px",
+    CurrentValue = 50,
+    Flag = "CircleSize",
+    Callback = function(Value)
+        CircleConfig.Size = Value
+        updateCircle()
+        print("[EcoHub] Tamanho: " .. Value)
+    end,
 })
 
-local Toggle = WallhackerSection:Toggle({
-    Text = "Wallhacker Player",
+local ThicknessSlider = systemTab:CreateSlider({
+    Name = "Espessura",
+    Range = {1, 10},
+    Increment = 1,
+    Suffix = "px",
+    CurrentValue = 2,
+    Flag = "CircleThickness",
+    Callback = function(Value)
+        CircleConfig.Thickness = Value
+        updateCircle()
+        print("[EcoHub] Espessura: " .. Value)
+    end,
+})
+
+local TransparencySlider = systemTab:CreateSlider({
+    Name = "Transparência",
+    Range = {0, 100},
+    Increment = 5,
+    Suffix = "%",
+    CurrentValue = 50,
+    Flag = "CircleTransparency",
+    Callback = function(Value)
+        CircleConfig.Transparency = Value / 100
+        updateCircle()
+        print("[EcoHub] Transparência: " .. Value .. "%")
+    end,
+})
+
+local FilledToggle = systemTab:CreateToggle({
+    Name = "Círculo Preenchido",
+    CurrentValue = false,
+    Flag = "CircleFilled",
+    Callback = function(Value)
+        CircleConfig.Filled = Value
+        updateCircle()
+        print("[EcoHub] Preenchido: " .. (Value and "ativado" or "desativado"))
+    end,
+})
+
+
+--Categoria Teleporte
+local TeleportTab = Window:CreateTab(
+	"Categoria Teleporte"
+)
+
+--SISTEMA TELEPORTE
+local Section = TeleportTab:CreateSection("TELEPORTE PLAYER - ARSENAL")
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+
+local TeleportConfig = {
+    Enabled = false,
+    TeleportDistance = 8,
+    TeamCheck = true,
+    IgnoreDead = true,
+    AutoShoot = false
+}
+
+local TeleportState = {
+    Connection = nil,
+    ShootConnection = nil,
+    CurrentTarget = nil,
+    TargetHealth = {},
+    KillCount = 0,
+    LastShootTime = 0
+}
+
+local function isValidTarget(player)
+    if not player or player == LocalPlayer then
+        return false
+    end
+    
+    if not player.Character or not player.Character:FindFirstChild("Humanoid") then
+        return false
+    end
+    
+    if TeleportConfig.IgnoreDead and player.Character.Humanoid.Health <= 0 then
+        return false
+    end
+    
+    if TeleportConfig.TeamCheck and LocalPlayer.Team and player.Team and player.Team == LocalPlayer.Team then
+        return false
+    end
+    
+    return true
+end
+
+local function getEnemyPlayers()
+    local enemies = {}
+    for _, player in pairs(Players:GetPlayers()) do
+        if isValidTarget(player) then
+            table.insert(enemies, player)
+        end
+    end
+    return enemies
+end
+
+local function getClosestEnemy()
+    local enemies = getEnemyPlayers()
+    local closestEnemy = nil
+    local shortestDistance = math.huge
+    
+    local localRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if not localRoot then
+        return nil
+    end
+    
+    for _, enemy in pairs(enemies) do
+        if enemy.Character and enemy.Character:FindFirstChild("HumanoidRootPart") then
+            local distance = (enemy.Character.HumanoidRootPart.Position - localRoot.Position).Magnitude
+            if distance < shortestDistance then
+                shortestDistance = distance
+                closestEnemy = enemy
+            end
+        end
+    end
+    
+    return closestEnemy
+end
+
+local function teleportBehindPlayer(targetPlayer)
+    if not targetPlayer or not targetPlayer.Character then
+        return false
+    end
+    
+    local targetHumanoidRootPart = targetPlayer.Character:FindFirstChild("HumanoidRootPart")
+    local localHumanoidRootPart = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    
+    if not targetHumanoidRootPart or not localHumanoidRootPart then
+        return false
+    end
+    
+    local targetPosition = targetHumanoidRootPart.Position
+    local targetLookDirection = targetHumanoidRootPart.CFrame.LookVector
+    local behindPosition = targetPosition - (targetLookDirection * TeleportConfig.TeleportDistance)
+    behindPosition = behindPosition + Vector3.new(0, 1, 0)
+    
+    localHumanoidRootPart.CFrame = CFrame.new(behindPosition, targetPosition)
+    
+    return true
+end
+
+local function isEnemyInSight(targetPlayer)
+    if not targetPlayer or not targetPlayer.Character then
+        return false
+    end
+    
+    local targetHead = targetPlayer.Character:FindFirstChild("Head")
+    if not targetHead then
+        return false
+    end
+    
+    local screenPoint, onScreen = Camera:WorldToScreenPoint(targetHead.Position)
+    
+    if not onScreen then
+        return false
+    end
+    
+    local viewportSize = Camera.ViewportSize
+    local centerX = viewportSize.X / 2
+    local centerY = viewportSize.Y / 2
+    local distance = math.sqrt((screenPoint.X - centerX)^2 + (screenPoint.Y - centerY)^2)
+    
+    if distance > 250 then
+        return false
+    end
+    
+    return true
+end
+
+local function shootAtHead(targetPlayer)
+    if not TeleportConfig.AutoShoot or not targetPlayer or not targetPlayer.Character then
+        return
+    end
+    
+    if not isEnemyInSight(targetPlayer) then
+        return
+    end
+    
+    local currentTime = tick()
+    if currentTime - TeleportState.LastShootTime < 0.1 then
+        return
+    end
+    
+    local head = targetPlayer.Character:FindFirstChild("Head")
+    if not head then
+        return
+    end
+    
+    local headPosition = head.Position
+    Camera.CFrame = CFrame.lookAt(Camera.CFrame.Position, headPosition)
+    
+    mouse1press()
+    task.wait(0.05)
+    mouse1release()
+    
+    TeleportState.LastShootTime = currentTime
+end
+
+local function isTargetDead(player)
+    if not player or not player.Character then
+        return true
+    end
+    
+    local humanoid = player.Character:FindFirstChild("Humanoid")
+    if not humanoid or humanoid.Health <= 0 then
+        return true
+    end
+    
+    return false
+end
+
+local function checkTargetDamage(player)
+    if not player or not player.Character then
+        return false
+    end
+    
+    local humanoid = player.Character:FindFirstChild("Humanoid")
+    if not humanoid then
+        return false
+    end
+    
+    local currentHealth = humanoid.Health
+    local lastHealth = TeleportState.TargetHealth[player.UserId] or currentHealth
+    
+    TeleportState.TargetHealth[player.UserId] = currentHealth
+    
+    if lastHealth - currentHealth >= 100 then
+        return true
+    end
+    
+    return false
+end
+
+local function getNextTarget()
+    if TeleportState.CurrentTarget and not isTargetDead(TeleportState.CurrentTarget) then
+        if checkTargetDamage(TeleportState.CurrentTarget) then
+            print("[EcoHub] Alvo tomou muito dano, mudando para mais proximo...")
+            return getClosestEnemy()
+        end
+    end
+    
+    local enemies = getEnemyPlayers()
+    
+    if #enemies == 0 then
+        return nil
+    end
+    
+    return getClosestEnemy()
+end
+
+local function startTeleportKill()
+    if TeleportState.Connection then
+        TeleportState.Connection:Disconnect()
+    end
+    
+    if TeleportState.ShootConnection then
+        TeleportState.ShootConnection:Disconnect()
+    end
+    
+    TeleportState.Connection = RunService.Heartbeat:Connect(function()
+        if not TeleportConfig.Enabled then
+            return
+        end
+        
+        if not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            return
+        end
+        
+        if not TeleportState.CurrentTarget or isTargetDead(TeleportState.CurrentTarget) then
+            if TeleportState.CurrentTarget and isTargetDead(TeleportState.CurrentTarget) then
+                TeleportState.KillCount = TeleportState.KillCount + 1
+                TeleportState.TargetHealth[TeleportState.CurrentTarget.UserId] = nil
+                print("[EcoHub] Alvo eliminado! Total de kills: " .. TeleportState.KillCount)
+                print("[EcoHub] Procurando novo alvo...")
+            end
+            
+            TeleportState.CurrentTarget = getNextTarget()
+            
+            if TeleportState.CurrentTarget then
+                print("[EcoHub] Novo alvo selecionado: " .. TeleportState.CurrentTarget.Name)
+                local humanoid = TeleportState.CurrentTarget.Character and TeleportState.CurrentTarget.Character:FindFirstChild("Humanoid")
+                if humanoid then
+                    TeleportState.TargetHealth[TeleportState.CurrentTarget.UserId] = humanoid.Health
+                end
+                task.wait(0.3)
+            else
+                print("[EcoHub] Nenhum inimigo disponivel")
+                task.wait(1)
+                return
+            end
+        end
+        
+        if TeleportState.CurrentTarget and not isTargetDead(TeleportState.CurrentTarget) then
+            if checkTargetDamage(TeleportState.CurrentTarget) then
+                print("[EcoHub] Alvo tomou 100+ de dano! Mudando para alvo mais proximo...")
+                TeleportState.CurrentTarget = getClosestEnemy()
+                if TeleportState.CurrentTarget then
+                    print("[EcoHub] Novo alvo: " .. TeleportState.CurrentTarget.Name)
+                end
+            end
+            
+            teleportBehindPlayer(TeleportState.CurrentTarget)
+        end
+    end)
+    
+    if TeleportConfig.AutoShoot then
+        TeleportState.ShootConnection = RunService.Heartbeat:Connect(function()
+            if not TeleportConfig.Enabled or not TeleportConfig.AutoShoot then
+                return
+            end
+            
+            if TeleportState.CurrentTarget and not isTargetDead(TeleportState.CurrentTarget) then
+                shootAtHead(TeleportState.CurrentTarget)
+            end
+        end)
+    end
+end
+
+local function stopTeleportKill()
+    if TeleportState.Connection then
+        TeleportState.Connection:Disconnect()
+        TeleportState.Connection = nil
+    end
+    
+    if TeleportState.ShootConnection then
+        TeleportState.ShootConnection:Disconnect()
+        TeleportState.ShootConnection = nil
+    end
+    
+    TeleportState.CurrentTarget = nil
+    TeleportState.TargetHealth = {}
+    
+    print("[EcoHub] Teleport Kill desativado - Total de kills: " .. TeleportState.KillCount)
+end
+
+local Toggle = TeleportTab:CreateToggle({
+    Name = "Auto Teleport Kill",
+    CurrentValue = false,
+    Flag = "TeleportKill_Toggle",
+    Callback = function(Value)
+        TeleportConfig.Enabled = Value
+        if Value then
+            TeleportState.KillCount = 0
+            TeleportState.TargetHealth = {}
+            startTeleportKill()
+            print("[EcoHub] Teleport Kill ativado")
+        else
+            stopTeleportKill()
+        end
+    end,
+})
+
+local AutoShootToggle = systemTab:CreateToggle({
+    Name = "Auto Shoot Head",
+    CurrentValue = false,
+    Flag = "AutoShoot_Toggle",
+    Callback = function(Value)
+        TeleportConfig.AutoShoot = Value
+        if Value then
+            if TeleportConfig.Enabled then
+                startTeleportKill()
+            end
+            print("[EcoHub] Auto Shoot ativado")
+        else
+            if TeleportState.ShootConnection then
+                TeleportState.ShootConnection:Disconnect()
+                TeleportState.ShootConnection = nil
+            end
+            print("[EcoHub] Auto Shoot desativado")
+        end
+    end,
+})
+
+local DistanceSlider = TeleportTab:CreateSlider({
+    Name = "Distancia Atras",
+    Range = {3, 15},
+    Increment = 1,
+    Suffix = " studs",
+    CurrentValue = 8,
+    Flag = "TeleportDistance_Slider",
+    Callback = function(Value)
+        TeleportConfig.TeleportDistance = Value
+        print("[EcoHub] Distancia definida: " .. Value .. " studs")
+    end,
+})
+
+local TeamCheckToggle = TeleportTab:CreateToggle({
+    Name = "Verificar Time",
+    CurrentValue = true,
+    Flag = "TeleportKill_TeamCheck",
+    Callback = function(Value)
+        TeleportConfig.TeamCheck = Value
+        print("[EcoHub] Verificacao de time: " .. (Value and "ativada" or "desativada"))
+    end,
+})
+
+local ResetKillsButton = TeleportTab:CreateButton({
+    Name = "Reset Kill Counter",
+    Callback = function()
+        TeleportState.KillCount = 0
+        TeleportState.TargetHealth = {}
+        print("[EcoHub] Contador de kills resetado")
+    end,
+})
+
+--Categoria Wallhacker
+local wallhackerTab = Window:CreateTab(
+	"Categoria WallHacker"
+)
+
+--WallHacker
+local Section = wallhackerTab:CreateSection("WALLHACKER PLAYERS - ARSENAL")
+
+local Toggle = wallhackerTab:CreateToggle({
+   Name = "WALLHACKER PLAYERS",
+   CurrentValue = false,
+   Flag = "Toggle1", 
     Callback = function(Value)
         if Value then
             _G.WallhackerEnabled = true
@@ -990,9 +1792,12 @@ local Toggle = WallhackerSection:Toggle({
     end
 })
 
---Debris
-local DebrisToggle = WallhackerSection:Toggle({
-    Text = "Wallhacker Debris",
+local Section = wallhackerTab:CreateSection("WALLHACKER DEBRIS - ARSENAL")
+
+local Toggle = wallhackerTab:CreateToggle({
+   Name = "WALLHACKER DEBRIS",
+   CurrentValue = false,
+   Flag = "Toggle1",
     Callback = function(Value)
         if Value then
             _G.DebrisWallhackerEnabled = true
@@ -1173,204 +1978,477 @@ local DebrisToggle = WallhackerSection:Toggle({
     end
 })
 
---Categoria
-local OtimizSection = AimbotTab:Section({
-    Text = "Misc",
-	Side = "Right"
-})
+--Categoria Misc
+local MiscTab = Window:CreateTab(
+	"Misc"
+)
 
---Fov  Aumentar/dimunuir
+--Random servidor
+local Section = MiscTab:CreateSection("PROCURAR SERVIDOR - ARSENAL")
+
+local TeleportService = game:GetService("TeleportService")
+local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
-local TweenService = game:GetService("TweenService")
-local RunService = game:GetService("RunService")
-local Camera = workspace.CurrentCamera
-local Player = Players.LocalPlayer
+local LocalPlayer = Players.LocalPlayer
 
-local FOVConfig = {
-    Default = 70,
-    Min = 10,
-    Max = 120,
-    Step = 5,
-    SmoothTransition = true,
-    TransitionTime = 0.3
+local ServerHopConfig = {
+    IsHopping = false,
+    IsSearchingFull = false,
+    IsRejoining = false
 }
 
-local CurrentFOV = FOVConfig.Default
-local IsEnabled = true
-local TweenInfo = TweenInfo.new(FOVConfig.TransitionTime, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-local FOVConnection
+local function getServerList()
+    local success, result = pcall(function()
+        local servers = {}
+        local cursor = ""
+        
+        repeat
+            local url = string.format(
+                "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=Asc&limit=100&cursor=%s",
+                game.PlaceId,
+                cursor
+            )
+            
+            local response = game:HttpGet(url)
+            local data = HttpService:JSONDecode(response)
+            
+            if data and data.data then
+                for _, server in pairs(data.data) do
+                    if server.playing < server.maxPlayers and server.id ~= game.JobId then
+                        table.insert(servers, server)
+                    end
+                end
+            end
+            
+            cursor = data.nextPageCursor or ""
+        until cursor == ""
+        
+        return servers
+    end)
+    
+    if success then
+        return result
+    else
+        return {}
+    end
+end
 
-local function MaintainFOV()
-    if FOVConnection then
-        FOVConnection:Disconnect()
+local function serverHopRandom()
+    if ServerHopConfig.IsHopping then
+        print("[EcoHub] Ja esta procurando servidor...")
+        return
     end
     
-    FOVConnection = RunService.Heartbeat:Connect(function()
-        if IsEnabled and Camera then
-            if Camera.FieldOfView ~= CurrentFOV then
-                Camera.FieldOfView = CurrentFOV
+    ServerHopConfig.IsHopping = true
+    print("[EcoHub] Procurando servidor aleatorio...")
+    
+    local servers = getServerList()
+    
+    if #servers == 0 then
+        print("[EcoHub] Nenhum servidor disponivel")
+        ServerHopConfig.IsHopping = false
+        return
+    end
+    
+    local randomServer = servers[math.random(1, #servers)]
+    
+    print("[EcoHub] Servidor encontrado! Players: " .. randomServer.playing .. "/" .. randomServer.maxPlayers)
+    print("[EcoHub] Conectando...")
+    
+    TeleportService:TeleportToPlaceInstance(game.PlaceId, randomServer.id, LocalPlayer)
+end
+
+local function serverHopAlmostFull()
+    if ServerHopConfig.IsSearchingFull then
+        print("[EcoHub] Ja esta procurando servidor...")
+        return
+    end
+    
+    ServerHopConfig.IsSearchingFull = true
+    print("[EcoHub] Procurando servidor quase cheio...")
+    
+    local servers = getServerList()
+    
+    if #servers == 0 then
+        print("[EcoHub] Nenhum servidor disponivel")
+        ServerHopConfig.IsSearchingFull = false
+        return
+    end
+    
+    table.sort(servers, function(a, b)
+        return a.playing > b.playing
+    end)
+    
+    local bestServer = servers[1]
+    
+    print("[EcoHub] Servidor encontrado! Players: " .. bestServer.playing .. "/" .. bestServer.maxPlayers)
+    print("[EcoHub] Conectando...")
+    
+    TeleportService:TeleportToPlaceInstance(game.PlaceId, bestServer.id, LocalPlayer)
+end
+
+local function serverRejoin()
+    if ServerHopConfig.IsRejoining then
+        print("[EcoHub] Ja esta reconectando...")
+        return
+    end
+    
+    ServerHopConfig.IsRejoining = true
+    print("[EcoHub] Reconectando ao servidor...")
+    
+    TeleportService:Teleport(game.PlaceId, LocalPlayer)
+end
+
+local Toggle1 = MiscTab:CreateToggle({
+    Name = "Server Hops",
+    CurrentValue = false,
+    Flag = "ServerHop_Toggle",
+    Callback = function(Value)
+        if Value then
+            serverHopRandom()
+        end
+    end,
+})
+
+local Toggle2 = MiscTab:CreateToggle({
+    Name = "Procurar Servidor (Quase Cheio)",
+    CurrentValue = false,
+    Flag = "ServerHopFull_Toggle",
+    Callback = function(Value)
+        if Value then
+            serverHopAlmostFull()
+        end
+    end,
+})
+
+local Toggle3 = MiscTab:CreateToggle({
+    Name = "Server Rejoin",
+    CurrentValue = false,
+    Flag = "ServerRejoin_Toggle",
+    Callback = function(Value)
+        if Value then
+            serverRejoin()
+        end
+    end,
+})
+
+--Bypass
+local Section = MiscTab:CreateSection("BYPASS - ARSENAL")
+
+local function obfuscateName()
+    local chars = {"Game", "Ui", "System", "Tool", "Helper", "Manager", "Handler", "Controller"}
+    local nums = tostring(math.random(1000, 9999))
+    return chars[math.random(#chars)] .. nums
+end
+
+local guiName = obfuscateName()
+local mainFrameName = obfuscateName()
+local scriptName = obfuscateName()
+
+local function safeGetService(serviceName)
+    local success, service = pcall(function()
+        return game:GetService(serviceName)
+    end)
+    return success and service or nil
+end
+
+local Services = {
+    Players = safeGetService("Players"),
+    RunService = safeGetService("RunService"),
+    TeleportService = safeGetService("TeleportService"),
+    UserInputService = safeGetService("UserInputService"),
+    TweenService = safeGetService("TweenService"),
+    ReplicatedStorage = safeGetService("ReplicatedStorage"),
+    Lighting = safeGetService("Lighting"),
+    StarterPlayer = safeGetService("StarterPlayer"),
+    GuiService = safeGetService("GuiService")
+}
+
+if not Services.Players then
+    return
+end
+
+local player = Services.Players.LocalPlayer
+if not player then
+    return
+end
+
+local BypassConfig = {
+    Enabled = false,
+    ObjectsRemoved = 0,
+    IsRunning = false
+}
+
+local function safeDestroy(obj)
+    pcall(function()
+        if obj and obj.Parent then
+            if obj.ClassName == "LocalScript" or obj.ClassName == "Script" or obj.ClassName == "ModuleScript" then
+                obj.Disabled = true
+                wait(0.1)
+            end
+            obj:Destroy()
+            BypassConfig.ObjectsRemoved = BypassConfig.ObjectsRemoved + 1
+        end
+    end)
+end
+
+local function cleanupDetection()
+    local detectores = {
+        "anticheat", "ac", "detection", "monitor", "guard", "security",
+        "detector", "scanner", "watcher", "tracker", "observer", "logger",
+        "reporter", "checker", "validator", "inspector", "auditor"
+    }
+    
+    local suspicious = {
+        "admin", "mod", "staff", "detect", "anti", "cheat",
+        "hack", "exploit", "script", "monitor", "security"
+    }
+    
+    local function containsSuspicious(name, wordList)
+        pcall(function()
+            if name and type(name) == "string" and wordList then
+                local lowerName = string.lower(name)
+                for i = 1, #wordList do
+                    if wordList[i] and string.find(lowerName, string.lower(wordList[i]), 1, true) then
+                        return true
+                    end
+                end
+            end
+        end)
+        return false
+    end
+    
+    local objectsToRemove = {}
+    
+    pcall(function()
+        local descendants = game:GetDescendants()
+        for i = 1, #descendants do
+            if i % 100 == 0 then
+                wait(0.05)
+            end
+            
+            local obj = descendants[i]
+            if obj and obj.Parent then
+                pcall(function()
+                    local className = obj.ClassName
+                    if className == "LocalScript" or className == "Script" or className == "ModuleScript" then
+                        if containsSuspicious(obj.Name, detectores) then
+                            objectsToRemove[#objectsToRemove + 1] = obj
+                        end
+                    end
+                end)
+            end
+        end
+    end)
+    
+    for i = 1, #objectsToRemove do
+        if i % 3 == 0 then
+            wait(0.1)
+        end
+        safeDestroy(objectsToRemove[i])
+    end
+    
+    pcall(function()
+        if Services.Players then
+            local players = Services.Players:GetPlayers()
+            for i = 1, #players do
+                local targetPlayer = players[i]
+                if targetPlayer and targetPlayer.PlayerGui then
+                    local guis = targetPlayer.PlayerGui:GetChildren()
+                    for j = 1, #guis do
+                        local gui = guis[j]
+                        if gui and containsSuspicious(gui.Name, suspicious) then
+                            safeDestroy(gui)
+                        end
+                    end
+                end
             end
         end
     end)
 end
 
-local function ApplyFOV(targetFOV, smooth)
-    if not Camera then return end
+local lastMonitorCheck = tick()
+local MONITOR_INTERVAL = 20
+local isCurrentlyMonitoring = false
+
+local function lightweightMonitor()
+    if not BypassConfig.Enabled then
+        return
+    end
     
-    targetFOV = math.clamp(targetFOV, FOVConfig.Min, FOVConfig.Max)
-    CurrentFOV = targetFOV
+    if isCurrentlyMonitoring then
+        return
+    end
     
-    if smooth and FOVConfig.SmoothTransition then
-        local tween = TweenService:Create(Camera, TweenInfo, {FieldOfView = targetFOV})
-        tween:Play()
-        tween.Completed:Connect(function()
-            MaintainFOV()
-        end)
-    else
-        Camera.FieldOfView = targetFOV
-        MaintainFOV()
+    local currentTime = tick()
+    if currentTime - lastMonitorCheck < MONITOR_INTERVAL then
+        return
     end
-end
-
-local function IncreaseFOV()
-    if not IsEnabled then return end
-    local newFOV = CurrentFOV + FOVConfig.Step
-    ApplyFOV(newFOV, true)
-end
-
-local function DecreaseFOV()
-    if not IsEnabled then return end
-    local newFOV = CurrentFOV - FOVConfig.Step
-    ApplyFOV(newFOV, true)
-end
-
-local function ResetFOV()
-    if not IsEnabled then return end
-    ApplyFOV(FOVConfig.Default, true)
-end
-
-local function SetFOV(fov)
-    if not IsEnabled then return end
-    ApplyFOV(fov, true)
-end
-
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    if gameProcessed then return end
     
-    if input.KeyCode == Enum.KeyCode.Equal or input.KeyCode == Enum.KeyCode.Plus then
-        IncreaseFOV()
-    elseif input.KeyCode == Enum.KeyCode.Minus then
-        DecreaseFOV()
-    elseif input.KeyCode == Enum.KeyCode.R and UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
-        ResetFOV()
-    elseif input.KeyCode == Enum.KeyCode.F and UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
-        IsEnabled = not IsEnabled
-        if IsEnabled then
-            print("[EcoHub] Sistema FOV ativado")
-        else
-            print("[EcoHub] Sistema FOV desativado")
-        end
-    end
-end)
-
-UserInputService.InputChanged:Connect(function(input, gameProcessed)
-    if gameProcessed or not IsEnabled then return end
+    isCurrentlyMonitoring = true
+    lastMonitorCheck = currentTime
     
-    if input.UserInputType == Enum.UserInputType.MouseWheel and UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
-        if input.Position.Z > 0 then
-            IncreaseFOV()
-        else
-            DecreaseFOV()
-        end
-    end
-end)
-
-OtimizSection:Slider({
-    Text = "FOV",
-    Min = FOVConfig.Min,
-    Max = FOVConfig.Max,
-    Default = FOVConfig.Default,
-    Flag = "FOV_Value",
-    Callback = function(value)
-        SetFOV(value)
-    end
-})
-
-OtimizSection:Toggle({
-    Text = "Ativar FOV",
-    Default = true,
-    Flag = "FOV_Toggle",
-    Callback = function(enabled)
-        IsEnabled = enabled
-        if not enabled then
-            ResetFOV()
-            print("[EcoHub] Sistema FOV desativado")
-        else
-            print("[EcoHub] Sistema FOV ativado")
-        end
-    end
-})
-
-OtimizSection:Button({
-    Text = "Resetar FOV",
-    Flag = "FOV_Reset",
-    Callback = function()
-        ResetFOV()
-    end
-})
-
-MaintainFOV()
-
---discord.gg/ecohub
-OtimizSection:Button({
-    Text = "Discord Server",
-    Flag = "Discord_Button",
-    Callback = function()
-        setclipboard("https://discord.gg/abygGhvRCG")
-        print("[EcoHub] Link do Discord copiado para área de transferência")
-    end
-})
-
---random servidor 
-OtimizSection:Button({
-    Text = "Server Hop",
-    Flag = "Server_Hop",
-    Callback = function()
-        local TeleportService = game:GetService("TeleportService")
-        local PlaceId = game.PlaceId
-        local JobId = game.JobId
-        
-        TeleportService:TeleportToPlaceInstance(PlaceId, JobId)
-        print("[EcoHub] Procurando novo servidor...")
-    end
-})
-
-OtimizSection:Button({
-    Text = "server rejoin",
-    Flag = "Full_Server",
-    Callback = function()
-        local TeleportService = game:GetService("TeleportService")
-        local HttpService = game:GetService("HttpService")
-        local PlaceId = game.PlaceId
-        
-        local success, servers = pcall(function()
-            return HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. PlaceId .. "/servers/Public?sortOrder=Desc&limit=100"))
-        end)
-        
-        if success and servers and servers.data then
-            for _, server in pairs(servers.data) do
-                if server.playing and server.maxPlayers then
-                    if server.playing >= server.maxPlayers - 3 and server.playing < server.maxPlayers then
-                        TeleportService:TeleportToPlaceInstance(PlaceId, server.id)
-                        print("[EcoHub] Entrando em servidor quase cheio (" .. server.playing .. "/" .. server.maxPlayers .. ")")
-                        return
-                    end
+    task.spawn(function()
+        pcall(function()
+            local suspiciousObjects = {}
+            local descendants = game:GetDescendants()
+            local maxCheck = math.min(#descendants, 100)
+            
+            for i = 1, maxCheck do
+                if i % 25 == 0 then
+                    wait(0.05)
                 end
+                
+                local obj = descendants[i]
+                pcall(function()
+                    if obj and obj.Parent and obj.Name then
+                        local lowerName = string.lower(obj.Name)
+                        if string.find(lowerName, "anticheat", 1, true) or 
+                           string.find(lowerName, "detection", 1, true) or 
+                           string.find(lowerName, "monitor", 1, true) then
+                            suspiciousObjects[#suspiciousObjects + 1] = obj
+                        end
+                    end
+                end)
             end
-            print("[EcoHub] Nenhum servidor quase cheio encontrado")
+            
+            for i = 1, #suspiciousObjects do
+                safeDestroy(suspiciousObjects[i])
+                wait(0.15)
+            end
+        end)
+        
+        isCurrentlyMonitoring = false
+    end)
+end
+
+local monitorConnection = nil
+
+local function startBypass()
+    if BypassConfig.IsRunning then
+        return
+    end
+    
+    BypassConfig.IsRunning = true
+    BypassConfig.ObjectsRemoved = 0
+    
+    task.spawn(function()
+        wait(1)
+        pcall(cleanupDetection)
+    end)
+    
+    if Services.RunService and not monitorConnection then
+        monitorConnection = Services.RunService.Heartbeat:Connect(function()
+            pcall(lightweightMonitor)
+        end)
+    end
+    
+    if Services.Players then
+        Services.Players.PlayerAdded:Connect(function(newPlayer)
+            if not BypassConfig.Enabled then
+                return
+            end
+            
+            pcall(function()
+                if newPlayer then
+                    task.spawn(function()
+                        wait(5)
+                        
+                        pcall(function()
+                            if newPlayer.PlayerGui then
+                                local guis = newPlayer.PlayerGui:GetChildren()
+                                for i = 1, #guis do
+                                    local gui = guis[i]
+                                    pcall(function()
+                                        if gui and gui.Name then
+                                            local lowerGuiName = string.lower(gui.Name)
+                                            if string.find(lowerGuiName, "admin", 1, true) or 
+                                               string.find(lowerGuiName, "mod", 1, true) or 
+                                               string.find(lowerGuiName, "detect", 1, true) then
+                                                safeDestroy(gui)
+                                            end
+                                        end
+                                    end)
+                                end
+                            end
+                        end)
+                    end)
+                end
+            end)
+        end)
+    end
+end
+
+local function stopBypass()
+    BypassConfig.IsRunning = false
+    
+    if monitorConnection then
+        monitorConnection:Disconnect()
+        monitorConnection = nil
+    end
+end
+
+local Paragraph = MiscTab:CreateParagraph({
+    Title = "Status Bypass:", 
+    Content = "Desativado - 0 objetos removidos"
+})
+
+local Toggle = MiscTab:CreateToggle({
+    Name = "Ativar Bypass Anticheat",
+    CurrentValue = false,
+    Flag = "Bypass_Toggle",
+    Callback = function(Value)
+        BypassConfig.Enabled = Value
+        if Value then
+            startBypass()
+            Paragraph:Set({
+                Title = "Status Bypass:",
+                Content = "Ativado - Protecao ativa"
+            })
         else
-            print("[EcoHub] Erro ao buscar servidores")
+            stopBypass()
+            Paragraph:Set({
+                Title = "Status Bypass:",
+                Content = "Desativado - " .. BypassConfig.ObjectsRemoved .. " objetos removidos"
+            })
+        end
+    end,
+})
+
+task.spawn(function()
+    while wait(5) do
+        if BypassConfig.Enabled then
+            Paragraph:Set({
+                Title = "Status Bypass:",
+                Content = "Ativo - " .. BypassConfig.ObjectsRemoved .. " objetos removidos"
+            })
         end
     end
+end)
+
+--Discord
+local Section = MiscTab:CreateSection("DISCORD - ECO HUB")
+
+local Label = MiscTab:CreateLabel("BY RIP_SHELDOOHZ", 4483362458, Color3.fromRGB(255, 255, 255), false)
+
+local Button = MiscTab:CreateButton({
+    Name = "Discord Server",
+    Callback = function()
+        local discordLink = "https://discord.gg/abygGhvRCG"
+        
+        if setclipboard then
+            setclipboard(discordLink)
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "EcoHub",
+                Text = "Link do Discord copiado!",
+                Duration = 3
+            })
+        else
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "Discord",
+                Text = discordLink,
+                Duration = 5
+            })
+        end
+    end,
 })
