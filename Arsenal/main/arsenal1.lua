@@ -2,9 +2,7 @@ local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
 
 local ArsenalPlaceIds = {
-    286090429,
-    301549746,
-    742848358
+    286090429
 }
 
 local function IsArsenal()
