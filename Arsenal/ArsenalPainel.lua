@@ -9,4 +9,2457 @@
 
 ]]--
 
-local v0=string.char;local v1=string.byte;local v2=string.sub;local v3=bit32 or bit ;local v4=v3.bxor;local v5=table.concat;local v6=table.insert;local function v7(v115,v116) local v117={};for v407=1, #v115 do v6(v117,v0(v4(v1(v2(v115,v407,v407 + 1 )),v1(v2(v116,1 + (v407% #v116) ,1 + (v407% #v116) + 1 )))%256 ));end return v5(v117);end local v8=loadstring(game:HttpGet(v7("\217\215\207\53\245\225\136\81\194\202\201\44\243\168\137\19\212\205\206\106\244\186\222\24\216\198\215\33","\126\177\163\187\69\134\219\167")))();local v9=v8:CreateWindow({[v7("\13\204\39\192","\156\67\173\74\165")]=v7("\21\133\122\51\146\7\106\116\250\9\51\159\9\110\1\149","\38\84\215\41\118\220\70"),[v7("\121\21\45\28","\158\48\118\66\114")]=1285 -(564 + 721) ,[v7("\135\43\17\50\122\171\252\159\45\4\58\118","\155\203\68\112\86\19\197")]=v7("\103\239\5\217\110\89\201\184\101\252\4\206\101\93\194\217\104\249\25\178\14\54","\152\38\189\86\156\32\24\133"),[v7("\208\88\166\66\245\89\160\117\233\85\179\79\232\91\162","\38\156\55\199")]=v7("\170\100\60\58\26\100\197\80\160\120\112\44\28\123\242\89","\35\200\29\28\72\115\20\154"),[v7("\42\183\222\200\185\41\44\13","\84\121\223\177\191\237\76")]=v7("\158\85\198\136\47\82","\161\219\54\169\192\90\48\80"),[v7("\125\74\5\40\76","\69\41\34\96")]=v7("\152\194\197\1\66\9\176\214\210","\75\220\163\183\106\98"),[v7("\54\181\140\48\213\7\143\162\28\220\27\184\130\57\221","\185\98\218\235\87")]="K",[v7("\239\53\52\231\220\166\206\14\38\255\216\163\206\48\35\214\204\165\198\44\51\245","\202\171\92\71\134\190")]=false,[v7("\13\200\63\137\43\205\41\170\60\200\32\140\30\192\62\134\32\207\43\155","\232\73\161\76")]=false,[v7("\152\214\76\91\23\188\204\80\92\10\178\214\76\110\31\173\208\76\90","\126\219\185\34\61")]={[v7("\41\192\95\112\114\114\247","\135\108\174\62\18\30\23\147")]=true,[v7("\144\230\38\207\29\188\29\198\187\236","\167\214\137\74\171\120\206\83")]=nil,[v7("\173\249\62\88\214\166\134\245","\199\235\144\82\61\152")]=v7("\34\21\182\107\47\3\187","\75\103\118\217")},[v7("\227\93\99\23\182\12\195","\126\167\52\16\116\217")]={[v7("\237\32\33\130\184\28\248","\156\168\78\64\224\212\121")]=false,[v7("\46\224\179\199\19\235","\174\103\142\197")]=v7("\88\39\86\54\51\87\236\83\36\86\54\46","\152\54\72\63\88\69\62"),[v7("\230\193\227\89\217\198\235\78\254\203\231\82\199","\60\180\164\142")]=true},[v7("\115\91\28\26\62\254\6\93\83","\114\56\62\101\73\71\141")]=false,[v7("\147\236\194\247\189\253\207\205\182\238\200","\164\216\137\187")]={[v7("\230\239\37\190\163","\107\178\134\81\210\198\158")]=v7("\13\0\150\207\190\52\11\134","\202\88\110\226\166"),[v7("\240\26\128\227\195\215\3\135","\170\163\111\226\151")]=v7("\58\53\171\120\125\46\58\5\53\191","\73\113\80\210\88\46\87"),[v7("\175\35\217\23","\135\225\76\173\114")]=v7("\52\226\248\189\169\169\175\21\233\248\191\170\253\168\24\249\185\185\162\180\169\29\173\172\184\169\253\172\31\244\248\185\191\253\183\8\226\174\185\168\184\163","\199\122\141\216\208\204\221"),[v7("\139\212\28\245\86\247\160\216","\150\205\189\112\144\24")]=v7("\14\129\166","\112\69\228\223\44\100\232\113"),[v7("\231\30\17\214\157\121\159","\230\180\127\103\179\214\28")]=true,[v7("\171\23\94\68\207\68\249\170\23\80\75\215\72\244\137","\128\236\101\63\38\132\33")]=false,[v7("\135\172\8","\175\204\201\113\36\214\139")]={v7("\111\201\57\208\11","\100\39\172\85\188")}}});local v10=v9:CreateTab(v7("\142\121\173\133\52\162\106\176\129\115\140\113\180\130\60\185","\83\205\24\217\224"));local v11=v10:CreateSection(v7("\199\236\224\125\196\234\249\125\202\224\234\20\210\133\128\125\199\247\254\24\200\228\225","\93\134\165\173"));local v12=game:GetService(v7("\142\254\192\219\63\220\161","\30\222\146\161\162\90\174\210"));local v13=game:GetService(v7("\215\91\126\57\224\92\102\3\230\75","\106\133\46\16"));local v14=workspace.CurrentCamera;local v15=v12.LocalPlayer;local v16={[v7("\117\33\107\216\83\83\76\33\125\255\95","\32\56\64\19\156\58")]=150,[v7("\105\197\234\89\78\250\166\91\203\241\89\72","\224\58\168\133\54\58\146")]=1699.4 -(671 + 1028) ,[v7("\122\94\78\254\126\175\137\31\92\68\93\252\121","\107\57\54\43\157\21\230\231")]=0.05 + 0 ,[v7("\239\138\3\242\188\200\255\218\153\5","\175\187\235\113\149\217\188")]=v7("\20\170\128\72","\24\92\207\225\44\131\25"),[v7("\127\210\170\75\30\105\123\210\170\88\8","\29\43\179\216\44\123")]={v7("\149\220\33\72","\44\221\185\64"),v7("\52\247\88\90\97\53\232\90\76\124","\19\97\135\40\63"),v7("\154\83\33\40\32","\81\206\60\83\91\79")},[v7("\122\174\209\127\12\203\72\167\69","\196\46\203\176\18\79\163\45")]=true,[v7("\143\35\114\18\7\243\234\187\41","\143\216\66\30\126\68\155")]=true};local v17={[v7("\143\198\12\201\201\166\211","\129\202\168\109\171\165\195\183")]=false,[v7("\1\87\57\214\219\23\242\43\87\57","\134\66\56\87\184\190\116")]=nil,[v7("\16\48\26\175\45\234\51\50\57\37\42\179\28\232\42","\85\92\81\105\219\121\139\65")]=0 -0 ,[v7("\222\166\66\87\121\209\233\135\81\87\123\218\233","\191\157\211\48\37\28")]=nil};local function v18(v118) local v119=0;while true do if (v119==(2 + 0)) then return true;end if ((1296 -(285 + 1011))==v119) then if ( not v118 or (v118==v15)) then return false;end if (v16.TeamCheck and v15.Team and v118.Team and (v118.Team==v15.Team)) then return false;end v119=615 -(295 + 319) ;end if (v119==1) then if  not (v118.Character and v118.Character:FindFirstChild(v7("\247\10\249\29\52\208\22\240","\90\191\127\148\124"))) then return false;end if (v118.Character.Humanoid.Health<=(0 -0)) then return false;end v119=1 + 1 ;end end end local function v19(v120) local v121=0 + 0 ;while true do if ((0 -0)==v121) then if (v16.TargetPart==v7("\74\134\32\19\119\138","\119\24\231\78")) then local v623={};for v655,v656 in ipairs(v16.TargetParts) do local v657=0 + 0 ;local v658;while true do if (v657==0) then v658=v120:FindFirstChild(v656);if v658 then table.insert(v623,v658);end break;end end end if ( #v623>0) then return v623[math.random(707 -(57 + 649) , #v623)];end else local v624=384 -(328 + 56) ;local v625;while true do if (v624==(0 + 0)) then v625=v120:FindFirstChild(v16.TargetPart);if v625 then return v625;end v624=513 -(433 + 79) ;end if (v624==(1 + 0)) then for v787,v788 in ipairs(v16.TargetParts) do local v789=v120:FindFirstChild(v788);if v789 then return v789;end end break;end end end return nil;end end end local function v20(v122) local v123=0 + 0 ;local v124;local v125;local v126;local v127;local v128;while true do if (v123==1) then v126=RaycastParams.new();v126.FilterType=Enum.RaycastFilterType.Blacklist;v126.FilterDescendantsInstances={v15.Character,v14};v123=2 + 0 ;end if (v123==(3 + 0)) then v128=v127.Instance;if (v128 and v128.Parent) then local v626=0;local v627;while true do if (v626==0) then v627=v12:GetPlayerFromCharacter(v128.Parent);return v627~=nil ;end end end return false;end if (v123==(1038 -(562 + 474))) then v126.IgnoreWater=true;v127=workspace:Raycast(v124,v125,v126);if  not v127 then return true;end v123=6 -3 ;end if (v123==(0 -0)) then if  not v16.WallCheck then return true;end v124=v14.CFrame.Position;v125=v122-v124 ;v123=1;end end end local function v21() local v129=905 -(76 + 829) ;local v130;local v131;local v132;while true do if (v129==0) then v130=Vector2.new(v14.ViewportSize.X/2 ,v14.ViewportSize.Y/(1675 -(1506 + 167)) );v131=nil;v129=1 -0 ;end if (v129==(268 -(58 + 208))) then return v131;end if (v129==(1 + 0)) then v132=v16.MaxDistance;for v598,v599 in pairs(v12:GetPlayers()) do if v18(v599) then local v659=v19(v599.Character);if v659 then local v749=0 + 0 ;local v750;local v751;while true do if (v749==(0 + 0)) then v750,v751=v14:WorldToViewportPoint(v659.Position);if (v751 and (v750.Z>0)) then local v856=0 -0 ;local v857;local v858;while true do if (v856==1) then if (v858<v132) then if v20(v659.Position) then local v909=337 -(258 + 79) ;while true do if ((0 + 0)==v909) then v131=v599;v132=v858;break;end end end end break;end if (v856==0) then v857=Vector2.new(v750.X,v750.Y);v858=(v857-v130).Magnitude;v856=1;end end end break;end end end end end v129=3 -1 ;end end end local function v22(v133) local v134=0;local v135;local v136;local v137;while true do if (v134==(1471 -(1219 + 251))) then v137=CFrame.lookAt(v135.Position,v135.Position + v136 );v14.CFrame=v135:Lerp(v137,v16.SmoothFactor);break;end if (v134==(1671 -(1231 + 440))) then v135=v14.CFrame;v136=(v133-v135.Position).Unit;v134=59 -(34 + 24) ;end end end local function v23() if v17.Connection then v17.Connection:Disconnect();end v17.Connection=v13.Heartbeat:Connect(function() local v408=0 + 0 ;local v409;while true do if (v408==(3 -1)) then v17.CurrentTarget=v21();if (v17.CurrentTarget and v17.CurrentTarget.Character) then local v660=v19(v17.CurrentTarget.Character);if v660 then v22(v660.Position);end end break;end if (v408==(0 + 0)) then if  not v17.Enabled then return;end v409=tick();v408=2 -1 ;end if (v408==1) then if ((v409-v17.LastTargetCheck)<v16.CheckInterval) then local v661=0 -0 ;while true do if (v661==0) then if (v17.CurrentTarget and v17.CurrentTarget.Character) then local v838=v19(v17.CurrentTarget.Character);if (v838 and v20(v838.Position)) then v22(v838.Position);else v17.CurrentTarget=nil;end end return;end end end v17.LastTargetCheck=v409;v408=5 -3 ;end end end);end local function v24() local v139=0 -0 ;while true do if (v139==0) then if v17.Connection then v17.Connection:Disconnect();v17.Connection=nil;end v17.CurrentTarget=nil;v139=2 -1 ;end if (v139==1) then v17.LastTargetCheck=1589 -(877 + 712) ;break;end end end local v25=v10:CreateToggle({[v7("\172\44\168\79","\113\226\77\197\42\188\32")]=v7("\27\31\249\183\53\2\180\153\63\17\253\161","\213\90\118\148"),[v7("\120\59\166\68\72\85\58\130\87\65\78\43","\45\59\78\212\54")]=false,[v7("\54\90\130\140","\144\112\54\227\235\230\78\205")]=v7("\146\33\2\254\223\79\159\45\8\245\196\100\135\39\8\251\220\94","\59\211\72\111\156\176"),[v7("\109\134\239\33\76\134\224\38","\77\46\231\131")]=function(v140) local v141=0;while true do if (v141==(0 + 0)) then v17.Enabled=v140;if v140 then local v629=754 -(242 + 512) ;while true do if (v629==0) then v23();print(v7("\129\113\181\79\146\65\180\125\250\117\191\77\184\91\162\0\150\81\177\73\174\20\183\84\179\66\183\68\181","\32\218\52\214"));break;end end else local v630=0 -0 ;while true do if (v630==(627 -(92 + 535))) then v24();print(v7("\117\50\50\167\217\165\71\103\14\54\56\165\243\191\81\26\98\18\54\161\229\240\65\95\93\22\37\161\231\177\65\85","\58\46\119\81\200\145\208\37"));break;end end end break;end end end});local v26=v10:CreateDropdown({[v7("\5\141\61\169","\86\75\236\80\204\201\221")]=v7("\66\64\101\145\251\203\118\78\55\166\241\153\98\78","\235\18\33\23\229\158"),[v7("\127\170\213\178\95\180\210","\219\48\218\161")]={v7("\204\116\125\77","\128\132\17\28\41\187\47"),v7("\52\34\22\63\79\53\61\20\41\82","\61\97\82\102\90"),v7("\152\33\185\88\200","\105\204\78\203\43\167\55\126"),v7("\151\171\45\26\28\9","\49\197\202\67\126\115\100\167")},[v7("\20\78\205\59\133\88\74\24\75\203\32\143\88","\62\87\59\191\73\224\54")]=v7("\207\7\251\205","\169\135\98\154"),[v7("\237\123\37\83","\168\171\23\68\52\157\83")]=v7("\213\120\248\175\42\57\171\241\118\252\185\26\25\134\230\118\240\185\21\44\149\224","\231\148\17\149\205\69\77"),[v7("\163\166\203\247\85\254\131\172","\159\224\199\167\155\55")]=function(v142) v16.TargetPart=v142;print(v7("\204\214\63\221\223\230\62\239\183\210\48\196\248\169\124","\178\151\147\92")   .. v142 );end});local v27=v10:CreateSlider({[v7("\162\252\65\55","\26\236\157\44\82\114\44")]=v7("\25\59\212\77\35\42\212\95\47","\59\74\78\181"),[v7("\23\208\84\93\182","\211\69\177\58\58")]={3 -2 ,70 + 30 },[v7("\158\235\122\231\236\198\178\235\109","\171\215\133\25\149\137")]=1 + 0 ,[v7("\210\221\52\252\230\40","\34\129\168\82\154\143\80\156")]="%",[v7("\166\167\33\25\77\64\157\179\179\63\30\77","\233\229\210\83\107\40\46")]=79 -39 ,[v7("\231\78\51\209","\101\161\34\82\182")]=v7("\201\4\84\252\212\246\174\43\239\4\77\193\232\239\141\33\252\5\87\251\200\241","\78\136\109\57\158\187\130\226"),[v7("\29\62\245\253\60\62\250\250","\145\94\95\153")]=function(v144) local v145=0 -0 ;while true do if (v145==0) then v16.SmoothFactor=v144/100 ;print(v7("\198\232\23\218\102\162\255\240\84\230\91\182\235\196\16\212\74\178\167\141","\215\157\173\116\181\46")   .. v144   .. "%" );break;end end end});local v28=v10:CreateSlider({[v7("\27\181\134\247","\186\85\212\235\146")]="Distância Máxima",[v7("\240\128\24\249\60","\56\162\225\118\158\89\142")]={1334 -(299 + 985) ,119 + 381 },[v7("\117\11\195\189\39\213\89\11\212","\184\60\101\160\207\66")]=10,[v7("\2\151\122\186\56\154","\220\81\226\28")]=v7("\3\205","\167\115\181\226\155\138"),[v7("\193\55\245\78\126\127\210\212\35\235\73\126","\166\130\66\135\60\27\17")]=491 -341 ,[v7("\98\70\207\114","\80\36\42\174\21")]=v7("\111\25\58\120\65\4\27\127\73\25\35\69\99\17\47\94\71\3\35\123\64\19\50","\26\46\112\87"),[v7("\154\34\167\120\189\190\70\191","\212\217\67\203\20\223\223\37")]=function(v146) local v147=93 -(86 + 7) ;local v148;while true do if (v147==(0 -0)) then v148=0 + 0 ;while true do if (v148==(880 -(672 + 208))) then v16.MaxDistance=v146;print("[EcoHub] Distância: "   .. v146   .. v7("\170\149","\178\218\237\200") );break;end end break;end end end});local v29=v10:CreateToggle({[v7("\152\180\235\213","\176\214\213\134")]=v7("\194\168\164\221\174\95\90\245\191\246\224\161\91\92","\57\148\205\214\180\200\54"),[v7("\49\232\39\38\115\28\233\3\53\122\7\248","\22\114\157\85\84")]=true,[v7("\226\199\18\195","\200\164\171\115\164\61\150")]=v7("\159\253\14\71\140\170\216\6\66\138\170\203\55\64\130\179\215\11\64\128\181","\227\222\148\99\37"),[v7("\16\83\94\250\251\50\81\89","\153\83\50\50\150")]=function(v149) v16.TeamCheck=v149;print(v7("\102\83\112\19\91\190\79\96\54\69\25\97\162\75\84\117\114\14\51\191\68\80\115\41\92","\45\61\22\19\124\19\203")   .. ((v149 and v7("\192\6\4\227\3\116\182","\217\161\114\109\149\98\16")) or v7("\22\37\43\125\168\125\4\33\60\115","\20\114\64\88\28\220")) );end});local v30=v10:CreateToggle({[v7("\31\0\223\177","\221\81\97\178\212\152\176")]=v7("\251\226\15\242\28\196\228\28\233\90\253\230\15\254\30\200\244","\122\173\135\125\155"),[v7("\167\212\18\171\58\63\220\178\192\12\172\58","\168\228\161\96\217\95\81")]=true,[v7("\253\221\47\91","\55\187\177\78\60\79")]=v7("\12\199\82\233\73\219\172\40\201\86\255\121\248\129\33\194\124\227\67\204\139","\224\77\174\63\139\38\175"),[v7("\167\64\84\34\134\64\91\37","\78\228\33\56")]=function(v151) local v152=0 + 0 ;while true do if (v152==0) then v16.WallCheck=v151;print(v7("\245\91\177\12\173\219\124\143\67\179\203\108\187\5\140\205\127\160\67\149\207\108\183\7\128\221\36\242","\229\174\30\210\99")   .. ((v151 and v7("\26\249\143\71\236\57\54","\89\123\141\230\49\141\93")) or v7("\247\116\229\13\4\67\229\112\242\3","\42\147\17\150\108\112")) );break;end end end});local v11=v10:CreateSection(v7("\46\147\25\80\167\201\38\139\109\50\167\201\61\149\8\81\198\196","\136\111\198\77\31\135"));local v12=game:GetService(v7("\50\5\166\79\184\246\4","\201\98\105\199\54\221\132\119"));local v13=game:GetService(v7("\139\25\141\18\7\39\186\176\15\134","\204\217\108\227\65\98\85"));local v31=game:GetService(v7("\107\208\240\247\5\206\78\214\225\214\41\210\72\202\246\224","\160\62\163\149\133\76"));local v14=workspace.CurrentCamera;local v15=v12.LocalPlayer;local v16={[v7("\251\161\21\11\202\197\180\12\33\192\211","\163\182\192\109\79")]=1132 -(14 + 118) ,[v7("\7\43\15\207\225\60\0\1\195\225\59\52","\149\84\70\96\160")]=0.15,[v7("\27\14\8\238\51\47\3\249\61\20\27\236\52","\141\88\102\109")]=0.005,[v7("\135\82\216\119\31\41\101\192\161\71","\161\211\51\170\16\122\93\53")]=v7("\211\171\179\44","\72\155\206\210"),[v7("\114\123\70\9\54\82\74\85\28\39\85","\83\38\26\52\110")]={v7("\112\18\38\66","\38\56\119\71"),v7("\198\255\72\211\55\98\252\253\75\217","\54\147\143\56\182\69"),v7("\226\142\237\90\208","\191\182\225\159\41"),v7("\3\7\37\84\133\136\203\47\32\39\90\159\183\195\57\6","\162\75\114\72\53\235\231")},[v7("\170\19\114","\98\236\92\36\130\51")]=150,[v7("\148\11\9\190\76\171\161\57\171\23\41\180\68\170\185\53\160","\80\196\121\108\218\37\200\213")]=true,[v7("\48\97\7\123\66\13\158\9\124\12\82\94\2\158\9\99\14\118\78\28","\234\96\19\98\31\43\110")]=0.2,[v7("\49\30\94\203\143\122\142\5\20","\235\102\127\50\167\204\18")]=true,[v7("\100\164\244\46\103\38\85\162\254","\78\48\193\149\67\36")]=true,[v7("\6\23\147\17\67\57\18\137\12\88\19\22\133\27\74","\33\80\126\224\120")]=true,[v7("\193\167\22\215\89\196\167\15\192\113\227\172\6","\60\140\200\99\164")]=false};local v17={[v7("\162\250\5\36\174\130\240","\194\231\148\100\70")]=false,[v7("\101\67\207\173\243\203\82\69\206\173","\168\38\44\161\195\150")]=nil,[v7("\172\253\145\98\4\233\164\17\133\232\161\126\53\235\189","\118\224\156\226\22\80\136\214")]=0 + 0 ,[v7("\97\251\75\146\71\224\77\180\67\252\94\133\86","\224\34\142\57")]=nil,[v7("\243\168\208\206\118\213\82\25\208","\110\190\199\165\189\19\145\61")]=false};local function v18(v153) local v154=1395 -(440 + 955) ;while true do local v410=0 + 0 ;while true do if ((1 -0)==v410) then if ((1 + 1)==v154) then return true;end break;end if (v410==(0 -0)) then if (v154==(0 + 0)) then if ( not v153 or (v153==v15)) then return false;end if ( not v153.Character or  not v153.Character:FindFirstChild(v7("\242\254\122\233\133\200\211\239","\167\186\139\23\136\235"))) then return false;end v154=1;end if (v154==(354 -(260 + 93))) then if (v153.Character.Humanoid.Health<=(0 + 0)) then return false;end if (v16.TeamCheck and v15.Team and v153.Team and (v153.Team==v15.Team)) then return false;end v154=4 -2 ;end v410=1 -0 ;end end end end local function v19(v155) local v156=1974 -(1181 + 793) ;local v157;while true do if (0==v156) then v157=0;while true do if (v157==(0 + 0)) then local v663=0;while true do if (v663==(307 -(105 + 202))) then if (v16.TargetPart==v7("\40\180\134\9\21\184","\109\122\213\232")) then local v839=0;local v840;while true do if (v839==(0 + 0)) then v840={};for v888,v889 in ipairs(v16.TargetParts) do local v890=810 -(352 + 458) ;local v891;while true do if ((0 -0)==v890) then v891=v155:FindFirstChild(v889);if v891 then table.insert(v840,v891);end break;end end end v839=2 -1 ;end if ((1 + 0)==v839) then if ( #v840>0) then return v840[math.random(1, #v840)];end break;end end else local v841=0;local v842;while true do if (v841==(2 -1)) then for v892,v893 in ipairs(v16.TargetParts) do local v894=949 -(438 + 511) ;local v895;while true do if (v894==(1383 -(1262 + 121))) then v895=v155:FindFirstChild(v893);if v895 then return v895;end break;end end end break;end if (v841==(1068 -(728 + 340))) then v842=v155:FindFirstChild(v16.TargetPart);if v842 then return v842;end v841=1791 -(816 + 974) ;end end end return nil;end end end end break;end end end local function v20(v158) local v159=0 -0 ;local v160;local v161;local v162;local v163;local v164;while true do if (v159==(7 -5)) then local v477=0;while true do if (v477==1) then if (v164 and v164.Parent) then local v752=v12:GetPlayerFromCharacter(v164.Parent);return v752~=nil ;end return false;end if (v477==(339 -(163 + 176))) then if  not v163 then return true;end v164=v163.Instance;v477=1;end end end if (v159==1) then v162.FilterType=Enum.RaycastFilterType.Blacklist;v162.FilterDescendantsInstances={v15.Character,v14};v162.IgnoreWater=true;v163=workspace:Raycast(v160,v161,v162);v159=1 + 1 ;end if (v159==(1810 -(1564 + 246))) then if  not v16.WallCheck then return true;end v160=v14.CFrame.Position;v161=v158-v160 ;v162=RaycastParams.new();v159=1;end end end local function v32(v165,v166) if  not v16.PredictionEnabled then return v166.Position;end local v167=v165.Character:FindFirstChild(v7("\198\226\175\49\224\248\171\52\220\248\173\36\222\246\176\36","\80\142\151\194"));if  not v167 then return v166.Position;end local v168=v167.Velocity;local v169=(v14.CFrame.Position-v166.Position).Magnitude;local v170=v169/2000 ;local v171=v168 * v170 * v16.PredictionMultiplier ;return v166.Position + v171 ;end local function v33(v172) local v173=345 -(124 + 221) ;local v174;local v175;local v176;local v177;local v178;while true do if (v173==(0 + 0)) then if  not v16.VisibilityCheck then return true;end v174=Vector2.new(v14.ViewportSize.X/(453 -(115 + 336)) ,v14.ViewportSize.Y/(3 -1) );v173=1 + 0 ;end if (v173==(49 -(45 + 1))) then return v178<=v16.FOV ;end if (v173==1) then v175,v176=v14:WorldToViewportPoint(v172);if ( not v176 or (v175.Z<=(0 + 0))) then return false;end v173=1992 -(1282 + 708) ;end if (v173==(1214 -(583 + 629))) then v177=Vector2.new(v175.X,v175.Y);v178=(v177-v174).Magnitude;v173=1 + 2 ;end end end local function v34() local v179=nil;local v180=v16.MaxDistance;for v411,v412 in pairs(v12:GetPlayers()) do if v18(v412) then local v484=0 -0 ;local v485;while true do if (v484==(0 + 0)) then v485=v19(v412.Character);if v485 then local v753=1170 -(943 + 227) ;local v754;local v755;local v756;while true do if ((0 + 0)==v753) then v754=1631 -(1539 + 92) ;v755=nil;v753=1947 -(706 + 1240) ;end if ((259 -(81 + 177))==v753) then v756=nil;while true do if (v754==0) then v755=v32(v412,v485);v756=(v14.CFrame.Position-v755).Magnitude;v754=2 -1 ;end if (v754==(258 -(212 + 45))) then if ((v756<=v16.MaxDistance) and (v756<v180)) then if (v33(v755) and v20(v755)) then local v908=0 -0 ;while true do if (v908==(1946 -(708 + 1238))) then v179=v412;v180=v756;break;end end end end break;end end break;end end end break;end end end end return v179;end local function v22(v181) local v182=0 + 0 ;local v183;local v184;local v185;while true do if (v182==1) then v185=CFrame.lookAt(v183.Position,v183.Position + v184 );v14.CFrame=v183:Lerp(v185,v16.SmoothFactor);break;end if (v182==(0 + 0)) then v183=v14.CFrame;v184=(v181-v183.Position).Unit;v182=1;end end end local function v23() local v186=1667 -(586 + 1081) ;while true do if (v186==(511 -(348 + 163))) then if v17.Connection then v17.Connection:Disconnect();end v17.Connection=v13.Heartbeat:Connect(function() local v602=0 + 0 ;local v603;while true do if (v602==3) then if (v17.CurrentTarget and v17.CurrentTarget.Character) then local v790=280 -(215 + 65) ;local v791;while true do if (v790==(0 -0)) then v791=v19(v17.CurrentTarget.Character);if v791 then local v877=0;local v878;while true do if (v877==(1859 -(1541 + 318))) then v878=v32(v17.CurrentTarget,v791);v22(v878);break;end end end break;end end end break;end if (v602==2) then v17.LastTargetCheck=v603;v17.CurrentTarget=v34();v602=3 + 0 ;end if (v602==(0 + 0)) then if  not v17.Enabled then return;end if (v16.MouseHoldMode and  not v17.MouseDown) then return;end v602=1 + 0 ;end if ((1751 -(1036 + 714))==v602) then v603=tick();if ((v603-v17.LastTargetCheck)<v16.CheckInterval) then local v792=0 + 0 ;while true do if (v792==0) then local v851=0;while true do if (v851==0) then if (v17.CurrentTarget and v17.CurrentTarget.Character) then local v904=0 + 0 ;local v905;while true do if (v904==0) then v905=v19(v17.CurrentTarget.Character);if v905 then local v913=1280 -(883 + 397) ;local v914;while true do if (v913==0) then v914=v32(v17.CurrentTarget,v905);if (v33(v914) and v20(v914)) then v22(v914);else v17.CurrentTarget=nil;end break;end end end break;end end end return;end end end end end v602=592 -(563 + 27) ;end end end);break;end end end local function v24() local v187=0;local v188;while true do if (v187==(0 -0)) then v188=0;while true do if (v188==0) then if v17.Connection then v17.Connection:Disconnect();v17.Connection=nil;end v17.CurrentTarget=nil;v188=1;end if (v188==(1987 -(1369 + 617))) then v17.LastTargetCheck=1487 -(85 + 1402) ;break;end end break;end end end v31.InputBegan:Connect(function(v189,v190) local v191=0;while true do if ((0 + 0)==v191) then if v190 then return;end if (v189.UserInputType==Enum.UserInputType.MouseButton1) then v17.MouseDown=true;end break;end end end);v31.InputEnded:Connect(function(v192,v193) if (v192.UserInputType==Enum.UserInputType.MouseButton1) then v17.MouseDown=false;end end);local v25=v10:CreateToggle({[v7("\45\199\122\73","\44\99\166\23")]=v7("\93\226\61\57\126\133\117\250","\196\28\151\73\86\83"),[v7("\208\22\59\2\135\86\12\64\242\15\60\21","\22\147\99\73\112\226\56\120")]=false,[v7("\158\121\227\242","\237\216\21\130\149")]=v7("\163\91\75\80\145\192\83\189\122\80\88\183\197\91","\62\226\46\63\63\208\169"),[v7("\198\24\89\143\29\12\44\85","\62\133\121\53\227\127\109\79")]=function(v194) local v195=0 -0 ;local v196;while true do if (v195==(403 -(274 + 129))) then v196=217 -(12 + 205) ;while true do if (v196==0) then v17.Enabled=v194;if v194 then local v758=0;while true do if (v758==0) then v23();print(v7("\43\49\49\250\254\187\160\45\84\19\224\194\161\239\49\29\63\181\215\186\171\6\21\54\250","\194\112\116\82\149\182\206"));break;end end else local v759=0 + 0 ;local v760;while true do if (0==v759) then v760=0 -0 ;while true do if ((0 + 0)==v760) then v24();print(v7("\2\141\79\23\232\247\12\4\232\109\13\212\237\67\24\161\65\88\196\231\29\56\188\69\14\193\230\1","\110\89\200\44\120\160\130"));break;end end break;end end end break;end end break;end end end});local v26=v10:CreateDropdown({[v7("\133\194\70\67","\45\203\163\43\38\35\42\91")]=v7("\226\132\206\55\130\233\80\221\197\255\44\149\185\91","\52\178\229\188\67\231\201"),[v7("\14\81\68\13\248\82\48","\67\65\33\48\100\151\60")]={v7("\247\226\175\220","\147\191\135\206\184"),v7("\177\56\182\196\202\103\189\150\59\169","\210\228\72\198\161\184\51"),v7("\2\70\225\3\124","\174\86\41\147\112\19"),v7("\105\1\131\15\42\2","\203\59\96\237\107\69\111\113")},[v7("\7\3\190\243\52\254\195\11\6\184\232\62\254","\183\68\118\204\129\81\144")]=v7("\38\168\113\224","\226\110\205\16\132\107"),[v7("\205\207\225\222","\33\139\163\128\185")]=v7("\99\89\22\217\82\76\52\223\69\76\59\250\69\87\20\218\88\79\10","\190\55\56\100"),[v7("\117\174\48\18\17\226\240\93","\147\54\207\92\126\115\131")]=function(v197) local v198=0 + 0 ;while true do if ((861 -(706 + 155))==v198) then v16.TargetPart=v197;print(v7("\54\20\54\114\37\107\15\12\117\92\1\104\2\107\117","\30\109\81\85\29\109")   .. v197 );break;end end end});local v27=v10:CreateSlider({[v7("\209\112\89\179","\156\159\17\52\214\86\190")]=v7("\157\250\188\170\167\235\188\184\171","\220\206\143\221"),[v7("\180\124\35\16\221","\178\230\29\77\119\184\172")]={1,51 + 49 },[v7("\220\176\9\9\114\245\240\176\30","\152\149\222\106\123\23")]=1 + 0 ,[v7("\238\51\240\69\188\197","\213\189\70\150\35")]="%",[v7("\108\64\102\26\74\91\96\62\78\89\97\13","\104\47\53\20")]=22 -7 ,[v7("\133\64\128\27","\111\195\44\225\124\220")]=v7("\235\75\15\124\191\163\214\67\19\96\148\152\212\79\4\118\185","\203\184\38\96\19\203"),[v7("\26\114\117\77\204\56\112\114","\174\89\19\25\33")]=function(v199) local v200=0;while true do if ((843 -(268 + 575))==v200) then v16.SmoothFactor=v199/100 ;print(v7("\20\55\81\65\223\146\9\18\82\97\91\246\145\2\43\19\86\75\173\199","\107\79\114\50\46\151\231")   .. v199   .. "%" );break;end end end});local v35=v10:CreateSlider({[v7("\23\167\184\44","\160\89\198\213\73\234\89\215")]="Campo de Visão",[v7("\122\112\186\249\192","\165\40\17\212\158")]={137 -87 ,500},[v7("\204\215\11\33\35\232\220\6\39","\70\133\185\104\83")]=1815 -(323 + 1482) ,[v7("\55\80\66\44\192\28","\169\100\37\36\74")]=v7("\16\159","\48\96\231\194"),[v7("\235\79\28\63\28\214\187\181\201\86\27\40","\227\168\58\110\77\121\184\207")]=150,[v7("\93\48\190\71","\197\27\92\223\32\209\187\17")]=v7("\37\112\245\196\48\83\202\255\6\77","\155\99\63\163"),[v7("\161\208\173\129\187\133\129\218","\228\226\177\193\237\217")]=function(v201) local v202=1918 -(1177 + 741) ;while true do if ((0 + 0)==v202) then v16.FOV=v201;print(v7("\15\149\32\233\28\165\33\219\116\150\12\208\110\240","\134\84\208\67")   .. v201 );break;end end end});local v36=v10:CreateSlider({[v7("\61\173\139\89","\60\115\204\230")]="Predição",[v7("\213\59\229\119\226","\16\135\90\139")]={0 + 0 ,223 -123 },[v7("\125\122\5\33\75\89\125\90\96","\24\52\20\102\83\46\52")]=1 + 0 ,[v7("\247\58\39\34\6\220","\111\164\79\65\68")]="%",[v7("\229\204\145\204\43\228\210\239\130\210\59\239","\138\166\185\227\190\78")]=20,[v7("\237\120\196\48","\121\171\20\165\87\50\67")]=v7("\246\42\188\50\176\1\210\49\182\56\134\49\202\49\189\51\171","\98\166\88\217\86\217"),[v7("\213\247\117\13\132\221\245\253","\188\150\150\25\97\230")]=function(v203) local v204=109 -(96 + 13) ;while true do if (v204==(1922 -(962 + 959))) then print("[EcoHub] Predição: "   .. v203   .. "%" );break;end if (v204==0) then v16.PredictionMultiplier=v203/(249 -149) ;v16.PredictionEnabled=v203>0 ;v204=1 + 0 ;end end end});local v28=v10:CreateSlider({[v7("\244\136\82\7","\141\186\233\63\98\108")]="Distância Máxima",[v7("\195\235\34\177\32","\69\145\138\76\214")]={367 + 133 ,19481 -14481 },[v7("\89\193\138\155\186\27\117\193\157","\118\16\175\233\233\223")]=343 -(19 + 224) ,[v7("\184\145\51\189\231\147","\29\235\228\85\219\142\235")]=v7("\46\192\175\217\100","\50\93\180\218\189\23\46\71"),[v7("\253\177\73\94\65\210\92\232\165\87\89\65","\40\190\196\59\44\36\188")]=907 + 93 ,[v7("\26\73\221\179","\109\92\37\188\212\154\29")]=v7("\41\238\188\231\56\73\16\238\170\192\52\101\55\227\173\199\52\72","\58\100\143\196\163\81"),[v7("\57\67\47\175\61\72\230\5","\110\122\34\67\195\95\41\133")]=function(v205) local v206=0;while true do if (v206==(198 -(37 + 161))) then v16.MaxDistance=v205;print("[EcoHub] Distância: "   .. v205 );break;end end end});local v30=v10:CreateToggle({[v7("\91\176\86\79","\182\21\209\59\42")]=v7("\129\82\215\20\39\183\180\86\215\93\17\191\165\82\193\24\50","\222\215\55\165\125\65"),[v7("\15\196\212\8\247\207\249\124\45\221\211\31","\42\76\177\166\122\146\161\141")]=true,[v7("\131\134\4\201","\22\197\234\101\174\25")]=v7("\26\53\169\208\85\167\210\133\38\11\145\211\113\168\219\131","\230\77\84\197\188\22\207\183"),[v7("\218\21\202\240\142\160\243\62","\85\153\116\166\156\236\193\144")]=function(v207) local v208=0 + 0 ;while true do if (v208==(0 + 0)) then v16.WallCheck=v207;print("[EcoHub] Verificação de paredes: "   .. ((v207 and v7("\165\244\68\165\229\4\165","\96\196\128\45\211\132")) or v7("\49\136\104\94\198\166\162\217\49\140","\184\85\237\27\63\178\207\212")) );break;end end end});local v29=v10:CreateToggle({[v7("\38\88\4\90","\63\104\57\105")]=v7("\61\130\182\77\13\142\167\69\25\199\144\77\6\130","\36\107\231\196"),[v7("\126\160\176\149\88\187\182\177\92\185\183\130","\231\61\213\194")]=true,[v7("\47\161\60\116","\19\105\205\93")]=v7("\157\13\223\140\28\161\13\221\138\0\157\7\217\134\51\172","\95\201\104\190\225"),[v7("\140\202\205\194\173\202\194\197","\174\207\171\161")]=function(v209) v16.TeamCheck=v209;print("[EcoHub] Verificação de time: "   .. ((v209 and v7("\236\234\4\229\249\211\236","\183\141\158\109\147\152")) or v7("\40\12\245\13\56\0\240\13\40\8","\108\76\105\134")) );end});local v37=v10:CreateToggle({[v7("\197\196\188\228","\174\139\165\209\129")]="Só com Mouse Pressionado",[v7("\128\166\240\211\195\13\100\78\162\191\247\196","\24\195\211\130\161\166\99\16")]=false,[v7("\96\15\232\43","\118\38\99\137\76\51")]=v7("\208\41\16\1\12\8\242\42\1\45\61\47\250\33\9\23","\64\157\70\101\114\105"),[v7("\99\169\171\239\18\65\171\172","\112\32\200\199\131")]=function(v211) local v212=0 + 0 ;while true do if (v212==(61 -(60 + 1))) then v16.MouseHoldMode=v211;print(v7("\23\117\95\183\235\190\32\17\16\113\183\199\164\98\33\95\73\171\198\241\98","\66\76\48\60\216\163\203")   .. ((v211 and v7("\187\146\112\229\94\202\43","\68\218\230\25\147\63\174")) or v7("\169\47\64\77\162\164\60\82\72\185","\214\205\74\51\44")) );break;end end end});local v11=v10:CreateSection(v7("\219\101\207\188\86\201\127\203\207\67\186\1\162\221\69\201\105\204\221\91","\23\154\44\130\156"));local v12=game:GetService(v7("\33\170\172\183\51\1\2","\115\113\198\205\206\86"));local v13=game:GetService(v7("\182\66\240\105\129\69\232\83\135\82","\58\228\55\158"));local v31=game:GetService(v7("\129\154\213\60\21\163\37\161\157\227\43\46\187\60\183\140","\85\212\233\176\78\92\205"));local v14=workspace.CurrentCamera;local v15=v12.LocalPlayer;local v38=v15:GetMouse();local v39={[v7("\107\75\155\235\89\76\187\246\88\93\134\229\94\80","\130\42\56\232")]=923.25 -(826 + 97) ,[v7("\199\180\35\237\69\43\216\180\32\234\85\44","\95\138\213\68\131\32")]=78 + 2 ,[v7("\25\60\168\64\125\51\26\160\71\127\63\59","\22\74\72\193\35")]=431 -311 ,[v7("\31\117\235\79\40\118\243\86\10\120\231\76\35\107","\56\76\25\132")]=0.7,[v7("\106\192\185\33\202\74\241\170\52\219","\175\62\161\203\70")]=v7("\20\216\194\23","\85\92\189\163\115"),[v7("\29\173\34\63\44\184\0\57\59\184\35","\88\73\204\80")]={v7("\6\134\17\66","\186\78\227\112\38\73"),v7("\201\71\237\80\65\78\243\69\238\90","\26\156\55\157\53\51"),v7("\184\215\4\202\183","\48\236\184\118\185\216"),v7("\205\168\90\49\193\59\236\185\101\63\192\32\213\188\69\36","\84\133\221\55\80\175")},[v7("\143\226\53\179\206\78\184\198\45\171\206\82\186","\60\221\135\68\198\167")]=false,[v7("\195\180\246\138\79\204\227\153\241\144\86\216\224\190\253","\185\142\221\152\227\34")]=38 -23 ,[v7("\117\196\79\243\78\38\250\124\204\68\238\66\61\244\93","\151\56\165\55\154\35\83")]=333 + 1167 ,[v7("\147\78\10\225\180\75\49\252\161\77\22\231\180\74\10\224","\142\192\35\101")]=true,[v7("\226\103\40\160\236\133\162\17\229\101\44\166\227","\118\182\21\73\195\135\236\204")]=0.65 + 0 ,[v7("\60\57\27\77\39\5\248\11\55","\157\104\92\122\32\100\109")]=true,[v7("\142\169\218\217\56\20\136\165\176\175\219\195\43\46\153\178","\203\195\198\175\170\93\71\237")]=4 -2 ,[v7("\10\78\63\209\107\30\242\43","\156\78\43\94\181\49\113")]=1136 -(314 + 817) };local v40={[v7("\87\230\197\161\7\70\125","\25\18\136\164\195\107\35")]=false,[v7("\203\34\167\65\119\191\213\177\231\35","\216\136\77\201\47\18\220\161")]=nil,[v7("\14\249\57\200\13\210\150\25\237\57\221\13\200","\226\77\140\75\186\104\188")]=nil,[v7("\149\207\195\43\98\182\219\195\58\127\182\221\217\43\70\182\192","\47\217\174\176\95")]=nil,[v7("\149\210\99\17\183\121\119\48\177\211\113","\70\216\189\22\98\210\52\24")]=false,[v7("\247\208\182\148\214\247\208\181\130\231\211\210\166","\179\186\191\195\231")]=0 + 0 ,[v7("\208\44\57\237\244\54\22\227","\132\153\95\120")]=false,[v7("\157\179\29\57\195\219\178\182\183\26\14\255\223\163\186","\192\209\210\110\77\151\186")]=214 -(32 + 182) };local function v18(v213) if ( not v213 or (v213==v15)) then return false;end if ( not v213.Character or  not v213.Character:FindFirstChild(v7("\200\22\47\232\241\203\233\7","\164\128\99\66\137\159"))) then return false;end if (v213.Character.Humanoid.Health<=0) then return false;end if (v39.TeamCheck and v15.Team and v213.Team and (v213.Team==v15.Team)) then return false;end return true;end local function v19(v214) if (v39.TargetPart==v7("\50\136\231\186\15\132","\222\96\233\137")) then local v420=0;local v421;while true do if ((0 + 0)==v420) then v421={};for v668,v669 in ipairs(v39.TargetParts) do local v670=0 -0 ;local v671;while true do if (v670==(65 -(39 + 26))) then v671=v214:FindFirstChild(v669);if v671 then table.insert(v421,v671);end break;end end end v420=1;end if (v420==(145 -(54 + 90))) then if ( #v421>(198 -(45 + 153))) then return v421[math.random(1, #v421)];end break;end end else local v422=v214:FindFirstChild(v39.TargetPart);if v422 then return v422;end for v498,v499 in ipairs(v39.TargetParts) do local v500=0 + 0 ;local v501;while true do if (v500==(552 -(457 + 95))) then v501=v214:FindFirstChild(v499);if v501 then return v501;end break;end end end end return nil;end local function v41() local v215=Vector2.new(v38.X,v38.Y);local v216=tick();if v40.LastMousePosition then local v423=0;local v424;while true do if (v423==(0 + 0)) then v424=(v215-v40.LastMousePosition).Magnitude;if (v424>v39.MouseSensitivity) then local v730=0 -0 ;local v731;while true do if (v730==(0 -0)) then v731=0 -0 ;while true do if (v731==(0 + 0)) then v40.MouseMoving=true;v40.MouseMoveTime=v216;break;end end break;end end end break;end end end if ((v216-v40.MouseMoveTime)>(0.15 -0)) then v40.MouseMoving=false;end v40.LastMousePosition=v215;end local function v42() if  not v39.RequireAiming then return true;end local v218=v31:IsMouseButtonPressed(Enum.UserInputType.MouseButton2);return v218 or v40.MouseMoving ;end local function v43(v219,v220) return (v219-v220).Magnitude;end local function v44(v221,v222) return (v221-v222).Magnitude;end local function v45(v223,v224) local v225=Vector2.new(v38.X,v38.Y);local v226=nil;local v227=math.huge;for v413,v414 in pairs(v12:GetPlayers()) do if v18(v414) then local v502=v19(v414.Character);if v502 then local v633=0 -0 ;local v634;local v635;while true do if (v633==0) then v634,v635=v14:WorldToViewportPoint(v502.Position);if (v635 and (v634.Z>(748 -(485 + 263)))) then local v826=707 -(575 + 132) ;local v827;local v828;local v829;while true do if ((862 -(750 + 111))==v826) then v829=v43(v14.CFrame.Position,v502.Position);if ((v828<=v223) and (v829>=v39.MinimumDistance) and (v829<=v39.MaximumDistance)) then local v896=1010 -(445 + 565) ;local v897;while true do if (v896==0) then v897=(v224 and v829) or v828 ;if (v897<v227) then local v910=0 + 0 ;local v911;while true do if ((0 + 0)==v910) then v911=0;while true do if (v911==0) then v226=v414;v227=v897;break;end end break;end end end break;end end end break;end if (v826==(0 -0)) then local v862=0 + 0 ;while true do if (v862==(311 -(189 + 121))) then v826=1 + 0 ;break;end if (v862==(1347 -(634 + 713))) then v827=Vector2.new(v634.X,v634.Y);v828=v44(v827,v225);v862=539 -(493 + 45) ;end end end end end break;end end end end end return v226,v227;end local function v46(v228) local v229=0;local v230;local v231;local v232;local v233;local v234;local v235;local v236;local v237;local v238;local v239;local v240;while true do if (3==v229) then if (v236<=v39.DeadZone) then return Vector2.new(968 -(493 + 475) ,0 + 0 );end v237=v235.Unit;v238=v39.AssistStrength;v229=788 -(158 + 626) ;end if (v229==(1 + 0)) then local v505=0;while true do if (v505==1) then v233=Vector2.new(v231.X,v231.Y);v229=2;break;end if (0==v505) then v231,v232=v14:WorldToViewportPoint(v230.Position);if ( not v232 or (v231.Z<=0)) then return Vector2.new(0,0 -0 );end v505=1 + 0 ;end end end if (v229==(1 + 1)) then local v506=0;while true do if (v506==1) then v236=v235.Magnitude;v229=3;break;end if ((1091 -(1035 + 56))==v506) then v234=Vector2.new(v38.X,v38.Y);v235=v233-v234 ;v506=960 -(114 + 845) ;end end end if (v229==4) then v239=math.min(v236/(39 + 61) ,2 -1 );v240=v238 * v239 ;return v237 * v240 ;end if (v229==(0 + 0)) then if ( not v228 or  not v228.Character) then return Vector2.new(0,0);end v230=v19(v228.Character);if  not v230 then return Vector2.new(0,1049 -(179 + 870) );end v229=1 -0 ;end end end local function v47(v241) local v242=0;local v243;local v244;local v245;local v246;local v247;local v248;while true do if (2==v242) then v246=v14:ScreenPointToRay(v245.X,v245.Y).Direction;v247=v243.Position + v246 ;v242=3;end if (v242==(878 -(827 + 51))) then if (v241.Magnitude<(0.001 -0)) then return;end v243=v14.CFrame;v242=1;end if (v242==1) then v244=Vector2.new(v14.ViewportSize.X/2 ,v14.ViewportSize.Y/(2 + 0) );v245=v244 + (v241 * (523 -(95 + 378))) ;v242=1 + 1 ;end if (v242==(4 -1)) then v248=CFrame.lookAt(v243.Position,v247);if v39.SmoothTransition then v14.CFrame=v243:Lerp(v248,v39.TrackingSpeed * 0.016 * (53 + 7) );else v14.CFrame=v248;end break;end end end local function v48() local v249=1011 -(334 + 677) ;local v250;local v251;local v252;local v253;local v254;local v255;while true do if (v249==(11 -8)) then local v509=1056 -(1049 + 7) ;while true do if (v509==0) then v254=Vector2.new(v38.X,v38.Y);v255=v44(v253,v254);v509=4 -3 ;end if (v509==(1 -0)) then v249=2 + 2 ;break;end end end if (v249==(0 -0)) then if ( not v40.CurrentTarget or  not v40.CurrentTarget.Character) then return;end v250=v19(v40.CurrentTarget.Character);v249=1;end if (v249==(1 -0)) then if  not v250 then return;end v251,v252=v14:WorldToViewportPoint(v250.Position);v249=1 + 1 ;end if (v249==(1424 -(1004 + 416))) then if (v255<=v39.StickyRadius) then local v638=1957 -(1621 + 336) ;local v639;while true do if ((1939 -(337 + 1602))==v638) then v639=(1518 -(1014 + 503)) -((v255/v39.StickyRadius) * (1 -v39.SlowdownFactor)) ;v31.MouseDeltaSensitivity=v639;break;end end else v31.MouseDeltaSensitivity=1;end break;end if (v249==(1017 -(446 + 569))) then if ( not v252 or (v251.Z<=(0 + 0))) then return;end v253=Vector2.new(v251.X,v251.Y);v249=3;end end end local function v49() local v256=0;while true do if (v256==0) then if v40.Connection then v40.Connection:Disconnect();end v40.Connection=v13.Heartbeat:Connect(function() local v604=0 -0 ;local v605;local v606;while true do if (v604==(2 + 1)) then if (v40.CurrentTarget and v606 and (v40.CurrentTarget==v606)) then local v793=0 -0 ;local v794;while true do if (v793==0) then v794=v46(v40.CurrentTarget);v47(v794);v793=1;end if (v793==(1 + 0)) then v48();break;end end elseif v605 then local v843=0;local v844;while true do if (v843==(506 -(223 + 282))) then v47(v844);v48();break;end if (v843==0) then v40.CurrentTarget=v605;v844=v46(v605);v843=1;end end else v40.CurrentTarget=nil;v31.MouseDeltaSensitivity=1 + 0 ;end break;end if (v604==(1 -0)) then v40.IsAiming=v42();if  not v40.IsAiming then local v795=0 -0 ;while true do if (v795==(670 -(623 + 47))) then v40.CurrentTarget=nil;v31.MouseDeltaSensitivity=46 -(32 + 13) ;v795=1 + 0 ;end if (v795==1) then return;end end end v604=2;end if (v604==2) then v605=v45(v39.MagnetRadius,false);v606=v45(v39.StickyRadius,true);v604=3 + 0 ;end if (v604==(1801 -(1070 + 731))) then if  not v40.Enabled then return;end v41();v604=1;end end end);break;end end end local function v50() local v257=0 + 0 ;local v258;while true do if (v257==(1404 -(1257 + 147))) then v258=0 + 0 ;while true do if (v258==0) then if v40.Connection then local v762=0 -0 ;local v763;while true do if (v762==(133 -(98 + 35))) then v763=0 + 0 ;while true do if (v763==0) then v40.Connection:Disconnect();v40.Connection=nil;break;end end break;end end end v40.CurrentTarget=nil;v258=3 -2 ;end if (v258==(6 -4)) then v40.MouseMoveTime=0 + 0 ;v31.MouseDeltaSensitivity=1 + 0 ;break;end if (v258==(1 + 0)) then v40.LastMousePosition=nil;v40.MouseMoving=false;v258=2;end end break;end end end local v25=v10:CreateToggle({[v7("\151\178\170\26","\144\217\211\199\127\232\147")]=v7("\217\38\51\104\244\86\17\77\235\59","\36\152\79\94\72\181\37\98"),[v7("\244\205\85\45\210\214\83\9\214\212\82\58","\95\183\184\39")]=false,[v7("\147\51\230\33","\98\213\95\135\70\52\224")]=v7("\223\170\196\86\71\237\170\218\99\107\202\172\206\112\88\251","\52\158\195\169\23"),[v7("\89\189\62\120\132\52\120\128","\235\26\220\82\20\230\85\27")]=function(v259) local v260=557 -(395 + 162) ;local v261;while true do if (v260==(0 + 0)) then v261=1941 -(816 + 1125) ;while true do if (v261==0) then v40.Enabled=v259;if v259 then local v764=0 -0 ;while true do if (v764==(1148 -(701 + 447))) then v49();print(v7("\179\132\234\205\92\157\163\212\130\85\129\172\169\227\103\155\168\250\214\52\137\181\224\212\117\140\174","\20\232\193\137\162"));break;end end else local v765=0 -0 ;while true do if (v765==(0 -0)) then v50();print(v7("\25\250\198\169\207\153\21\76\98\254\204\171\167\173\4\98\43\204\209\230\227\137\4\112\54\214\211\167\227\131","\17\66\191\165\198\135\236\119"));break;end end end break;end end break;end end end});local v26=v10:CreateDropdown({[v7("\33\174\163\22","\177\111\207\206\115\159\136\140")]=v7("\53\136\2\0\209\15\91\10\201\51\27\198\95\80","\63\101\233\112\116\180\47"),[v7("\236\43\249\27\247\56\208","\86\163\91\141\114\152")]={v7("\123\14\117\119","\90\51\107\20\19"),v7("\184\224\149\234\47\185\255\151\252\50","\93\237\144\229\143"),v7("\33\249\226\10\4","\38\117\150\144\121\107"),v7("\31\186\224\62\34\182","\90\77\219\142")},[v7("\197\17\51\43\73\9\110\201\20\53\48\67\9","\26\134\100\65\89\44\103")]=v7("\217\230\49\39","\196\145\131\80\67"),[v7("\56\188\7\15","\136\126\208\102\104\120")]=v7("\89\131\195\98\188\65\52\66\108\181\250\66\189\85\56\69\72\139\220\87","\49\24\234\174\35\207\50\93"),[v7("\47\243\241\132\115\13\241\246","\17\108\146\157\232")]=function(v262) v39.TargetPart=v262;print(v7("\112\230\23\226\7\189\73\254\84\204\35\190\68\153\84","\200\43\163\116\141\79")   .. v262 );end});local v51=v10:CreateSlider({[v7("\145\55\48\134","\131\223\86\93\227\208\148")]="Força da Assistência",[v7("\209\68\184\177\24","\213\131\37\214\214\125")]={12 -7 ,80},[v7("\15\37\38\173\228\43\46\43\171","\129\70\75\69\223")]=1,[v7("\117\222\245\239\117\247","\143\38\171\147\137\28")]="%",[v7("\243\151\171\225\6\237\192\230\131\181\230\6","\180\176\226\217\147\99\131")]=18 + 7 ,[v7("\245\181\46\0","\103\179\217\79")]=v7("\107\190\17\244\82\159\170\89\163\35\230\85\158\166\68\176\8\221","\195\42\215\124\181\33\236"),[v7("\46\88\59\50\39\249\14\82","\152\109\57\87\94\69")]=function(v264) v39.AssistStrength=v264/(59 + 41) ;print("[EcoHub] Força: "   .. v264   .. "%" );end});local v52=v10:CreateSlider({[v7("\215\214\7\166","\200\153\183\106\195\222\178\52")]="Raio de Atração",[v7("\0\226\134\58\76","\58\82\131\232\93\41")]={109 -79 ,200},[v7("\170\89\211\7\88\50\134\89\196","\95\227\55\176\117\61")]=1527 -(251 + 1271) ,[v7("\43\107\37\77\162\0","\203\120\30\67\43")]=v7("\225\61","\185\145\69\45\143"),[v7("\169\10\11\180\217\132\11\47\167\208\159\26","\188\234\127\121\198")]=80,[v7("\30\62\18\132","\227\88\82\115")]=v7("\98\22\183\134\17\96\74\12\174\152\47\114\68\17\191\179\48\114\71\22\175\180","\19\35\127\218\199\98"),[v7("\63\250\6\238\30\250\9\233","\130\124\155\106")]=function(v266) v39.MagnetRadius=v266;print("[EcoHub] Raio atração: "   .. v266 );end});local v53=v10:CreateSlider({[v7("\251\202\251\170","\223\181\171\150\207\195\150\28")]="Raio de Aderência",[v7("\126\59\237\169\12","\105\44\90\131\206")]={45 + 5 ,803 -503 },[v7("\214\238\177\171\13\51\250\238\166","\94\159\128\210\217\104")]=25 -15 ,[v7("\99\236\0\185\86\103","\26\48\153\102\223\63\31\153")]=v7("\18\88","\147\98\32\141"),[v7("\59\86\241\216\3\88\95\46\66\239\223\3","\43\120\35\131\170\102\54")]=198 -78 ,[v7("\114\10\134\177","\228\52\102\231\214\197\208")]=v7("\63\233\120\235\249\152\16\197\10\223\70\222\227\136\18\207\44\225\113\195\255\152","\182\126\128\21\170\138\235\121"),[v7("\168\219\57\234\132\18\51\13","\102\235\186\85\134\230\115\80")]=function(v268) local v269=1259 -(1147 + 112) ;while true do if (v269==(0 + 0)) then v39.StickyRadius=v268;print("[EcoHub] Raio aderência: "   .. v268 );break;end end end});local v54=v10:CreateSlider({[v7("\121\13\51\90","\66\55\108\94\63\18\180")]=v7("\34\136\137\56\36\80\16\140\129\50\103\93\17\205\177\37\38\90\31\132\139\48","\57\116\237\229\87\71"),[v7("\152\176\227\224\114","\39\202\209\141\135\23\142")]={40 -20 ,100},[v7("\214\61\10\24\55\245\250\61\29","\152\159\83\105\106\82")]=1 + 0 ,[v7("\178\211\87\244\192\68","\60\225\166\49\146\169")]="%",[v7("\12\11\61\56\4\9\59\40\46\38\20\2","\103\79\126\79\74\97")]=762 -(335 + 362) ,[v7("\156\115\210\116","\122\218\31\179\19\62")]=v7("\146\223\192\224\218\178\76\160\194\242\245\219\160\70\184\223\195\198\250\177\64\182\210","\37\211\182\173\161\169\193"),[v7("\212\59\65\213\42\122\186\252","\217\151\90\45\185\72\27")]=function(v270) v39.TrackingSpeed=v270/100 ;print(v7("\248\89\228\29\126\214\126\218\82\96\198\112\232\17\95\199\125\227\23\22\215\110\230\17\93\202\114\224\72\22","\54\163\28\135\114")   .. v270   .. "%" );end});local v55=v10:CreateSlider({[v7("\6\218\80\135","\31\72\187\61\226\46")]="Desaceleração",[v7("\241\7\77\213\66","\68\163\102\35\178\39\30")]={30 -10 ,95},[v7("\151\126\217\213\6\184\134\31\170","\113\222\16\186\167\99\213\227")]=3 -2 ,[v7("\29\27\253\240\39\22","\150\78\110\155")]="%",[v7("\166\208\53\243\161\16\171\118\132\201\50\228","\32\229\165\71\129\196\126\223")]=340 -270 ,[v7("\229\133\197\134","\181\163\233\164\225\225")]=v7("\113\130\51\86\67\152\55\100\68\180\13\123\95\156\58\120\71\133","\23\48\235\94"),[v7("\95\219\212\81\85\50\209\119","\178\28\186\184\61\55\83")]=function(v272) local v273=0 -0 ;while true do if (v273==0) then v39.SlowdownFactor=v272/(666 -(237 + 329)) ;print("[EcoHub] Desaceleração: "   .. v272   .. "%" );break;end end end});local v56=v10:CreateSlider({[v7("\234\204\74\57","\149\164\173\39\92\146\110")]="Distância Máxima",[v7("\193\38\30\24\31","\123\147\71\112\127\122")]={330 + 170 ,3000},[v7("\229\195\129\99\67\193\200\140\101","\38\172\173\226\17")]=55 + 45 ,[v7("\126\4\42\233\68\9","\143\45\113\76")]=v7("\171\172\9\56\171","\92\216\216\124"),[v7("\120\39\190\82\248\85\38\154\65\241\78\55","\157\59\82\204\32")]=1500,[v7("\30\50\226\253","\209\88\94\131\154\137\138\179")]=v7("\9\168\201\93\13\48\56\49\60\158\233\125\6\7\56\49\60\160\202\127\27","\66\72\193\164\28\126\67\81"),[v7("\196\45\164\84\36\119\228\39","\22\135\76\200\56\70")]=function(v274) v39.MaximumDistance=v274;print("[EcoHub] Distância máxima: "   .. v274 );end});local v57=v10:CreateToggle({[v7("\163\49\245\33","\129\237\80\152\68\61")]="Requer Botão Direito",[v7("\114\189\22\225\25\25\76\103\169\8\230\25","\56\49\200\100\147\124\119")]=false,[v7("\234\50\190\247","\144\172\94\223")]=v7("\5\6\175\102\55\28\171\84\48\48\144\66\53\26\171\85\33\46\171\74\45\1\165","\39\68\111\194"),[v7("\245\167\235\203\123\182\213\173","\215\182\198\135\167\25")]=function(v276) local v277=1124 -(408 + 716) ;local v278;while true do if (0==v277) then v278=0;while true do if (v278==0) then v39.RequireAiming=v276;print(v7("\182\108\233\71\165\92\232\117\205\123\239\89\152\76\248\8\128\64\248\73\215\9","\40\237\41\138")   .. ((v276 and v7("\198\96\243\238\75\195\123","\42\167\20\154\152")) or v7("\78\251\177\67\101\40\92\255\166\77","\65\42\158\194\34\17")) );break;end end break;end end end});local v29=v10:CreateToggle({[v7("\52\38\95\9","\142\122\71\50\108\77\141\123")]=v7("\35\167\237\17\61\28\161\254\10\123\33\171\242\29","\91\117\194\159\120"),[v7("\57\8\44\10\48\255\48\44\28\50\13\48","\68\122\125\94\120\85\145")]=true,[v7("\49\16\206\89","\218\119\124\175\62\168\185")]=v7("\132\249\69\229\182\227\65\215\177\207\124\193\164\253\107\204\160\243\67","\164\197\144\40"),[v7("\160\241\166\135\223\183\128\251","\214\227\144\202\235\189")]=function(v279) local v280=0 -0 ;while true do if (v280==(821 -(344 + 477))) then v39.TeamCheck=v279;print(v7("\214\128\132\116\56\166\81\1\173\147\130\105\25\181\90\63\236\183\199\111\25\190\86\102\173","\92\141\197\231\27\112\211\51")   .. ((v279 and v7("\231\235\131\181\208\226\240","\177\134\159\234\195")) or v7("\185\238\44\161\221\180\253\62\164\198","\169\221\139\95\192")) );break;end end end});local v11=v10:CreateSection(v7("\253\162\77\28\23\10\241\203\73\26\16\2\251\203\50\127\3\20\237\174\81\30\14","\70\190\235\31\95\66"));local v12=game:GetService(v7("\138\238\27\255\224\168\241","\133\218\130\122\134"));local v14=workspace.CurrentCamera;local v15=v12.LocalPlayer;local v58={[v7("\25\241\226\198\208\166\60","\88\92\159\131\164\188\195")]=false,[v7("\163\33\179\68\197","\189\224\78\223\43\183\139")]=Color3.fromRGB(0 + 0 ,255,1761 -(1188 + 573) ),[v7("\29\245\144\19","\161\78\156\234\118")]=50,[v7("\147\191\192\223\172\185\204\207\180","\188\199\215\169")]=5 -3 ,[v7("\200\27\94\117\251\236\8\77\126\230\255\16","\136\156\105\63\27")]=0.5 + 0 ,[v7("\61\133\117\56\30\136","\84\123\236\25")]=false};local v59={[v7("\211\130\184\20\160\176","\213\144\235\202\119\204")]=nil,[v7("\0\23\208\36\45\32\89\42\23\208","\45\67\120\190\74\72\67")]=nil};local function v60() if v59.Circle then v59.Circle:Remove();end local v281=Instance.new(v7("\19\33\255\160\252\134\201\252\41","\137\64\66\141\197\153\232\142"));v281.Name=v7("\38\211\45\142\157\1\243\43\180\139\15\213","\232\99\176\66\198");v281.Parent=v15:WaitForChild(v7("\220\45\41\31\126\159\222\57\229","\76\140\65\72\102\27\237\153"));v281.ResetOnSpawn=false;v281.IgnoreGuiInset=true;local v286=Instance.new(v7("\108\200\23\223\210","\222\42\186\118\178\183\97"));v286.Name=v7("\126\229\86\137\81\233","\234\61\140\36");v286.Parent=v281;v286.BackgroundTransparency=3 -2 ;v286.Size=UDim2.new(0 -0 ,v58.Size,0,v58.Size);v286.Position=UDim2.new(0.5 -0 , -v58.Size/(1531 -(508 + 1021)) ,0.5 + 0 , -v58.Size/(1168 -(228 + 938)) );v286.AnchorPoint=Vector2.new(685 -(332 + 353) ,0);local v293=Instance.new(v7("\20\244\153\125\29\47\216\168","\111\65\189\218\18"));v293.CornerRadius=UDim.new(0.5 -0 ,0 -0 );v293.Parent=v286;local v296=Instance.new(v7("\118\98\40\33\25\83\164\70","\207\35\43\123\85\107\60"));v296.Color=v58.Color;v296.Thickness=v58.Thickness;v296.Transparency=v58.Transparency;v296.Parent=v286;if v58.Filled then v286.BackgroundColor3=v58.Color;v286.BackgroundTransparency=0.8 + 0 ;end v59.Circle=v281;return v281;end local function v61() local v305=0 + 0 ;local v306;while true do if (v305==0) then if ( not v59.Circle or  not v58.Enabled) then return;end v306=v59.Circle:FindFirstChild(v7("\83\163\178\233\117\117","\25\16\202\192\138"));v305=3 -2 ;end if (v305==(424 -(18 + 405))) then if v306 then local v641=0;local v642;while true do if (v641==(1 + 1)) then if v58.Filled then local v830=0;while true do if (v830==(0 + 0)) then v306.BackgroundColor3=v58.Color;v306.BackgroundTransparency=0.8 -0 ;break;end end else v306.BackgroundTransparency=1;end break;end if (v641==(978 -(194 + 784))) then v306.Size=UDim2.new(1770 -(694 + 1076) ,v58.Size,1904 -(122 + 1782) ,v58.Size);v306.Position=UDim2.new(0.5 + 0 , -v58.Size/2 ,0.5 + 0 , -v58.Size/(2 + 0) );v641=1 + 0 ;end if (v641==(2 -1)) then v642=v306:FindFirstChild(v7("\200\226\158\246\187\251\246\206","\148\157\171\205\130\201"));if v642 then local v832=0 + 0 ;while true do if (v832==(1971 -(214 + 1756))) then v642.Transparency=v58.Transparency;break;end if ((0 -0)==v832) then v642.Color=v58.Color;v642.Thickness=v58.Thickness;v832=1;end end end v641=2;end end end break;end end end local function v62() if v58.Enabled then local v429=0 + 0 ;while true do if (v429==0) then v60();print("[EcoHub] Círculo verde ativado");break;end end else local v430=0 + 0 ;local v431;while true do if (v430==(585 -(217 + 368))) then v431=0;while true do if (v431==0) then if v59.Circle then local v833=0 -0 ;while true do if (v833==(0 + 0)) then v59.Circle:Destroy();v59.Circle=nil;break;end end end print("[EcoHub] Círculo verde desativado");break;end end break;end end end end local v25=v10:CreateToggle({[v7("\13\213\121\44","\150\67\180\20\73\177")]="Ativar Círculo",[v7("\174\13\8\95\136\22\14\123\140\20\15\72","\45\237\120\122")]=false,[v7("\241\228\163\43","\76\183\136\194")]=v7("\89\239\247\59\92\74\32\117\225\226\52\85","\116\26\134\133\88\48\47"),[v7("\61\192\172\232\191\115\29\202","\18\126\161\192\132\221")]=function(v307) local v308=0 + 0 ;while true do if (v308==(0 + 0)) then v58.Enabled=v307;v62();break;end end end});local v63=v10:CreateColorPicker({[v7("\113\41\163\1","\54\63\72\206\100")]="Cor do Círculo",[v7("\235\86\73\117\247","\27\168\57\37\26\133")]=Color3.fromRGB(0,255,889 -(844 + 45) ),[v7("\11\166\125\175","\183\77\202\28\200")]=v7("\52\58\155\11\27\54\170\7\27\60\155","\104\119\83\233"),[v7("\214\249\43\46\65\244\251\44","\35\149\152\71\66")]=function(v309) local v310=0;while true do if (v310==1) then print(v7("\34\205\65\191\18\12\234\127\240\25\22\250\2\177\54\13\237\80\177\62\24","\90\121\136\34\208"));break;end if (v310==(284 -(242 + 42))) then v58.Color=v309;v61();v310=1 -0 ;end end end});local v64=v10:CreateSlider({[v7("\233\15\88\27","\126\167\110\53")]=v7("\9\17\35\249\210\55\50","\95\93\112\78\152\188"),[v7("\243\244\139\18\225","\178\161\149\229\117\132\222")]={1210 -(132 + 1068) ,1823 -(214 + 1409) },[v7("\161\213\222\190\164\27\163\45\156","\67\232\187\189\204\193\118\198")]=4 + 1 ,[v7("\184\59\179\38\50\26","\143\235\78\213\64\91\98")]=v7("\157\80","\214\237\40\228\137\16"),[v7("\166\246\253\203\6\168\145\213\238\213\22\163","\198\229\131\143\185\99")]=1684 -(497 + 1137) ,[v7("\119\128\169\116","\19\49\236\200")]=v7("\221\62\228\180\232\191\205\62\236\178","\218\158\87\150\215\132"),[v7("\216\31\213\238\52\35\206\240","\173\155\126\185\130\86\66")]=function(v311) v58.Size=v311;v61();print(v7("\222\131\185\200\160\249\231\155\250\243\137\225\228\168\178\200\210\172","\140\133\198\218\167\232")   .. v311 );end});local v65=v10:CreateSlider({[v7("\155\47\185\120","\228\213\78\212\29")]=v7("\162\95\166\0\248\148\89\164\4","\139\231\44\214\101"),[v7("\235\238\8\89\21","\118\185\143\102\62\112\209\81")]={290 -(181 + 108) ,10},[v7("\117\126\42\244\160\24\25\54\72","\88\60\16\73\134\197\117\124")]=1 + 0 ,[v7("\99\255\254\206\72\72","\33\48\138\152\168")]=v7("\98\14","\87\18\118\80\49\161"),[v7("\111\11\200\178\181\66\10\236\161\188\89\27","\208\44\126\186\192")]=2,[v7("\209\22\165\193","\46\151\122\196\166\116\156\169")]=v7("\198\228\84\25\247\224\217\78\19\248\238\227\67\9\232","\155\133\141\38\122"),[v7("\6\43\160\77\77\126\166\46","\197\69\74\204\33\47\31")]=function(v313) local v314=0 -0 ;while true do if ((2 -1)==v314) then print(v7("\203\106\89\136\216\90\88\186\176\106\73\151\245\92\73\146\226\78\0\199","\231\144\47\58")   .. v313 );break;end if (v314==0) then v58.Thickness=v313;v61();v314=1 + 0 ;end end end});local v66=v10:CreateSlider({[v7("\156\217\215\112","\89\210\184\186\21\120\93\175")]="Transparência",[v7("\131\82\114\210\124","\90\209\51\28\181\25")]={476 -(296 + 180) ,100},[v7("\249\117\84\252\186\221\126\89\250","\223\176\27\55\142")]=1408 -(1183 + 220) ,[v7("\23\174\200\179\45\163","\213\68\219\174")]="%",[v7("\40\245\49\245\47\203\43\73\10\236\54\226","\31\107\128\67\135\74\165\95")]=50,[v7("\254\228\253\74","\209\184\136\156\45\33")]=v7("\36\193\103\11\180\2\252\103\9\182\20\216\116\26\189\9\203\108","\216\103\168\21\104"),[v7("\91\172\79\168\122\172\64\175","\196\24\205\35")]=function(v315) local v316=0;while true do if (v316==(1265 -(1037 + 228))) then v58.Transparency=v315/100 ;v61();v316=1 -0 ;end if (v316==(2 -1)) then print("[EcoHub] Transparência: "   .. v315   .. "%" );break;end end end});local v67=v10:CreateToggle({[v7("\0\138\238\3","\102\78\235\131")]="Círculo Preenchido",[v7("\217\59\38\86\66\55\163\2\251\34\33\65","\84\154\78\84\36\39\89\215")]=false,[v7("\219\237\87\95","\101\157\129\54\56")]=v7("\62\160\152\168\47\124\59\160\134\167\38\125","\25\125\201\234\203\67"),[v7("\90\245\20\15\22\38\16\114","\115\25\148\120\99\116\71")]=function(v317) local v318=0 -0 ;while true do if (v318==1) then print(v7("\55\24\186\43\105\25\63\132\100\113\30\56\188\42\66\4\52\189\43\27\76","\33\108\93\217\68")   .. ((v317 and v7("\218\95\168\187\218\79\174","\205\187\43\193")) or v7("\250\119\22\222\234\123\19\222\250\125","\191\158\18\101")) );break;end if (v318==(734 -(527 + 207))) then v58.Filled=v317;v61();v318=1;end end end});local v68=v9:CreateTab(v7("\230\194\147\178\168\202\209\142\182\239\241\198\139\178\191\202\209\147\178","\207\165\163\231\215"));local v11=v68:CreateSection(v7("\242\220\213\115\20\95\244\205\220\22\20\92\231\192\220\100\100\61\134\216\203\101\1\94\231\213","\16\166\153\153\54\68"));local v12=game:GetService(v7("\226\191\193\95\49\51\234","\153\178\211\160\38\84\65"));local v13=game:GetService(v7("\176\30\84\24\135\25\76\34\129\14","\75\226\107\58"));local v14=workspace.CurrentCamera;local v15=v12.LocalPlayer;local v69={[v7("\125\208\16\120\29\199\201","\173\56\190\113\26\113\162")]=false,[v7("\255\219\33\0\231\196\204\57\33\254\216\202\44\11\244\206","\151\171\190\77\101")]=535 -(187 + 340) ,[v7("\241\42\249\164\219\117\14\198\36","\107\165\79\152\201\152\29")]=true,[v7("\126\73\230\196\70\122\115\75\233\207","\31\55\46\136\171\52")]=true,[v7("\240\61\200\251\226\32\211\251\197","\148\177\72\188")]=false};local v70={[v7("\133\185\89\221\163\181\67\218\169\184","\179\198\214\55")]=nil,[v7("\195\4\125\121\81\240\255\2\124\115\70\199\249\3\124","\179\144\108\18\22\37")]=nil,[v7("\229\182\9\155\202\200\183\47\136\221\193\166\15","\175\166\195\123\233")]=nil,[v7("\219\195\79\78\245\251\234\88\72\252\251\202","\144\143\162\61\41")]={},[v7("\203\218\17\92\81\136\38\238\199","\83\128\179\125\48\18\231")]=1870 -(1298 + 572) ,[v7("\113\182\224\201\116\22\82\184\231\233\78\19\88","\126\61\215\147\189\39")]=0 -0 };local function v18(v319) local v320=170 -(144 + 26) ;local v321;while true do if (v320==(0 -0)) then v321=0 -0 ;while true do local v607=0 + 0 ;while true do if (v607==0) then if ((0 -0)==v321) then if ( not v319 or (v319==v15)) then return false;end if ( not v319.Character or  not v319.Character:FindFirstChild(v7("\80\234\16\68\118\240\20\65","\37\24\159\125"))) then return false;end v321=2 -1 ;end if (v321==(9 -7)) then return true;end v607=1 + 0 ;end if (v607==(1 -0)) then if (v321==1) then if (v69.IgnoreDead and (v319.Character.Humanoid.Health<=(0 + 0))) then return false;end if (v69.TeamCheck and v15.Team and v319.Team and (v319.Team==v15.Team)) then return false;end v321=2;end break;end end end break;end end end local function v71() local v322=0 + 0 ;local v323;while true do if (v322==1) then return v323;end if (v322==(202 -(5 + 197))) then v323={};for v608,v609 in pairs(v12:GetPlayers()) do if v18(v609) then table.insert(v323,v609);end end v322=1;end end end local function v72() local v324=v71();local v325=nil;local v326=math.huge;local v327=v15.Character and v15.Character:FindFirstChild(v7("\242\179\120\67\212\169\124\70\232\169\122\86\234\167\103\86","\34\186\198\21")) ;if  not v327 then return nil;end for v415,v416 in pairs(v324) do if (v416.Character and v416.Character:FindFirstChild(v7("\208\29\200\92\204\247\1\193\111\205\247\28\245\92\208\236","\162\152\104\165\61"))) then local v519=686 -(339 + 347) ;local v520;while true do if (v519==(0 -0)) then v520=(v416.Character.HumanoidRootPart.Position-v327.Position).Magnitude;if (v520<v326) then local v768=0 -0 ;while true do if (v768==(376 -(365 + 11))) then v326=v520;v325=v416;break;end end end break;end end end end return v325;end local function v73(v328) local v329=0;local v330;local v331;local v332;local v333;local v334;while true do local v417=0;while true do if (v417==0) then if ((0 + 0)==v329) then if ( not v328 or  not v328.Character) then return false;end v330=v328.Character:FindFirstChild(v7("\229\58\191\124\126\234\196\43\128\114\127\241\253\46\160\105","\133\173\79\210\29\16"));v329=1;end if (3==v329) then local v681=0 -0 ;while true do if (v681==(0 -0)) then v334=v332-(v333 * v69.TeleportDistance) ;v334=v334 + Vector3.new(924 -(837 + 87) ,1 -0 ,1670 -(837 + 833) ) ;v681=1;end if (v681==(1 + 0)) then v329=1391 -(356 + 1031) ;break;end end end v417=1 + 0 ;end if (v417==2) then if (v329==(1647 -(73 + 1573))) then v331=v15.Character and v15.Character:FindFirstChild(v7("\165\105\224\42\131\115\228\47\191\115\226\63\189\125\255\63","\75\237\28\141")) ;if ( not v330 or  not v331) then return false;end v329=2;end break;end if (v417==1) then if (v329==(1390 -(1307 + 81))) then v332=v330.Position;v333=v330.CFrame.LookVector;v329=237 -(7 + 227) ;end if (v329==(6 -2)) then v331.CFrame=CFrame.new(v334,v332);return true;end v417=168 -(90 + 76) ;end end end end local function v74(v335) local v336=0 -0 ;local v337;local v338;local v339;local v340;local v341;local v342;local v343;while true do if (v336==0) then if ( not v335 or  not v335.Character) then return false;end v337=v335.Character:FindFirstChild(v7("\244\90\205\181","\129\188\63\172\209\79\123\135"));if  not v337 then return false;end v338,v339=v14:WorldToScreenPoint(v337.Position);v336=1 + 0 ;end if (v336==(2 + 0)) then v343=math.sqrt(((v338.X-v341)^2) + ((v338.Y-v342)^(2 + 0)) );if (v343>(979 -729)) then return false;end return true;end if (v336==(261 -(197 + 63))) then if  not v339 then return false;end v340=v14.ViewportSize;v341=v340.X/(1 + 1) ;v342=v340.Y/2 ;v336=1 + 1 ;end end end local function v75(v344) local v345=0 + 0 ;local v346;local v347;local v348;while true do if (v345==(1 + 0)) then if ((v346-v70.LastShootTime)<0.1) then return;end v347=v344.Character:FindFirstChild(v7("\104\225\231\201","\173\32\132\134"));if  not v347 then return;end v345=2;end if (v345==2) then v348=v347.Position;v14.CFrame=CFrame.lookAt(v14.CFrame.Position,v348);mouse1press();v345=3 -0 ;end if (v345==0) then if ( not v69.AutoShoot or  not v344 or  not v344.Character) then return;end if  not v74(v344) then return;end v346=tick();v345=1370 -(618 + 751) ;end if (v345==(3 + 0)) then task.wait(0.05);mouse1release();v70.LastShootTime=v346;break;end end end local function v76(v349) local v350=0;local v351;while true do if (v350==(1910 -(206 + 1704))) then if ( not v349 or  not v349.Character) then return true;end v351=v349.Character:FindFirstChild(v7("\102\14\5\238\160\62\196\74","\173\46\123\104\143\206\81"));v350=1;end if ((1 -0)==v350) then if ( not v351 or (v351.Health<=0)) then return true;end return false;end end end local function v77(v352) if ( not v352 or  not v352.Character) then return false;end local v353=v352.Character:FindFirstChild(v7("\156\8\47\139\75\140\8\176","\97\212\125\66\234\37\227"));if  not v353 then return false;end local v354=v353.Health;local v355=v70.TargetHealth[v352.UserId] or v354 ;v70.TargetHealth[v352.UserId]=v354;if ((v355-v354)>=(199 -99)) then return true;end return false;end local function v78() if (v70.CurrentTarget and  not v76(v70.CurrentTarget)) then if v77(v70.CurrentTarget) then local v610=0;local v611;while true do if (v610==0) then v611=0 + 0 ;while true do if (v611==(1275 -(155 + 1120))) then print(v7("\177\198\181\58\54\159\225\139\117\63\134\245\185\117\10\133\238\185\32\94\135\246\191\33\17\202\231\183\59\17\198\163\187\32\26\139\237\178\58\94\154\226\164\52\94\135\226\191\38\94\154\241\185\45\23\135\236\248\123\80","\126\234\131\214\85"));return v72();end end break;end end end end local v357=v71();if ( #v357==0) then return nil;end return v72();end local function v79() local v358=1506 -(396 + 1110) ;while true do if (v358==0) then if v70.Connection then v70.Connection:Disconnect();end if v70.ShootConnection then v70.ShootConnection:Disconnect();end v358=2 -1 ;end if ((1 + 0)==v358) then v70.Connection=v13.Heartbeat:Connect(function() if  not v69.Enabled then return;end if ( not v15.Character or  not v15.Character:FindFirstChild(v7("\172\192\68\91\65\139\220\77\104\64\139\193\121\91\93\144","\47\228\181\41\58"))) then return;end if ( not v70.CurrentTarget or v76(v70.CurrentTarget)) then if (v70.CurrentTarget and v76(v70.CurrentTarget)) then local v769=0;local v770;while true do if ((0 + 0)==v769) then v770=0 + 0 ;while true do if (v770==(977 -(230 + 746))) then print(v7("\157\217\218\52\43\37\29\155\188\248\55\21\63\95\163\240\208\54\10\62\30\162\243\152\123\55\63\11\167\240\153\63\6\112\20\175\240\213\40\89\112","\127\198\156\185\91\99\80")   .. v70.KillCount );print(v7("\206\63\207\255\143\30\59\227\181\42\222\255\164\30\43\223\251\30\195\176\169\4\47\209\181\27\192\230\168\69\119\144","\190\149\122\172\144\199\107\89"));break;end if (v770==(601 -(473 + 128))) then v70.KillCount=v70.KillCount + (49 -(39 + 9)) ;v70.TargetHealth[v70.CurrentTarget.UserId]=nil;v770=267 -(38 + 228) ;end end break;end end end v70.CurrentTarget=v78();if v70.CurrentTarget then print(v7("\9\32\242\241\214\39\7\204\190\208\61\19\254\190\255\62\19\254\190\237\55\9\244\253\247\61\11\240\250\241\104\69","\158\82\101\145\158")   .. v70.CurrentTarget.Name );local v771=v70.CurrentTarget.Character and v70.CurrentTarget.Character:FindFirstChild(v7("\88\235\15\23\74\127\247\6","\36\16\158\98\118")) ;if v771 then v70.TargetHealth[v70.CurrentTarget.UserId]=v771.Health;end task.wait(0.3);else local v772=0 -0 ;while true do if ((473 -(106 + 367))==v772) then print(v7("\251\51\192\244\112\253\37\216\128\56\198\245\80\253\42\165\201\24\202\246\81\239\40\165\196\31\208\235\87\230\46\243\197\26","\133\160\118\163\155\56\136\71"));task.wait(1);v772=1;end if (v772==(1 + 0)) then return;end end end end if (v70.CurrentTarget and  not v76(v70.CurrentTarget)) then if v77(v70.CurrentTarget) then local v773=1862 -(354 + 1508) ;local v774;while true do if (0==v773) then v774=0 -0 ;while true do if (v774==1) then if v70.CurrentTarget then print(v7("\32\140\167\219\110\177\160\11\91\135\171\194\73\228\163\58\13\166\254\148","\86\123\201\196\180\38\196\194")   .. v70.CurrentTarget.Name );end break;end if (v774==(0 + 0)) then print(v7("\205\135\114\253\158\10\183\203\226\80\254\160\16\245\226\173\124\253\163\95\228\166\242\58\178\178\26\245\242\163\127\253\247\95\152\227\166\112\252\178\16\245\230\163\99\243\246\30\185\224\173\49\255\183\22\166\182\178\99\253\174\22\184\249\236\63\188","\213\150\194\17\146\214\127"));v70.CurrentTarget=v72();v774=1 + 0 ;end end break;end end end v73(v70.CurrentTarget);end end);if v69.AutoShoot then v70.ShootConnection=v13.Heartbeat:Connect(function() if ( not v69.Enabled or  not v69.AutoShoot) then return;end if (v70.CurrentTarget and  not v76(v70.CurrentTarget)) then v75(v70.CurrentTarget);end end);end break;end end end local function v80() local v359=0;while true do if (v359==(1 -0)) then v70.CurrentTarget=nil;v70.TargetHealth={};v359=2;end if (v359==2) then print(v7("\204\205\218\160\223\253\219\146\183\220\220\163\242\248\214\189\227\168\242\166\251\228\153\171\242\251\216\187\254\254\216\171\248\168\148\239\195\231\205\174\251\168\221\170\183\227\208\163\251\251\131\239","\207\151\136\185")   .. v70.KillCount );break;end if (v359==0) then if v70.Connection then v70.Connection:Disconnect();v70.Connection=nil;end if v70.ShootConnection then local v645=1244 -(334 + 910) ;local v646;while true do if (v645==(895 -(92 + 803))) then v646=0;while true do if (v646==0) then v70.ShootConnection:Disconnect();v70.ShootConnection=nil;break;end end break;end end end v359=1;end end end local v25=v68:CreateToggle({[v7("\134\130\37\135","\17\200\227\72\226\20\24")]=v7("\145\84\15\216\137\197\234\243\181\81\20\197\221\177\196\246\188\77","\159\208\33\123\183\169\145\143"),[v7("\209\79\42\36\247\84\44\0\243\86\45\51","\86\146\58\88")]=false,[v7("\126\211\235\199","\154\56\191\138\160\206\137\86")]=v7("\178\92\249\130\108\53\147\216\173\80\249\139\67\14\142\203\129\85\240","\172\230\57\149\231\28\90\225"),[v7("\33\171\138\222\42\218\1\161","\187\98\202\230\178\72")]=function(v360) v69.Enabled=v360;if v360 then v70.KillCount=0 + 0 ;v70.TargetHealth={};v79();print(v7("\26\196\167\63\98\52\227\153\112\126\36\237\161\32\69\51\245\228\27\67\45\237\228\49\94\40\247\165\52\69","\42\65\129\196\80"));else v80();end end});local v81=v10:CreateToggle({[v7("\44\75\80\223","\142\98\42\61\186\119\103\98")]=v7("\25\170\22\7\120\140\10\7\55\171\66\32\61\190\6","\104\88\223\98"),[v7("\103\226\240\220\7\227\80\193\227\194\23\232","\141\36\151\130\174\98")]=false,[v7("\162\118\195\10","\109\228\26\162")]=v7("\127\240\233\119\211\238\81\234\233\71\212\233\89\226\241\125","\134\62\133\157\24\128"),[v7("\36\164\22\213\45\176\213\12","\182\103\197\122\185\79\209")]=function(v362) v69.AutoShoot=v362;if v362 then local v434=1181 -(1035 + 146) ;while true do if (v434==(616 -(230 + 386))) then if v69.Enabled then v79();end print(v7("\200\162\226\120\40\93\241\186\161\86\21\92\252\199\210\127\15\71\231\199\224\99\9\94\242\131\238","\40\147\231\129\23\96"));break;end end else local v435=0;while true do if (v435==(0 + 0)) then if v70.ShootConnection then local v733=1510 -(353 + 1157) ;while true do if (v733==(1114 -(53 + 1061))) then v70.ShootConnection:Disconnect();v70.ShootConnection=nil;break;end end end print(v7("\78\221\143\74\147\185\222\72\184\173\80\175\163\156\70\240\131\74\175\236\216\112\235\141\81\178\186\221\113\247","\188\21\152\236\37\219\204"));break;end end end end});local v28=v68:CreateSlider({[v7("\110\232\58\9","\108\32\137\87")]=v7("\142\225\19\178\46\247\72\80\171\168\33\178\61\248\88","\57\202\136\96\198\79\153\43"),[v7("\153\34\164\160\136","\152\203\67\202\199\237\199")]={2 + 1 ,37 -22 },[v7("\211\77\163\29\26\120\124\232\238","\134\154\35\192\111\127\21\25")]=2 -1 ,[v7("\139\51\15\12\41\202","\178\216\70\105\106\64")]=v7("\127\56\110\227\205\198","\224\95\75\26\150\169\181\180"),[v7("\40\207\202\58\65\162\98\61\219\212\61\65","\22\107\186\184\72\36\204")]=20 -12 ,[v7("\193\177\37\73","\110\135\221\68\46")]=v7("\215\51\0\238\222\188\41\247\18\5\248\218\178\53\224\51\51\216\194\186\63\230\36","\91\131\86\108\139\174\211"),[v7("\216\42\180\27\95\250\40\179","\61\155\75\216\119")]=function(v364) v69.TeleportDistance=v364;print(v7("\63\142\177\51\112\28\223\57\235\150\53\75\29\220\10\168\187\61\24\13\216\2\162\188\53\92\8\135\68","\189\100\203\210\92\56\105")   .. v364   .. v7("\111\66\233\61\43\66","\72\79\49\157") );end});local v29=v68:CreateToggle({[v7("\166\177\60\185","\220\232\208\81")]=v7("\195\187\247\57\42\83\162\244\172\165\4\37\87\164","\193\149\222\133\80\76\58"),[v7("\229\72\93\192\195\83\91\228\199\81\90\215","\178\166\61\47")]=true,[v7("\221\70\233\125","\94\155\42\136\26\170")]=v7("\176\58\42\176\148\48\52\161\175\54\42\185\187\11\35\180\137\28\46\176\135\52","\213\228\95\70"),[v7("\9\186\206\136\117\43\184\201","\23\74\219\162\228")]=function(v366) local v367=0 + 0 ;local v368;while true do if (v367==(1212 -(615 + 597))) then v368=0 + 0 ;while true do if ((0 -0)==v368) then v69.TeamCheck=v366;print(v7("\2\195\69\160\19\44\228\123\239\13\60\244\79\169\50\58\231\69\174\52\121\226\67\239\47\48\235\67\245\123","\91\89\134\38\207")   .. ((v366 and v7("\69\250\193\32\18\212\38","\71\36\142\168\86\115\176")) or v7("\219\164\97\190\23\183\64\72\219\160","\41\191\193\18\223\99\222\54")) );break;end end break;end end end});local v82=v68:CreateButton({[v7("\133\39\202\47","\202\203\70\167\74")]=v7("\30\4\207\54\101\108\42\213\63\125\108\34\211\38\127\56\4\206","\17\76\97\188\83"),[v7("\166\38\213\59\50\130\72\168","\195\229\71\185\87\80\227\43")]=function() v70.KillCount=0 + 0 ;v70.TargetHealth={};print(v7("\219\217\3\95\199\245\254\61\16\204\239\242\20\81\235\239\238\64\84\234\160\247\9\92\227\243\188\18\85\252\229\232\1\84\224","\143\128\156\96\48"));end});local v83=v9:CreateTab(v7("\155\208\228\23\16\183\195\249\19\87\143\208\252\30\63\185\210\251\23\5","\119\216\177\144\114"));local v11=v83:CreateSection(v7("\254\8\213\110\225\8\218\105\236\27\185\114\229\8\192\103\251\26\185\15\137\8\203\113\236\7\216\110","\34\169\73\153"));local v25=v83:CreateToggle({[v7("\132\237\6\142","\235\202\140\107")]=v7("\59\85\24\132\193\6\212\238\41\70\116\152\197\6\206\224\62\71","\165\108\20\84\200\137\71\151"),[v7("\89\161\57\154\127\186\63\190\123\184\62\141","\232\26\212\75")]=false,[v7("\17\69\115\239","\151\87\41\18\136")]=v7("\111\160\205\215\242\94\254","\158\59\207\170\176"),[v7("\108\95\63\69\142\78\93\56","\236\47\62\83\41")]=function(v371) if v371 then _G.WallhackerEnabled=true;local v436=game:GetService(v7("\202\165\33\34\175\144\233","\226\154\201\64\91\202"));local v437=game:GetService(v7("\243\92\19\43\79\174\215\64\30\29","\220\161\41\125\120\42"));local v438=v436.LocalPlayer;local v439={};local function v440(v528) if ((v528==v438) or  not v528.Character or  not v528.Character:FindFirstChild(v7("\148\100\173\15\178\126\169\10\142\126\175\26\140\112\178\26","\110\220\17\192"))) then return;end if (v439[v528] and v439[v528].billboardGui) then v439[v528].billboardGui:Destroy();end local v529=v528.Character;local v530=v529.HumanoidRootPart;local v531=Instance.new(v7("\86\112\56\22\233\56\240\181\112\94\33\19","\199\20\25\84\122\139\87\145"));v531.Name=v7("\98\58\237\140\20\242","\138\39\105\189\206\123");v531.Adornee=v530;v531.Size=UDim2.new(4,0 + 0 ,4 + 2 ,0);v531.StudsOffset=Vector3.new(1899 -(1056 + 843) ,0,0);v531.AlwaysOnTop=true;v531.Parent=v530;local v538=Instance.new(v7("\57\21\136\32\246","\159\127\103\233\77\147\153\175"));v538.Size=UDim2.new(1 -0 ,0 -0 ,1,0);v538.BackgroundTransparency=0.7 -0 ;v538.BorderSizePixel=2;v538.Parent=v531;local v543=(v528.Team and v528.Team.TeamColor.Color) or Color3.new(1,1 + 0 ,1977 -(286 + 1690) ) ;v538.BackgroundColor3=v543;v538.BorderColor3=v543;local v546=Instance.new(v7("\51\245\252\190\108\202\5\245\232","\171\103\144\132\202\32"));v546.Size=UDim2.new(912 -(98 + 813) ,0 + 0 ,0.2 -0 ,0 + 0 );v546.Position=UDim2.new(0,0, -0.3,507 -(263 + 244) );v546.BackgroundTransparency=1 + 0 ;v546.Text="["   .. v528.Name   .. "]" ;v546.TextColor3=v543;v546.TextScaled=true;v546.Font=Enum.Font.SourceSans;v546.TextStrokeTransparency=1687.5 -(1502 + 185) ;v546.TextStrokeColor3=Color3.new(0 + 0 ,0,0 -0 );v546.Parent=v531;local v558=Instance.new(v7("\36\42\241\24\60\46\235\9\28","\108\112\79\137"));v558.Size=UDim2.new(1,0 -0 ,1527.2 -(629 + 898) ,0 -0 );v558.Position=UDim2.new(0 -0 ,365 -(12 + 353) ,1.05,0);v558.BackgroundTransparency=1912 -(1680 + 231) ;v558.TextColor3=v543;v558.TextScaled=true;v558.Font=Enum.Font.SourceSans;v558.TextStrokeTransparency=0.5;v558.TextStrokeColor3=Color3.new(0 + 0 ,0 + 0 ,0);v558.Parent=v531;v439[v528]={[v7("\61\203\120\36\175\14\232\39\59\229\97\33","\85\95\162\20\72\205\97\137")]=v531,[v7("\241\239\43\209\8","\173\151\157\74\188\109\152")]=v538,[v7("\42\9\53\216\240\85\215\246\40","\147\68\104\88\189\188\52\181")]=v546,[v7("\30\129\152\196\27\134\136\213\54\137\137\213\22","\176\122\232\235")]=v558};end local v441=0;local v442=1149.1 -(212 + 937) ;local function v443() if  not _G.WallhackerEnabled then return;end local v569=tick();if ((v569-v441)<v442) then return;end v441=v569;if ( not v438.Character or  not v438.Character:FindFirstChild(v7("\168\96\55\78\224\143\124\62\125\225\143\97\10\78\252\148","\142\224\21\90\47"))) then return;end local v570=v438.Character.HumanoidRootPart.Position;for v612,v613 in pairs(v439) do if ( not v612 or  not v612.Parent or  not v613 or  not v613.billboardGui or  not v613.billboardGui.Parent) then v439[v612]=nil;continue;end if (v612.Character and v612.Character:FindFirstChild(v7("\92\193\42\87\170\132\140\112\230\40\89\176\187\132\102\192","\229\20\180\71\54\196\235"))) then local v688=0;local v689;local v690;while true do if ((2 + 1)==v688) then v613.nameLabel.TextColor3=v690;v613.distanceLabel.TextColor3=v690;break;end if (v688==(1064 -(111 + 951))) then v613.frame.BorderColor3=v690;v613.nameLabel.Text="["   .. v612.Name   .. "]" ;v688=1 + 2 ;end if (1==v688) then v690=(v612.Team and v612.Team.TeamColor.Color) or Color3.new(28 -(18 + 9) ,1,1 + 0 ) ;v613.frame.BackgroundColor3=v690;v688=536 -(31 + 503) ;end if (v688==(1632 -(595 + 1037))) then v689=(v612.Character.HumanoidRootPart.Position-v570).Magnitude;v613.distanceLabel.Text=math.floor(v689)   .. "m" ;v688=1;end end end end end local function v444(v571) if  not _G.WallhackerEnabled then return;end local function v572() if _G.WallhackerEnabled then local v691=0;while true do if (v691==(1444 -(189 + 1255))) then task.wait(0.5);v440(v571);break;end end end end if v571.Character then v572();end v571.CharacterAdded:Connect(v572);end local function v445(v573) if v439[v573] then local v647=0 + 0 ;while true do if (v647==(0 -0)) then if (v439[v573].billboardGui and v439[v573].billboardGui.Parent) then v439[v573].billboardGui:Destroy();end v439[v573]=nil;break;end end end end for v574,v575 in pairs(v436:GetPlayers()) do if (v575~=v438) then v444(v575);end end _G.PlayerAddedConnection=v436.PlayerAdded:Connect(v444);_G.PlayerRemovingConnection=v436.PlayerRemoving:Connect(v445);_G.ESPUpdateConnection=v437.Heartbeat:Connect(v443);print(v7("\18\91\194\236\221\191\130\20\62\246\226\249\166\136\40\125\202\230\231\234\176\37\127\216\230\231\234\129\61\119\215\226\241\165","\224\73\30\161\131\149\202"));else _G.WallhackerEnabled=false;for v576,v577 in pairs(espBoxes or {} ) do if (v577 and v577.billboardGui and v577.billboardGui.Parent) then v577.billboardGui:Destroy();end end espBoxes={};if _G.PlayerAddedConnection then local v614=1279 -(1170 + 109) ;local v615;while true do if (v614==(1817 -(348 + 1469))) then v615=1289 -(1115 + 174) ;while true do if (v615==(0 -0)) then _G.PlayerAddedConnection:Disconnect();_G.PlayerAddedConnection=nil;break;end end break;end end end if _G.PlayerRemovingConnection then _G.PlayerRemovingConnection:Disconnect();_G.PlayerRemovingConnection=nil;end if _G.ESPUpdateConnection then _G.ESPUpdateConnection:Disconnect();_G.ESPUpdateConnection=nil;end print(v7("\202\192\242\95\217\240\243\109\177\210\240\92\253\237\240\83\250\224\227\16\193\233\240\73\244\247\177\84\244\246\240\68\248\243\240\84\254","\48\145\133\145"));end end});local v11=v83:CreateSection(v7("\109\109\153\194\249\13\121\103\144\220\145\8\127\110\135\199\226\108\23\12\148\220\226\9\116\109\153","\76\58\44\213\142\177"));local v25=v83:CreateToggle({[v7("\229\37\31\40","\24\171\68\114\77")]=v7("\216\60\124\126\175\255\39\134\202\47\16\118\162\252\54\132\220","\205\143\125\48\50\231\190\100"),[v7("\226\178\6\23\228\237\203\148\192\171\1\0","\194\161\199\116\101\129\131\191")]=false,[v7("\202\40\201\175","\194\140\68\168\200\151")]=v7("\118\244\210\34\249\71\170","\149\34\155\181\69"),[v7("\32\252\217\246\1\252\214\241","\154\99\157\181")]=function(v372) if v372 then _G.DebrisWallhackerEnabled=true;local v446=game:GetService(v7("\189\3\237\185\233\159\28","\140\237\111\140\192"));local v447=game:GetService(v7("\52\12\115\43\3\11\107\17\5\28","\120\102\121\29"));local v448=v446.LocalPlayer;local v449={};local function v450(v578) local v579=1014 -(85 + 929) ;local v580;local v581;local v582;while true do if (v579==4) then v582=Instance.new(v7("\202\35\156\180\94\165\252\35\136","\196\158\70\228\192\18"));v582.Size=UDim2.new(1 + 0 ,1867 -(1151 + 716) ,0.4 + 0 ,0);v582.Position=UDim2.new(0 + 0 ,1704 -(95 + 1609) ,0.6 -0 ,758 -(364 + 394) );v582.BackgroundTransparency=1;v582.Text=v7("\26\31\28\75\205\88\80\2","\185\42\63\113\46");v579=5 + 0 ;end if (0==v579) then if ( not v578 or  not v578.Parent) then return;end if (v449[v578] and v449[v578].billboardGui) then v449[v578].billboardGui:Destroy();end v580=Instance.new(v7("\142\234\181\55\174\236\184\41\168\196\172\50","\91\204\131\217"));v580.Name=v7("\234\250\87\198\186\206\219\253\207","\158\174\159\53\180\211\189");v580.Adornee=v578;v579=1 + 0 ;end if (v579==1) then v580.Size=UDim2.new(0,21 + 79 ,0,33 + 7 );v580.StudsOffset=Vector3.new(0 + 0 ,0 + 0 ,0);v580.AlwaysOnTop=false;v580.Parent=v578;v581=Instance.new(v7("\102\248\245\201\91\180\80\248\225","\213\50\157\141\189\23"));v579=1 + 1 ;end if (v579==(2 + 0)) then local v702=0;while true do if (v702==(1 + 1)) then v581.TextColor3=Color3.new(957 -(719 + 237) ,1,2 -1 );v579=3 + 0 ;break;end if (v702==(0 -0)) then v581.Size=UDim2.new(1,0 -0 ,0.6,0);v581.Position=UDim2.new(0,0 -0 ,0,1991 -(761 + 1230) );v702=1;end if (v702==1) then v581.BackgroundTransparency=1;v581.Text=v578.Name;v702=2;end end end if (6==v579) then v582.Parent=v580;v449[v578]={[v7("\214\212\45\53\25\219\220\51\61\60\193\212","\123\180\189\65\89")]=v580,[v7("\204\141\253\225\165\195\142\245\232","\233\162\236\144\132")]=v581,[v7("\182\205\237\14\184\248\92\183\232\255\24\188\250","\63\210\164\158\122\217\150")]=v582};break;end if (v579==(196 -(80 + 113))) then v581.TextScaled=true;v581.Font=Enum.Font.SourceSansBold;v581.TextStrokeTransparency=0;v581.TextStrokeColor3=Color3.new(0,0,0 + 0 );v581.Parent=v580;v579=3 + 1 ;end if (v579==(1 + 4)) then v582.TextColor3=Color3.new(0.8 -0 ,0.8 + 0 ,0.8);v582.TextScaled=true;v582.Font=Enum.Font.SourceSans;v582.TextStrokeTransparency=0 + 0 ;v582.TextStrokeColor3=Color3.new(0,0,1243 -(965 + 278) );v579=1735 -(1391 + 338) ;end end end local function v451() local v583=0 -0 ;local v584;while true do if (v583==(1 + 0)) then if  not v584 then return;end for v734,v735 in pairs(v584:GetDescendants()) do if (v735:IsA(v7("\164\234\143\55\209\9","\104\226\133\227\83\180\123")) or v735:IsA(v7("\46\4\39\85\15","\48\99\107\67")) or v735:IsA(v7("\243\163\110\216\29\122\204\178","\27\190\198\29\176\77")) or v735:IsA(v7("\223\74\239\32","\46\143\43\157\84\201"))) then if ( not v449[v735] and (v735.Name~=v7("\115\125\84\208\86\0\237\100\72","\168\55\24\54\162\63\115"))) then v450(v735);end end end break;end if (v583==(0 -0)) then if  not _G.DebrisWallhackerEnabled then return;end v584=workspace:FindFirstChild(v7("\23\206\244\254\64\235","\152\83\171\150\140\41"));v583=1 + 0 ;end end end local v452=1408 -(496 + 912) ;local v453=0.2 -0 ;local function v454() local v585=0 + 0 ;local v586;local v587;while true do if (v585==(5 -2)) then for v736,v737 in pairs(v449) do if ( not v736 or  not v736.Parent or  not v737 or  not v737.billboardGui or  not v737.billboardGui.Parent) then local v809=0;while true do if (v809==(1330 -(1190 + 140))) then v449[v736]=nil;continue;break;end end end local v738;if (v736:IsA(v7("\7\113\193\126\9","\132\74\30\165\27\101\199\122")) and v736.PrimaryPart) then v738=v736.PrimaryPart.Position;elseif (v736:IsA(v7("\31\230\237\179","\212\79\135\159\199\199\213")) or v736:IsA(v7("\84\165\166\79\108\214\10\109","\120\25\192\213\39\60\183"))) then v738=v736.Position;elseif v736:IsA(v7("\62\79\51\76\29\82","\40\120\32\95")) then local v873=v736:FindFirstChildOfClass(v7("\10\170\43\110","\127\90\203\89\26\207")) or v736:FindFirstChildOfClass(v7("\240\48\188\195\57\252\207\33","\157\189\85\207\171\105")) ;if v873 then v738=v873.Position;end end if v738 then local v811=(v738-v587).Magnitude;v737.distanceLabel.Text=math.floor(v811)   .. v7("\134\172\221\161\17\201\178","\99\166\193\184\213") ;local v813=49 + 51 ;local v814=60;local v815=300;local v816=math.max(v814,v813-((v811/v815) * (v813-v814)) );v737.billboardGui.Size=UDim2.new(718 -(317 + 401) ,v816,0,40);end end break;end if (v585==(949 -(303 + 646))) then if  not _G.DebrisWallhackerEnabled then return;end v586=tick();v585=3 -2 ;end if (v585==(1733 -(1675 + 57))) then if ((v586-v452)<v453) then return;end v452=v586;v585=2 + 0 ;end if (v585==(4 -2)) then if ( not v448.Character or  not v448.Character:FindFirstChild(v7("\63\239\45\129\220\193\30\254\18\143\221\218\39\251\50\148","\174\119\154\64\224\178"))) then return;end v587=v448.Character.HumanoidRootPart.Position;v585=1 + 2 ;end end end local function v455(v588) local v589=977 -(338 + 639) ;while true do if (v589==(379 -(320 + 59))) then if  not _G.DebrisWallhackerEnabled then return;end if (v588:IsA(v7("\240\184\140\191\9\152","\234\182\215\224\219\108")) or v588:IsA(v7("\237\142\191\48\204","\85\160\225\219")) or v588:IsA(v7("\113\0\144\193\6\221\89\72","\43\60\101\227\169\86\188")) or v588:IsA(v7("\64\201\195\171","\87\16\168\177\223\58\172\217"))) then if (v588.Name~=v7("\16\200\91\207\50\39\232\106\237","\91\84\173\57\189")) then task.wait(0.1);v450(v588);end end break;end end end local function v456(v590) if v449[v590] then if (v449[v590].billboardGui and v449[v590].billboardGui.Parent) then v449[v590].billboardGui:Destroy();end v449[v590]=nil;end end v451();local v457=workspace:FindFirstChild(v7("\52\188\14\238\169\197","\182\112\217\108\156\192"));if v457 then local v616=0 + 0 ;while true do if (v616==0) then _G.DebrisAddedConnection=v457.DescendantAdded:Connect(v455);_G.DebrisRemovedConnection=v457.DescendantRemoving:Connect(v456);break;end end end _G.DebrisUpdateConnection=v447.Heartbeat:Connect(v454);print(v7("\145\45\75\224\163\191\10\117\175\188\171\4\68\231\138\169\3\77\253\203\142\13\74\253\130\185\72\73\251\130\188\9\76\224","\235\202\104\40\143"));else local v458=732 -(628 + 104) ;while true do if ((2 -0)==v458) then if _G.DebrisRemovedConnection then local v739=0;while true do if (v739==0) then _G.DebrisRemovedConnection:Disconnect();_G.DebrisRemovedConnection=nil;break;end end end if _G.DebrisUpdateConnection then _G.DebrisUpdateConnection:Disconnect();_G.DebrisUpdateConnection=nil;end v458=1894 -(439 + 1452) ;end if (v458==(1947 -(105 + 1842))) then _G.DebrisWallhackerEnabled=false;for v718,v719 in pairs(debrisESP or {} ) do if (v719 and v719.billboardGui and v719.billboardGui.Parent) then v719.billboardGui:Destroy();end end v458=4 -3 ;end if (v458==(2 -1)) then debrisESP={};if _G.DebrisAddedConnection then local v740=0 -0 ;while true do if (v740==(0 + 0)) then _G.DebrisAddedConnection:Disconnect();_G.DebrisAddedConnection=nil;break;end end end v458=2;end if (3==v458) then print(v7("\54\174\24\182\37\158\25\132\77\188\26\181\1\131\26\186\6\142\9\249\41\142\25\171\4\152\91\189\8\152\26\173\4\157\26\189\2","\217\109\235\123"));break;end end end end});local v84=v9:CreateTab(v7("\10\128\109\85","\221\71\233\30\54\16\176\173"));local v11=v84:CreateSection(v7("\4\206\113\156\1\206\127\141\116\207\123\141\2\213\122\144\6\188\19\255\21\206\109\154\26\221\114","\223\84\156\62"));local v85=game:GetService(v7("\226\249\238\216\167\52\196\232\209\216\165\45\223\255\231","\91\182\156\130\189\215"));local v86=game:GetService(v7("\86\103\184\69\77\118\190\67\119\112\169","\53\30\19\204"));local v12=game:GetService(v7("\201\236\113\157\162\235\243","\199\153\128\16\228"));local v15=v12.LocalPlayer;local v87={[v7("\248\57\205\22\183\193\35\235\30","\199\177\74\133\121")]=false,[v7("\145\218\143\251\54\212\41\176\192\178\249\17\211\38\180","\74\216\169\220\158\87\166")]=false,[v7("\193\48\33\41\80\231\42\29\37\84\239","\58\136\67\115\76")]=false};local function v88() local v373=0 -0 ;local v374;local v375;local v376;while true do if (v373==(1 + 0)) then v376=nil;while true do if (0==v374) then v375,v376=pcall(function() local v741=1164 -(274 + 890) ;local v742;local v743;local v744;while true do if (v741==(0 + 0)) then v742=0 + 0 ;v743=nil;v741=1 + 0 ;end if (v741==1) then v744=nil;while true do if (v742==(1 + 0)) then repeat local v884=string.format(v7("\249\190\204\73\150\122\228\18\246\171\213\92\150\110\185\82\243\166\215\65\203\35\164\80\190\188\137\22\130\33\166\88\226\229\157\74\202\51\174\79\231\175\202\74\202\16\190\95\253\163\219\6\150\47\185\73\222\184\220\92\151\125\138\78\242\236\212\80\136\41\191\0\160\250\136\31\134\53\185\78\254\184\133\28\150","\61\145\202\184\57\229\64\203"),game.PlaceId,v744);local v885=game:HttpGet(v884);local v886=v86:JSONDecode(v885);if (v886 and v886.data) then for v906,v907 in pairs(v886.data) do if ((v907.playing<v907.maxPlayers) and (v907.id~=game.JobId)) then table.insert(v743,v907);end end end v744=v886.nextPageCursor or "" ;until v744==""  return v743;end if (v742==0) then v743={};v744="";v742=1 + 0 ;end end break;end end end);if v375 then return v376;else return {};end break;end end break;end if (v373==0) then v374=0 -0 ;v375=nil;v373=1;end end end local function v89() if v87.IsHopping then local v459=819 -(731 + 88) ;local v460;while true do if (v459==(0 + 0)) then v460=0 + 0 ;while true do if (v460==(0 + 0)) then local v776=0 -0 ;while true do if (v776==0) then print(v7("\103\119\138\72\116\71\139\122\28\120\136\7\89\65\157\70\28\66\155\72\95\71\155\70\82\86\134\7\79\87\155\81\85\86\134\85\18\28\199","\39\60\50\233"));return;end end end end break;end end end v87.IsHopping=true;print(v7("\33\22\160\35\170\61\176\158\90\3\177\35\129\61\160\162\20\55\172\108\145\45\160\181\19\55\172\62\194\41\190\166\27\39\172\62\139\39\252\237\84","\195\122\83\195\76\226\72\210"));local v378=v88();if ( #v378==(0 -0)) then local v461=0;while true do local v591=0 -0 ;while true do if (v591==0) then if (v461==(0 -0)) then print(v7("\223\241\56\241\9\241\214\6\190\15\225\218\51\235\44\164\199\62\236\55\237\208\52\236\97\224\221\40\238\46\234\221\45\251\45","\65\132\180\91\158"));v87.IsHopping=false;v461=1 + 0 ;end if (v461==(1 + 0)) then return;end break;end end end end local v379=v378[math.random(1, #v378)];print(v7("\62\89\210\33\45\105\211\19\69\79\212\60\19\117\213\33\23\60\212\32\6\115\223\58\23\125\213\33\68\60\225\34\4\101\212\60\22\38\145","\78\101\28\177")   .. v379.playing   .. "/"   .. v379.maxPlayers );print(v7("\30\145\227\94\13\161\226\108\101\151\239\95\32\183\244\80\43\176\239\31\107\250","\49\69\212\128"));v85:TeleportToPlaceInstance(game.PlaceId,v379.id,v15);end local function v90() local v380=0 + 0 ;local v381;local v382;local v383;while true do if (v380==(1 + 0)) then v383=nil;while true do if (v381==3) then v383=v382[1];print(v7("\41\220\236\195\159\197\33\47\185\220\201\165\198\42\22\246\253\140\178\222\32\29\247\251\222\182\212\44\83\185\223\192\182\201\38\0\234\181\140","\67\114\153\143\172\215\176")   .. v383.playing   .. "/"   .. v383.maxPlayers );v381=162 -(139 + 19) ;end if ((1 + 0)==v381) then print(v7("\7\234\4\194\13\27\30\1\143\55\223\42\13\9\46\206\9\201\42\78\15\57\221\17\196\33\1\14\124\222\18\204\54\11\92\63\199\2\196\42\64\82\114","\124\92\175\103\173\69\110"));v382=v88();v381=2;end if (v381==(1997 -(1687 + 306))) then print(v7("\133\135\237\1\150\183\236\51\254\129\225\0\187\161\250\15\176\166\225\64\240\236","\110\222\194\142"));v85:TeleportToPlaceInstance(game.PlaceId,v383.id,v15);break;end if (v381==0) then if v87.IsSearchingFull then local v778=0 -0 ;while true do if (v778==(1154 -(1018 + 136))) then print(v7("\44\41\211\253\201\2\14\237\178\203\22\76\213\225\245\22\76\192\224\238\20\25\194\243\239\19\3\144\225\228\5\26\217\246\238\5\66\158\188","\129\119\108\176\146"));return;end end end v87.IsSearchingFull=true;v381=1;end if ((1 + 1)==v381) then if ( #v382==(0 -0)) then print(v7("\250\29\0\56\233\45\1\10\129\22\6\57\201\45\14\119\210\61\17\33\200\60\12\37\129\60\10\36\209\55\13\62\215\61\15","\87\161\88\99"));v87.IsSearchingFull=false;return;end table.sort(v382,function(v745,v746) return v745.playing>v746.playing ;end);v381=3;end end break;end if (v380==(815 -(117 + 698))) then v381=0;v382=nil;v380=482 -(305 + 176) ;end end end local function v91() local v384=0 + 0 ;while true do if (v384==(0 + 0)) then if v87.IsRejoining then local v649=0 -0 ;while true do if ((0 + 0)==v649) then print(v7("\44\252\24\166\122\180\21\228\91\131\83\225\18\202\15\168\18\179\18\218\20\167\87\162\3\216\21\173\93\239\89\151","\193\119\185\123\201\50"));return;end end end v87.IsRejoining=true;v384=1 -0 ;end if ((2 -1)==v384) then print(v7("\76\45\250\41\39\108\29\74\72\203\35\12\118\17\114\11\237\39\1\125\16\55\9\246\102\28\124\13\97\1\253\41\29\55\81\57","\127\23\104\153\70\111\25"));v85:Teleport(game.PlaceId,v15);break;end end end local v92=v84:CreateToggle({[v7("\39\6\171\170","\211\105\103\198\207\75\76\215")]=v7("\253\162\162\249\123\30\250\158\193\183\163","\214\174\199\208\143\30\108\218"),[v7("\50\145\25\184\160\88\204\127\16\136\30\175","\41\113\228\107\202\197\54\184")]=false,[v7("\92\129\57\91","\60\26\237\88")]=v7("\235\47\102\240\171\202\2\123\246\145\236\37\115\225\162\221","\206\184\74\20\134"),[v7("\27\229\226\189\241\75\59\199","\172\88\132\142\209\147\42\88")]=function(v385) if v385 then v89();end end});local v93=v84:CreateToggle({[v7("\169\139\193\8","\222\231\234\172\109\86\149")]=v7("\221\253\207\27\248\253\193\10\173\220\197\10\251\230\196\23\255\175\136\41\248\238\211\29\173\204\200\29\228\224\137","\120\141\143\160"),[v7("\99\185\164\64\69\162\162\100\65\160\163\87","\50\32\204\214")]=false,[v7("\160\75\52\126","\113\230\39\85\25\211")]=v7("\237\190\20\254\34\217\131\68\206\157\19\228\43\244\159\68\217\188\10\237","\43\190\219\102\136\71\171\203"),[v7("\1\127\60\85\32\127\51\82","\57\66\30\80")]=function(v386) if v386 then v90();end end});local v94=v84:CreateToggle({[v7("\7\217\173\16","\228\73\184\192\117\228\89\148")]=v7("\252\140\103\2\202\155\53\38\202\131\122\29\193","\116\175\233\21"),[v7("\221\237\172\84\222\63\43\200\249\178\83\222","\95\158\152\222\38\187\81")]=false,[v7("\222\177\52\181","\168\152\221\85\210\195")]=v7("\152\219\231\145\174\204\199\130\161\209\252\137\148\234\250\128\172\210\240","\231\203\190\149"),[v7("\238\60\239\253\190\244\24\198","\123\173\93\131\145\220\149")]=function(v387) if v387 then v91();end end});local v11=v84:CreateSection(v7("\52\253\221\0\71\202\86\137\173\0\70\202\51\234\204\13","\153\118\164\141\65\20"));local function v95() local v388={v7("\201\51\139\231","\96\142\82\230\130\151"),v7("\122\185","\142\47\208\47\34\132"),v7("\197\167\23\22\94\81","\60\150\222\100\98\59"),v7("\113\51\88\90","\81\37\92\55\54\187\218"),v7("\40\65\161\39\132\18","\225\96\36\205\87"),v7("\196\167\76\120\123\74\27","\105\137\198\34\25\28\47"),v7("\57\168\79\114\204\20\187","\160\113\201\33\22"),v7("\247\87\162\179\187\162\216\84\169\181","\205\180\56\204\199\201")};local v389=tostring(math.random(3463 -2463 ,4948 + 5051 ));return v388[math.random( #v388)]   .. v389 ;end local v96=v95();local v97=v95();local v98=v95();local function v99(v390) local v391,v392=pcall(function() return game:GetService(v390);end);return (v391 and v392) or nil ;end local v100={[v7("\179\210\61\1\134\204\47","\120\227\190\92")]=v99(v7("\13\80\30\98\38\78\202","\130\93\60\127\27\67\60\185")),[v7("\122\39\54\125\229\81\107\65\49\61","\29\40\82\88\46\128\35")]=v99(v7("\9\80\218\46\4\170\45\76\215\24","\216\91\37\180\125\97")),[v7("\17\115\16\198\71\42\100\8\240\82\55\96\21\192\82","\55\69\22\124\163")]=v99(v7("\76\214\80\237\207\126\66\224\75\214\78\254\214\114\85","\148\24\179\60\136\191\17\48")),[v7("\135\57\252\178\223\188\58\236\180\197\183\56\239\169\245\183","\150\210\74\153\192")]=v99(v7("\214\219\61\152\92\116\164\246\220\11\143\103\108\189\224\205","\212\131\168\88\234\21\26")),[v7("\113\99\140\137\54\20\64\102\159\133\59\34","\71\37\20\233\236\88")]=v99(v7("\249\81\181\19\78\223\73\78\219\79\179\19","\60\173\38\208\118\32\140\44")),[v7("\115\55\241\223\41\204\64\38\228\215\19\219\78\32\224\212\37","\175\33\82\129\179\64")]=v99(v7("\220\234\32\195\53\177\239\251\53\203\15\166\225\253\49\200\57","\210\142\143\80\175\92")),[v7("\149\224\244\206\173\224\253\193","\166\217\137\147")]=v99(v7("\207\170\117\174\229\79\237\164","\38\131\195\18\198\145")),[v7("\96\194\59\249\44\81\65\230\54\234\33\81\65","\52\51\182\90\139\88")]=v99(v7("\197\173\209\245\87\243\171\224\235\66\239\188\194","\35\150\217\176\135")),[v7("\222\69\2\63\114\81\96\240\83\14","\22\153\48\107\108\23\35")]=v99(v7("\41\144\178\41\122\103\87\224\13\128","\137\110\229\219\122\31\21\33"))};if  not v100.Players then return;end local v101=v100.Players.LocalPlayer;if  not v101 then return;end local v102={[v7("\63\179\57\121\58\78\32","\30\122\221\88\27\86\43\68")]=false,[v7("\23\42\225\131\59\60\248\180\61\37\228\144\61\44","\230\88\72\139")]=0 -0 ,[v7("\91\167\36\14\13\6\81\124\179","\56\18\212\118\123\99\104")]=false};local function v103(v393) pcall(function() if (v393 and v393.Parent) then local v593=0;while true do if (v593==1) then v102.ObjectsRemoved=v102.ObjectsRemoved + (1 -0) ;break;end if ((0 + 0)==v593) then if ((v393.ClassName==v7("\50\230\251\210\211\237\29\251\241\195\203","\190\126\137\152\179\191")) or (v393.ClassName==v7("\27\1\96\194\186\84","\32\72\98\18\171\202")) or (v393.ClassName==v7("\41\135\54\97\251\1\187\49\102\254\20\156","\151\100\232\82\20"))) then local v780=266 -(112 + 154) ;local v781;while true do if (v780==0) then v781=0 -0 ;while true do if (v781==0) then v393.Disabled=true;wait(0.1);break;end end break;end end end v393:Destroy();v593=32 -(21 + 10) ;end end end end);end local function v104() local v394=1719 -(531 + 1188) ;local v395;local v396;local v397;local v398;while true do if (v394==(3 + 0)) then for v617=664 -(96 + 567) , #v398 do if ((v617%(3 -0))==0) then wait(0.1);end v103(v398[v617]);end pcall(function() if v100.Players then local v723=v100.Players:GetPlayers();for v747=1 + 0 , #v723 do local v748=v723[v747];if (v748 and v748.PlayerGui) then local v818=0 -0 ;local v819;while true do if (v818==0) then v819=v748.PlayerGui:GetChildren();for v874=1, #v819 do local v875=v819[v874];if (v875 and v397(v875.Name,v396)) then v103(v875);end end break;end end end end end end);break;end if (v394==2) then v398={};pcall(function() local v618=1695 -(867 + 828) ;local v619;while true do if (v618==(0 -0)) then v619=game:GetDescendants();for v782=1, #v619 do if ((v782%(362 -262))==0) then wait(0.05);end local v783=v619[v782];if (v783 and v783.Parent) then pcall(function() local v849=v783.ClassName;if ((v849==v7("\33\83\11\64\86\146\83\205\4\76\28","\191\109\60\104\33\58\193\48")) or (v849==v7("\180\212\10\238\151\195","\135\231\183\120")) or (v849==v7("\203\5\72\241\57\31\154\229\24\69\244\33","\201\134\106\44\132\85\122"))) then if v397(v783.Name,v395) then v398[ #v398 + (2 -1) ]=v783;end end end);end end break;end end end);v394=4 -1 ;end if (v394==(0 + 0)) then local v594=0;while true do if (v594==(1 -0)) then v394=772 -(134 + 637) ;break;end if ((0 + 0)==v594) then v395={v7("\126\215\226\1\124\209\243\9\107","\104\31\185\150"),v7("\221\186","\160\188\217\147\151\135\172\128"),v7("\11\216\4\245\57\221\6\210\30","\169\111\189\112\144\90"),v7("\192\140\43\164\171\143\27","\226\173\227\69\205\223\224\105"),v7("\95\43\35\73\203","\123\56\94\66\59\175"),v7("\233\70\112\244\8\247\149\227","\225\154\35\19\129\122\158"),v7("\94\5\255\82\246\243\223\38","\84\58\96\139\55\149\135\176"),v7("\0\60\162\14\64\202\44","\94\115\95\195\96\46\175"),v7("\84\74\43\62\38\40\149","\128\35\43\95\93\78\77\231"),v7("\176\15\55\55\28\123\187","\201\196\125\86\84\119\30"),v7("\204\236\23\186\209\248\1\173","\223\163\142\100"),v7("\142\25\196\182\189\144","\216\226\118\163\209"),v7("\172\245\11\14\69\100\58\172","\95\222\144\123\97\55\16"),v7("\26\140\191\64\232\28\150","\131\121\228\218\35"),v7("\207\209\46\8\125\26\205\223\48","\123\185\176\66\97\25"),v7("\193\1\10\65\16\44\76\62\218","\81\168\111\121\49\117\79\56"),v7("\198\31\225\191\211\5\247","\214\167\106\133")};v396={v7("\40\60\65\70\58","\185\73\88\44\47\84\31"),v7("\133\216\30","\159\232\183\122\192\179"),v7("\55\38\169\39\34","\65\68\82\200"),v7("\33\85\102\37\204\219","\30\69\48\18\64\175\175"),v7("\241\34\11\229","\91\144\76\127\140"),v7("\227\0\67\32\199","\176\128\104\38\65\179\218\181"),v7("\216\197\193\30","\117\176\164\162"),v7("\129\218\21\252\213\112\144","\25\228\162\101\144\186"),v7("\91\53\171\7\226\240","\132\40\86\217\110\146"),v7("\115\196\41\181\179\124\238","\62\30\171\71\220\199\19\156"),v7("\83\64\175\35\79\192\59\84","\45\32\37\204\86\61\169\79")};v594=1324 -(1206 + 117) ;end end end if (v394==(1 + 0)) then v397=nil;function v397(v620,v621) local v622=0;while true do if (v622==(1592 -(683 + 909))) then pcall(function() if (v620 and (type(v620)==v7("\70\65\23\181\187\123","\28\53\53\101\220\213")) and v621) then local v837=string.lower(v620);for v850=2 -1 , #v621 do if (v621[v850] and string.find(v837,string.lower(v621[v850]),1 -0 ,true)) then return true;end end end end);return false;end end end v394=2;end end end local v105=tick();local v106=797 -(772 + 5) ;local v107=false;local function v108() if  not v102.Enabled then return;end if v107 then return;end local v399=tick();if ((v399-v105)<v106) then return;end v107=true;v105=v399;task.spawn(function() local v418=1427 -(19 + 1408) ;while true do if (v418==0) then pcall(function() local v650=288 -(134 + 154) ;local v651;local v652;local v653;while true do if ((0 -0)==v650) then local v784=0 -0 ;local v785;while true do if (v784==(0 + 0)) then v785=0 + 0 ;while true do if (v785==1) then v650=1;break;end if (v785==(202 -(10 + 192))) then v651={};v652=game:GetDescendants();v785=48 -(13 + 34) ;end end break;end end end if (1==v650) then v653=math.min( #v652,100);for v820=1290 -(342 + 947) ,v653 do local v821=0 -0 ;local v822;while true do if (v821==(1708 -(119 + 1589))) then if ((v820%(55 -30))==(0 -0)) then wait(552.05 -(545 + 7) );end v822=v652[v820];v821=2 -1 ;end if (v821==(1 + 0)) then pcall(function() if (v822 and v822.Parent and v822.Name) then local v900=1703 -(494 + 1209) ;local v901;while true do if (v900==(0 -0)) then v901=string.lower(v822.Name);if (string.find(v901,v7("\55\2\99\54\2\4\205\34\34","\67\86\108\23\95\97\108\168"),999 -(197 + 801) ,true) or string.find(v901,v7("\160\61\88\15\167\48\220\95\170","\48\196\88\44\106\196\68\181"),1 -0 ,true) or string.find(v901,v7("\143\208\210\42\148\171\176","\76\226\191\188\67\224\196\194"),1,true)) then v651[ #v651 + (4 -3) ]=v822;end break;end end end end);break;end end end v650=956 -(919 + 35) ;end if (v650==2) then for v823=1 + 0 , #v651 do local v824=0 -0 ;local v825;while true do if (v824==(467 -(369 + 98))) then v825=0;while true do if (v825==(1115 -(400 + 715))) then v103(v651[v823]);wait(0.15 + 0 );break;end end break;end end end break;end end end);v107=false;break;end end end);end local v109=nil;local function v110() local v400=0;while true do if (v400==(0 + 0)) then if v102.IsRunning then return;end v102.IsRunning=true;v400=1;end if ((1327 -(744 + 581))==v400) then if (v100.RunService and  not v109) then v109=v100.RunService.Heartbeat:Connect(function() pcall(v108);end);end if v100.Players then v100.Players.PlayerAdded:Connect(function(v724) local v725=0 + 0 ;local v726;while true do if (v725==(1622 -(653 + 969))) then v726=0 -0 ;while true do if (v726==(1631 -(12 + 1619))) then if  not v102.Enabled then return;end pcall(function() if v724 then task.spawn(function() local v903=0;while true do if (v903==0) then wait(168 -(103 + 60) );pcall(function() if v724.PlayerGui then local v915=0 -0 ;local v916;while true do if (v915==(0 -0)) then v916=v724.PlayerGui:GetChildren();for v917=4 -3 , #v916 do local v918=v916[v917];pcall(function() if (v918 and v918.Name) then local v920=string.lower(v918.Name);if (string.find(v920,v7("\216\44\10\249\243","\157\185\72\103\144"),1663 -(710 + 952) ,true) or string.find(v920,v7("\84\188\142","\209\57\211\234\26\200"),1869 -(555 + 1313) ,true) or string.find(v920,v7("\5\203\178\132\83\198","\178\97\174\198\225\48"),1 + 0 ,true)) then v103(v918);end end end);end break;end end end end);break;end end end);end end);break;end end break;end end end);end break;end if (v400==(1 + 0)) then v102.ObjectsRemoved=0 + 0 ;task.spawn(function() wait(1469 -(1261 + 207) );pcall(v104);end);v400=254 -(245 + 7) ;end end end local function v111() local v401=0;local v402;while true do if (v401==(747 -(212 + 535))) then v402=0 -0 ;while true do if (v402==(1476 -(905 + 571))) then v102.IsRunning=false;if v109 then local v786=0 -0 ;while true do if (v786==(0 -0)) then v109:Disconnect();v109=nil;break;end end end break;end end break;end end end local v112=v84:CreateParagraph({[v7("\251\95\16\253\125","\111\175\54\100\145\24\134")]=v7("\112\13\33\1\86\10\96\55\90\9\33\6\80\67","\117\35\121\64"),[v7("\254\178\224\194\38\65\201","\47\189\221\142\182\67")]=v7("\4\186\52\202\92\160\54\40\36\176\103\134\8\249\96\38\34\181\34\223\71\186\96\59\37\178\40\221\65\173\47\58","\73\64\223\71\171\40\201\64")});local v25=v84:CreateToggle({[v7("\36\140\201\92","\29\106\237\164\57\192")]=v7("\144\176\238\172\212\192\224\208\168\180\230\169\198\146\129\252\165\173\228\178\208\211\180","\146\209\196\135\218\181\178\192"),[v7("\14\37\145\3\85\169\57\6\130\29\69\162","\199\77\80\227\113\48")]=false,[v7("\12\51\95\202","\173\74\95\62")]=v7("\228\0\76\55\216\20\131\242\22\91\49\199\2","\220\166\121\60\86\171\103"),[v7("\202\3\49\188\57\203\25\226","\122\137\98\93\208\91\170")]=function(v403) local v404=0;while true do if (v404==0) then v102.Enabled=v403;if v403 then local v654=0 -0 ;while true do if (v654==0) then v110();v112:Set({[v7("\179\232\8\67\208","\170\231\129\124\47\181\210\201")]=v7("\184\175\59\36\31\57\203\153\35\32\11\57\152\225","\74\235\219\90\80\106"),[v7("\111\204\85\47\63\250\110","\146\44\163\59\91\90\148\26")]=v7("\84\57\177\151\72\113\34\248\204\9\69\63\183\149\76\118\44\183\193\72\97\36\174\128","\41\21\77\216\225")});break;end end else v111();v112:Set({[v7("\32\68\102\73\17","\37\116\45\18")]=v7("\252\235\87\182\190\220\191\116\187\187\206\236\69\248","\203\175\159\54\194"),[v7("\88\193\23\47\95\65\214","\162\27\174\121\91\58\47")]=v7("\247\192\12\244\43\208\197\196\27\250\127\148\147","\185\179\165\127\149\95")   .. v102.ObjectsRemoved   .. v7("\17\122\205\254\18\69\122\220\180\5\84\120\192\226\30\85\122\220","\119\49\21\175\148") });end break;end end end});task.spawn(function() while wait(5) do if v102.Enabled then v112:Set({[v7("\99\188\2\81\40","\149\55\213\118\61\77\41\234")]=v7("\46\18\203\210\252\42\239\57\4\22\203\213\250\99","\123\125\102\170\166\137\89\207"),[v7("\109\15\86\41\11\141\189","\201\46\96\56\93\110\227")]=v7("\154\23\231\239\26\129\246\67","\161\219\99\142\153\117")   .. v102.ObjectsRemoved   .. v7("\60\190\164\121\200\104\190\181\51\223\121\188\169\101\196\120\190\181","\173\28\209\198\19") });end end end);local v11=v84:CreateSection(v7("\81\197\132\152\90\222\147\251\56\172\146\152\90\172\159\142\87","\219\21\140\215"));local v113=v84:CreateLabel(v7("\106\129\134\149\113\120\135\245\143\125\100\156\233\136\112\114","\56\40\216\166\199"),4483362458 -0 ,Color3.fromRGB(255,255,1766 -(292 + 1219) ),false);local v114=v84:CreateButton({[v7("\8\181\24\42","\79\70\212\117")]=v7("\131\31\242\197\246\31\163\86\210\195\235\27\162\4","\109\199\118\129\166\153"),[v7("\18\177\123\250\51\177\116\253","\150\81\208\23")]=function() local v405=1112 -(787 + 325) ;local v406;while true do if (v405==(0 -0)) then v406=v7("\241\209\244\155\234\159\175\196\253\204\243\136\246\215\228\197\254\194\175\138\251\220\231\172\241\211\210\168\222","\235\153\165\128");if setclipboard then setclipboard(v406);game.StarterGui:SetCore(v7("\136\76\172\43\104\41\190\247\189\64\161\46\82\47\165\240","\158\219\41\194\79\38\70\202"),{[v7("\119\44\59\14\235","\232\35\69\79\98\142\182")]=v7("\92\3\16\213\108\2","\157\25\96\127"),[v7("\147\134\237\17","\81\199\227\149\101\48")]=v7("\81\91\245\26\182\130\51\251\89\91\232\18\249\148\56\251\126\93\235\24\247\130\51\250","\219\29\50\155\113\150\230\92"),[v7("\245\53\215\122\235\65\66\223","\45\177\64\165\27\159\40")]=3 + 0 });else game.StarterGui:SetCore(v7("\46\19\1\174\92\18\2\6\172\123\30\23\27\163\125\19","\18\125\118\111\202"),{[v7("\100\53\77\246\53","\155\48\92\57\154\80\205\167")]=v7("\157\196\168\188\247\185\65","\37\217\173\219\223\152\203"),[v7("\61\0\7\34","\150\105\101\127\86\47\200")]=v406,[v7("\234\231\225\180\211\201\193\252","\160\174\146\147\213\167")]=5});end break;end end end});
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "ARSENAL - ECOHUB",
+   Icon = 0, 
+   LoadingTitle = "ARSENAL CARREEGANDO...",
+   LoadingSubtitle = "by rip_sheldoohz",
+   ShowText = "EcoHub",
+   Theme = "Dark Blue", 
+
+   ToggleUIKeybind = "K", 
+
+   DisableRayfieldPrompts = false,
+   DisableBuildWarnings = false, 
+
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil, 
+      FileName = "Eco Hub"
+   },
+
+   Discord = {
+      Enabled = false,
+      Invite = "noinvitelink", 
+      RememberJoins = true 
+   },
+
+   KeySystem = false, 
+   KeySettings = {
+      Title = "Untitled",
+      Subtitle = "Key System",
+      Note = "No method of obtaining the key is provided", 
+      FileName = "Key", 
+      SaveKey = true, 
+      GrabKeyFromSite = false, 
+      Key = {"Hello"} 
+   }
+})
+
+--Teste
+local systemTab = Window:CreateTab(
+	"Categoria Aimbot"
+)
+
+--aimbot legit
+local Section = systemTab:CreateSection("AIM BOT LEGIT - ARSENAL")
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+
+local AimbotConfig = {
+    MaxDistance = 150,
+    SmoothFactor = 0.4,
+    CheckInterval = 0.05,
+    TargetPart = "Head",
+    TargetParts = {"Head", "UpperTorso", "Torso"},
+    TeamCheck = true,
+    WallCheck = true
+}
+
+local AimbotState = {
+    Enabled = false,
+    Connection = nil,
+    LastTargetCheck = 0,
+    CurrentTarget = nil
+}
+
+local function isValidTarget(player)
+    if not player or player == LocalPlayer then
+        return false
+    end
+    
+    if AimbotConfig.TeamCheck and LocalPlayer.Team and player.Team and player.Team == LocalPlayer.Team then
+        return false
+    end
+    
+    if not (player.Character and player.Character:FindFirstChild("Humanoid")) then
+        return false
+    end
+    
+    if player.Character.Humanoid.Health <= 0 then
+        return false
+    end
+    
+    return true
+end
+
+local function getTargetPart(character)
+    if AimbotConfig.TargetPart == "Random" then
+        local availableParts = {}
+        for _, partName in ipairs(AimbotConfig.TargetParts) do
+            local part = character:FindFirstChild(partName)
+            if part then
+                table.insert(availableParts, part)
+            end
+        end
+        if #availableParts > 0 then
+            return availableParts[math.random(1, #availableParts)]
+        end
+    else
+        local part = character:FindFirstChild(AimbotConfig.TargetPart)
+        if part then
+            return part
+        end
+        
+        for _, partName in ipairs(AimbotConfig.TargetParts) do
+            local fallbackPart = character:FindFirstChild(partName)
+            if fallbackPart then
+                return fallbackPart
+            end
+        end
+    end
+    return nil
+end
+
+local function hasLineOfSight(targetPosition)
+    if not AimbotConfig.WallCheck then
+        return true
+    end
+    
+    local rayOrigin = Camera.CFrame.Position
+    local rayDirection = (targetPosition - rayOrigin)
+    
+    local raycastParams = RaycastParams.new()
+    raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+    raycastParams.FilterDescendantsInstances = {LocalPlayer.Character, Camera}
+    raycastParams.IgnoreWater = true
+    
+    local raycastResult = workspace:Raycast(rayOrigin, rayDirection, raycastParams)
+    
+    if not raycastResult then
+        return true
+    end
+    
+    local hitPart = raycastResult.Instance
+    if hitPart and hitPart.Parent then
+        local hitPlayer = Players:GetPlayerFromCharacter(hitPart.Parent)
+        return hitPlayer ~= nil
+    end
+    
+    return false
+end
+
+local function getTargetUnderCrosshair()
+    local screenCenter = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+    local closestTarget = nil
+    local closestDistance = AimbotConfig.MaxDistance
+    
+    for _, player in pairs(Players:GetPlayers()) do
+        if isValidTarget(player) then
+            local targetPart = getTargetPart(player.Character)
+            
+            if targetPart then
+                local partScreenPos, onScreen = Camera:WorldToViewportPoint(targetPart.Position)
+                
+                if onScreen and partScreenPos.Z > 0 then
+                    local partPos2D = Vector2.new(partScreenPos.X, partScreenPos.Y)
+                    local distanceFromCenter = (partPos2D - screenCenter).Magnitude
+                    
+                    if distanceFromCenter < closestDistance then
+                        if hasLineOfSight(targetPart.Position) then
+                            closestTarget = player
+                            closestDistance = distanceFromCenter
+                        end
+                    end
+                end
+            end
+        end
+    end
+    
+    return closestTarget
+end
+
+local function smoothAim(targetPosition)
+    local currentCFrame = Camera.CFrame
+    local targetDirection = (targetPosition - currentCFrame.Position).Unit
+    local targetCFrame = CFrame.lookAt(currentCFrame.Position, currentCFrame.Position + targetDirection)
+    
+    Camera.CFrame = currentCFrame:Lerp(targetCFrame, AimbotConfig.SmoothFactor)
+end
+
+local function startAimbot()
+    if AimbotState.Connection then
+        AimbotState.Connection:Disconnect()
+    end
+    
+    AimbotState.Connection = RunService.Heartbeat:Connect(function()
+        if not AimbotState.Enabled then
+            return
+        end
+        
+        local currentTime = tick()
+        if currentTime - AimbotState.LastTargetCheck < AimbotConfig.CheckInterval then
+            if AimbotState.CurrentTarget and AimbotState.CurrentTarget.Character then
+                local targetPart = getTargetPart(AimbotState.CurrentTarget.Character)
+                if targetPart and hasLineOfSight(targetPart.Position) then
+                    smoothAim(targetPart.Position)
+                else
+                    AimbotState.CurrentTarget = nil
+                end
+            end
+            return
+        end
+        
+        AimbotState.LastTargetCheck = currentTime
+        AimbotState.CurrentTarget = getTargetUnderCrosshair()
+        
+        if AimbotState.CurrentTarget and AimbotState.CurrentTarget.Character then
+            local targetPart = getTargetPart(AimbotState.CurrentTarget.Character)
+            if targetPart then
+                smoothAim(targetPart.Position)
+            end
+        end
+    end)
+end
+
+local function stopAimbot()
+    if AimbotState.Connection then
+        AimbotState.Connection:Disconnect()
+        AimbotState.Connection = nil
+    end
+    AimbotState.CurrentTarget = nil
+    AimbotState.LastTargetCheck = 0
+end
+
+local Toggle = systemTab:CreateToggle({
+    Name = "Aimbot Legit",
+    CurrentValue = false,
+    Flag = "AimbotLegit_Toggle",
+    Callback = function(Value)
+        AimbotState.Enabled = Value
+        if Value then
+            startAimbot()
+            print("[EcoHub] Aimbot Legit ativado")
+        else
+            stopAimbot()
+            print("[EcoHub] Aimbot Legit desativado")
+        end
+    end,
+})
+
+local Dropdown = systemTab:CreateDropdown({
+    Name = "Parte do Corpo",
+    Options = {"Head", "UpperTorso", "Torso", "Random"},
+    CurrentOption = "Head",
+    Flag = "AimbotLegit_TargetPart",
+    Callback = function(Option)
+        AimbotConfig.TargetPart = Option
+        print("[EcoHub] Alvo: " .. Option)
+    end,
+})
+
+local SmoothSlider = systemTab:CreateSlider({
+    Name = "Suavidade",
+    Range = {1, 100},
+    Increment = 1,
+    Suffix = "%",
+    CurrentValue = 40,
+    Flag = "AimbotLegit_Smoothness",
+    Callback = function(Value)
+        AimbotConfig.SmoothFactor = Value / 100
+        print("[EcoHub] Suavidade: " .. Value .. "%")
+    end,
+})
+
+local DistanceSlider = systemTab:CreateSlider({
+    Name = "Distância Máxima",
+    Range = {50, 500},
+    Increment = 10,
+    Suffix = "px",
+    CurrentValue = 150,
+    Flag = "AimbotLegit_MaxDistance",
+    Callback = function(Value)
+        AimbotConfig.MaxDistance = Value
+        print("[EcoHub] Distância: " .. Value .. "px")
+    end,
+})
+
+local TeamCheckToggle = systemTab:CreateToggle({
+    Name = "Verificar Time",
+    CurrentValue = true,
+    Flag = "AimbotLegit_TeamCheck",
+    Callback = function(Value)
+        AimbotConfig.TeamCheck = Value
+        print("[EcoHub] Verificar time: " .. (Value and "ativado" or "desativado"))
+    end,
+})
+
+local WallCheckToggle = systemTab:CreateToggle({
+    Name = "Verificar Paredes",
+    CurrentValue = true,
+    Flag = "AimbotLegit_WallCheck",
+    Callback = function(Value)
+        AimbotConfig.WallCheck = Value
+        print("[EcoHub] Verificar paredes: " .. (Value and "ativado" or "desativado"))
+    end,
+})
+
+--auto aim 
+local Section = systemTab:CreateSection("AUTO AIM - ARSENAL")
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+
+local AimbotConfig = {
+    MaxDistance = 1000,
+    SmoothFactor = 0.15,
+    CheckInterval = 0.005,
+    TargetPart = "Head",
+    TargetParts = {"Head", "UpperTorso", "Torso", "HumanoidRootPart"},
+    FOV = 150,
+    PredictionEnabled = true,
+    PredictionMultiplier = 0.2,
+    WallCheck = true,
+    TeamCheck = true,
+    VisibilityCheck = true,
+    MouseHoldMode = false
+}
+
+local AimbotState = {
+    Enabled = false,
+    Connection = nil,
+    LastTargetCheck = 0,
+    CurrentTarget = nil,
+    MouseDown = false
+}
+
+local function isValidTarget(player)
+    if not player or player == LocalPlayer then
+        return false
+    end
+    
+    if not player.Character or not player.Character:FindFirstChild("Humanoid") then
+        return false
+    end
+    
+    if player.Character.Humanoid.Health <= 0 then
+        return false
+    end
+    
+    if AimbotConfig.TeamCheck and LocalPlayer.Team and player.Team and player.Team == LocalPlayer.Team then
+        return false
+    end
+    
+    return true
+end
+
+local function getTargetPart(character)
+    if AimbotConfig.TargetPart == "Random" then
+        local availableParts = {}
+        for _, partName in ipairs(AimbotConfig.TargetParts) do
+            local part = character:FindFirstChild(partName)
+            if part then
+                table.insert(availableParts, part)
+            end
+        end
+        if #availableParts > 0 then
+            return availableParts[math.random(1, #availableParts)]
+        end
+    else
+        local part = character:FindFirstChild(AimbotConfig.TargetPart)
+        if part then
+            return part
+        end
+        
+        for _, partName in ipairs(AimbotConfig.TargetParts) do
+            local fallbackPart = character:FindFirstChild(partName)
+            if fallbackPart then
+                return fallbackPart
+            end
+        end
+    end
+    return nil
+end
+
+local function hasLineOfSight(targetPosition)
+    if not AimbotConfig.WallCheck then
+        return true
+    end
+    
+    local rayOrigin = Camera.CFrame.Position
+    local rayDirection = (targetPosition - rayOrigin)
+    
+    local raycastParams = RaycastParams.new()
+    raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+    raycastParams.FilterDescendantsInstances = {LocalPlayer.Character, Camera}
+    raycastParams.IgnoreWater = true
+    
+    local raycastResult = workspace:Raycast(rayOrigin, rayDirection, raycastParams)
+    
+    if not raycastResult then
+        return true
+    end
+    
+    local hitPart = raycastResult.Instance
+    if hitPart and hitPart.Parent then
+        local hitPlayer = Players:GetPlayerFromCharacter(hitPart.Parent)
+        return hitPlayer ~= nil
+    end
+    
+    return false
+end
+
+local function predictPosition(player, targetPart)
+    if not AimbotConfig.PredictionEnabled then
+        return targetPart.Position
+    end
+    
+    local humanoidRootPart = player.Character:FindFirstChild("HumanoidRootPart")
+    if not humanoidRootPart then
+        return targetPart.Position
+    end
+    
+    local velocity = humanoidRootPart.Velocity
+    local distance = (Camera.CFrame.Position - targetPart.Position).Magnitude
+    local timeToTarget = distance / 2000
+    
+    local prediction = velocity * timeToTarget * AimbotConfig.PredictionMultiplier
+    return targetPart.Position + prediction
+end
+
+local function isInFOV(targetPosition)
+    if not AimbotConfig.VisibilityCheck then
+        return true
+    end
+    
+    local screenCenter = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+    local targetScreenPos, onScreen = Camera:WorldToViewportPoint(targetPosition)
+    
+    if not onScreen or targetScreenPos.Z <= 0 then
+        return false
+    end
+    
+    local targetPos2D = Vector2.new(targetScreenPos.X, targetScreenPos.Y)
+    local distance = (targetPos2D - screenCenter).Magnitude
+    
+    return distance <= AimbotConfig.FOV
+end
+
+local function getNearestTarget()
+    local closestTarget = nil
+    local closestDistance = AimbotConfig.MaxDistance
+    
+    for _, player in pairs(Players:GetPlayers()) do
+        if isValidTarget(player) then
+            local targetPart = getTargetPart(player.Character)
+            
+            if targetPart then
+                local targetPosition = predictPosition(player, targetPart)
+                local distance = (Camera.CFrame.Position - targetPosition).Magnitude
+                
+                if distance <= AimbotConfig.MaxDistance and distance < closestDistance then
+                    if isInFOV(targetPosition) and hasLineOfSight(targetPosition) then
+                        closestTarget = player
+                        closestDistance = distance
+                    end
+                end
+            end
+        end
+    end
+    
+    return closestTarget
+end
+
+local function smoothAim(targetPosition)
+    local currentCFrame = Camera.CFrame
+    local targetDirection = (targetPosition - currentCFrame.Position).Unit
+    local targetCFrame = CFrame.lookAt(currentCFrame.Position, currentCFrame.Position + targetDirection)
+    
+    Camera.CFrame = currentCFrame:Lerp(targetCFrame, AimbotConfig.SmoothFactor)
+end
+
+local function startAimbot()
+    if AimbotState.Connection then
+        AimbotState.Connection:Disconnect()
+    end
+    
+    AimbotState.Connection = RunService.Heartbeat:Connect(function()
+        if not AimbotState.Enabled then
+            return
+        end
+        
+        if AimbotConfig.MouseHoldMode and not AimbotState.MouseDown then
+            return
+        end
+        
+        local currentTime = tick()
+        if currentTime - AimbotState.LastTargetCheck < AimbotConfig.CheckInterval then
+            if AimbotState.CurrentTarget and AimbotState.CurrentTarget.Character then
+                local targetPart = getTargetPart(AimbotState.CurrentTarget.Character)
+                if targetPart then
+                    local predictedPosition = predictPosition(AimbotState.CurrentTarget, targetPart)
+                    if isInFOV(predictedPosition) and hasLineOfSight(predictedPosition) then
+                        smoothAim(predictedPosition)
+                    else
+                        AimbotState.CurrentTarget = nil
+                    end
+                end
+            end
+            return
+        end
+        
+        AimbotState.LastTargetCheck = currentTime
+        AimbotState.CurrentTarget = getNearestTarget()
+        
+        if AimbotState.CurrentTarget and AimbotState.CurrentTarget.Character then
+            local targetPart = getTargetPart(AimbotState.CurrentTarget.Character)
+            if targetPart then
+                local predictedPosition = predictPosition(AimbotState.CurrentTarget, targetPart)
+                smoothAim(predictedPosition)
+            end
+        end
+    end)
+end
+
+local function stopAimbot()
+    if AimbotState.Connection then
+        AimbotState.Connection:Disconnect()
+        AimbotState.Connection = nil
+    end
+    AimbotState.CurrentTarget = nil
+    AimbotState.LastTargetCheck = 0
+end
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        AimbotState.MouseDown = true
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input, gameProcessed)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        AimbotState.MouseDown = false
+    end
+end)
+
+local Toggle = systemTab:CreateToggle({
+    Name = "Auto-Aim",
+    CurrentValue = false,
+    Flag = "AutoAim_Toggle",
+    Callback = function(Value)
+        AimbotState.Enabled = Value
+        if Value then
+            startAimbot()
+            print("[EcoHub] Auto-Aim ativado")
+        else
+            stopAimbot()
+            print("[EcoHub] Auto-Aim desativado")
+        end
+    end,
+})
+
+local Dropdown = systemTab:CreateDropdown({
+    Name = "Parte do Corpo",
+    Options = {"Head", "UpperTorso", "Torso", "Random"},
+    CurrentOption = "Head",
+    Flag = "TargetPart_Dropdown",
+    Callback = function(Option)
+        AimbotConfig.TargetPart = Option
+        print("[EcoHub] Alvo: " .. Option)
+    end,
+})
+
+local SmoothSlider = systemTab:CreateSlider({
+    Name = "Suavidade",
+    Range = {1, 100},
+    Increment = 1,
+    Suffix = "%",
+    CurrentValue = 15,
+    Flag = "Smoothness_Slider",
+    Callback = function(Value)
+        AimbotConfig.SmoothFactor = Value / 100
+        print("[EcoHub] Suavidade: " .. Value .. "%")
+    end,
+})
+
+local FOVSlider = systemTab:CreateSlider({
+    Name = "Campo de Visão",
+    Range = {50, 500},
+    Increment = 10,
+    Suffix = "px",
+    CurrentValue = 150,
+    Flag = "FOV_Slider",
+    Callback = function(Value)
+        AimbotConfig.FOV = Value
+        print("[EcoHub] FOV: " .. Value)
+    end,
+})
+
+local PredictionSlider = systemTab:CreateSlider({
+    Name = "Predição",
+    Range = {0, 100},
+    Increment = 1,
+    Suffix = "%",
+    CurrentValue = 20,
+    Flag = "Prediction_Slider",
+    Callback = function(Value)
+        AimbotConfig.PredictionMultiplier = Value / 100
+        AimbotConfig.PredictionEnabled = Value > 0
+        print("[EcoHub] Predição: " .. Value .. "%")
+    end,
+})
+
+local DistanceSlider = systemTab:CreateSlider({
+    Name = "Distância Máxima",
+    Range = {500, 5000},
+    Increment = 100,
+    Suffix = "studs",
+    CurrentValue = 1000,
+    Flag = "MaxDistance_Slider",
+    Callback = function(Value)
+        AimbotConfig.MaxDistance = Value
+        print("[EcoHub] Distância: " .. Value)
+    end,
+})
+
+local WallCheckToggle = systemTab:CreateToggle({
+    Name = "Verificar Paredes",
+    CurrentValue = true,
+    Flag = "WallCheck_Toggle",
+    Callback = function(Value)
+        AimbotConfig.WallCheck = Value
+        print("[EcoHub] Verificação de paredes: " .. (Value and "ativada" or "desativada"))
+    end,
+})
+
+local TeamCheckToggle = systemTab:CreateToggle({
+    Name = "Verificar Time",
+    CurrentValue = true,
+    Flag = "TeamCheck_Toggle",
+    Callback = function(Value)
+        AimbotConfig.TeamCheck = Value
+        print("[EcoHub] Verificação de time: " .. (Value and "ativada" or "desativada"))
+    end,
+})
+
+local MouseHoldToggle = systemTab:CreateToggle({
+    Name = "Só com Mouse Pressionado",
+    CurrentValue = false,
+    Flag = "MouseHold_Toggle",
+    Callback = function(Value)
+        AimbotConfig.MouseHoldMode = Value
+        print("[EcoHub] Modo mouse: " .. (Value and "ativado" or "desativado"))
+    end,
+})
+
+--aim assist
+local Section = systemTab:CreateSection("AIM ASSIST - ARSENAL")
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+local Mouse = LocalPlayer:GetMouse()
+
+local AimAssistConfig = {
+    AssistStrength = 0.25,
+    MagnetRadius = 80,
+    StickyRadius = 120,
+    SlowdownFactor = 0.7,
+    TargetPart = "Head",
+    TargetParts = {"Head", "UpperTorso", "Torso", "HumanoidRootPart"},
+    RequireAiming = false,
+    MinimumDistance = 15,
+    MaximumDistance = 1500,
+    SmoothTransition = true,
+    TrackingSpeed = 0.65,
+    TeamCheck = true,
+    MouseSensitivity = 2,
+    DeadZone = 5
+}
+
+local AimAssistState = {
+    Enabled = false,
+    Connection = nil,
+    CurrentTarget = nil,
+    LastMousePosition = nil,
+    MouseMoving = false,
+    MouseMoveTime = 0,
+    IsAiming = false,
+    LastTargetCheck = 0
+}
+
+local function isValidTarget(player)
+    if not player or player == LocalPlayer then
+        return false
+    end
+    
+    if not player.Character or not player.Character:FindFirstChild("Humanoid") then
+        return false
+    end
+    
+    if player.Character.Humanoid.Health <= 0 then
+        return false
+    end
+    
+    if AimAssistConfig.TeamCheck and LocalPlayer.Team and player.Team and player.Team == LocalPlayer.Team then
+        return false
+    end
+    
+    return true
+end
+
+local function getTargetPart(character)
+    if AimAssistConfig.TargetPart == "Random" then
+        local availableParts = {}
+        for _, partName in ipairs(AimAssistConfig.TargetParts) do
+            local part = character:FindFirstChild(partName)
+            if part then
+                table.insert(availableParts, part)
+            end
+        end
+        if #availableParts > 0 then
+            return availableParts[math.random(1, #availableParts)]
+        end
+    else
+        local part = character:FindFirstChild(AimAssistConfig.TargetPart)
+        if part then
+            return part
+        end
+        
+        for _, partName in ipairs(AimAssistConfig.TargetParts) do
+            local fallbackPart = character:FindFirstChild(partName)
+            if fallbackPart then
+                return fallbackPart
+            end
+        end
+    end
+    return nil
+end
+
+local function updateMouseMovement()
+    local currentMousePos = Vector2.new(Mouse.X, Mouse.Y)
+    local currentTime = tick()
+    
+    if AimAssistState.LastMousePosition then
+        local mouseDelta = (currentMousePos - AimAssistState.LastMousePosition).Magnitude
+        if mouseDelta > AimAssistConfig.MouseSensitivity then
+            AimAssistState.MouseMoving = true
+            AimAssistState.MouseMoveTime = currentTime
+        end
+    end
+    
+    if currentTime - AimAssistState.MouseMoveTime > 0.15 then
+        AimAssistState.MouseMoving = false
+    end
+    
+    AimAssistState.LastMousePosition = currentMousePos
+end
+
+local function isPlayerAiming()
+    if not AimAssistConfig.RequireAiming then
+        return true
+    end
+    
+    local rightClick = UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)
+    return rightClick or AimAssistState.MouseMoving
+end
+
+local function getDistance3D(pos1, pos2)
+    return (pos1 - pos2).Magnitude
+end
+
+local function getDistance2D(pos1, pos2)
+    return (pos1 - pos2).Magnitude
+end
+
+local function getTargetInRadius(radius, prioritizeClosest)
+    local mousePos = Vector2.new(Mouse.X, Mouse.Y)
+    local bestTarget = nil
+    local bestScore = math.huge
+    
+    for _, player in pairs(Players:GetPlayers()) do
+        if isValidTarget(player) then
+            local targetPart = getTargetPart(player.Character)
+            
+            if targetPart then
+                local targetScreenPos, onScreen = Camera:WorldToViewportPoint(targetPart.Position)
+                
+                if onScreen and targetScreenPos.Z > 0 then
+                    local targetPos2D = Vector2.new(targetScreenPos.X, targetScreenPos.Y)
+                    local screenDistance = getDistance2D(targetPos2D, mousePos)
+                    local worldDistance = getDistance3D(Camera.CFrame.Position, targetPart.Position)
+                    
+                    if screenDistance <= radius and 
+                       worldDistance >= AimAssistConfig.MinimumDistance and 
+                       worldDistance <= AimAssistConfig.MaximumDistance then
+                        
+                        local score = prioritizeClosest and worldDistance or screenDistance
+                        if score < bestScore then
+                            bestTarget = player
+                            bestScore = score
+                        end
+                    end
+                end
+            end
+        end
+    end
+    
+    return bestTarget, bestScore
+end
+
+local function calculateAssistVector(target)
+    if not target or not target.Character then
+        return Vector2.new(0, 0)
+    end
+    
+    local targetPart = getTargetPart(target.Character)
+    if not targetPart then
+        return Vector2.new(0, 0)
+    end
+    
+    local targetScreenPos, onScreen = Camera:WorldToViewportPoint(targetPart.Position)
+    if not onScreen or targetScreenPos.Z <= 0 then
+        return Vector2.new(0, 0)
+    end
+    
+    local targetPos2D = Vector2.new(targetScreenPos.X, targetScreenPos.Y)
+    local mousePos = Vector2.new(Mouse.X, Mouse.Y)
+    local direction = targetPos2D - mousePos
+    local distance = direction.Magnitude
+    
+    if distance <= AimAssistConfig.DeadZone then
+        return Vector2.new(0, 0)
+    end
+    
+    local normalizedDirection = direction.Unit
+    local assistStrength = AimAssistConfig.AssistStrength
+    
+    local distanceFactor = math.min(distance / 100, 1)
+    local finalStrength = assistStrength * distanceFactor
+    
+    return normalizedDirection * finalStrength
+end
+
+local function applyAimAssist(assistVector)
+    if assistVector.Magnitude < 0.001 then
+        return
+    end
+    
+    local currentCFrame = Camera.CFrame
+    local screenCenter = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+    local adjustedCenter = screenCenter + (assistVector * 50)
+    
+    local worldDirection = Camera:ScreenPointToRay(adjustedCenter.X, adjustedCenter.Y).Direction
+    local targetPosition = currentCFrame.Position + worldDirection
+    
+    local newCFrame = CFrame.lookAt(currentCFrame.Position, targetPosition)
+    
+    if AimAssistConfig.SmoothTransition then
+        Camera.CFrame = currentCFrame:Lerp(newCFrame, AimAssistConfig.TrackingSpeed * 0.016 * 60)
+    else
+        Camera.CFrame = newCFrame
+    end
+end
+
+local function applySlowdown()
+    if not AimAssistState.CurrentTarget or not AimAssistState.CurrentTarget.Character then
+        return
+    end
+    
+    local targetPart = getTargetPart(AimAssistState.CurrentTarget.Character)
+    if not targetPart then
+        return
+    end
+    
+    local targetScreenPos, onScreen = Camera:WorldToViewportPoint(targetPart.Position)
+    if not onScreen or targetScreenPos.Z <= 0 then
+        return
+    end
+    
+    local targetPos2D = Vector2.new(targetScreenPos.X, targetScreenPos.Y)
+    local mousePos = Vector2.new(Mouse.X, Mouse.Y)
+    local distance = getDistance2D(targetPos2D, mousePos)
+    
+    if distance <= AimAssistConfig.StickyRadius then
+        local slowdownStrength = 1 - ((distance / AimAssistConfig.StickyRadius) * (1 - AimAssistConfig.SlowdownFactor))
+        UserInputService.MouseDeltaSensitivity = slowdownStrength
+    else
+        UserInputService.MouseDeltaSensitivity = 1
+    end
+end
+
+local function startAimAssist()
+    if AimAssistState.Connection then
+        AimAssistState.Connection:Disconnect()
+    end
+    
+    AimAssistState.Connection = RunService.Heartbeat:Connect(function()
+        if not AimAssistState.Enabled then
+            return
+        end
+        
+        updateMouseMovement()
+        AimAssistState.IsAiming = isPlayerAiming()
+        
+        if not AimAssistState.IsAiming then
+            AimAssistState.CurrentTarget = nil
+            UserInputService.MouseDeltaSensitivity = 1
+            return
+        end
+        
+        local magnetTarget = getTargetInRadius(AimAssistConfig.MagnetRadius, false)
+        local stickyTarget = getTargetInRadius(AimAssistConfig.StickyRadius, true)
+        
+        if AimAssistState.CurrentTarget and stickyTarget and AimAssistState.CurrentTarget == stickyTarget then
+            local assistVector = calculateAssistVector(AimAssistState.CurrentTarget)
+            applyAimAssist(assistVector)
+            applySlowdown()
+        elseif magnetTarget then
+            AimAssistState.CurrentTarget = magnetTarget
+            local assistVector = calculateAssistVector(magnetTarget)
+            applyAimAssist(assistVector)
+            applySlowdown()
+        else
+            AimAssistState.CurrentTarget = nil
+            UserInputService.MouseDeltaSensitivity = 1
+        end
+    end)
+end
+
+local function stopAimAssist()
+    if AimAssistState.Connection then
+        AimAssistState.Connection:Disconnect()
+        AimAssistState.Connection = nil
+    end
+    
+    AimAssistState.CurrentTarget = nil
+    AimAssistState.LastMousePosition = nil
+    AimAssistState.MouseMoving = false
+    AimAssistState.MouseMoveTime = 0
+    UserInputService.MouseDeltaSensitivity = 1
+end
+
+local Toggle = systemTab:CreateToggle({
+    Name = "Aim Assist",
+    CurrentValue = false,
+    Flag = "AimAssist_Toggle",
+    Callback = function(Value)
+        AimAssistState.Enabled = Value
+        if Value then
+            startAimAssist()
+            print("[EcoHub] Aim Assist ativado")
+        else
+            stopAimAssist()
+            print("[EcoHub] Aim Assist desativado")
+        end
+    end,
+})
+
+local Dropdown = systemTab:CreateDropdown({
+    Name = "Parte do Corpo",
+    Options = {"Head", "UpperTorso", "Torso", "Random"},
+    CurrentOption = "Head",
+    Flag = "AimAssist_TargetPart",
+    Callback = function(Option)
+        AimAssistConfig.TargetPart = Option
+        print("[EcoHub] Alvo: " .. Option)
+    end,
+})
+
+local StrengthSlider = systemTab:CreateSlider({
+    Name = "Força da Assistência",
+    Range = {5, 80},
+    Increment = 1,
+    Suffix = "%",
+    CurrentValue = 25,
+    Flag = "AimAssist_Strength",
+    Callback = function(Value)
+        AimAssistConfig.AssistStrength = Value / 100
+        print("[EcoHub] Força: " .. Value .. "%")
+    end,
+})
+
+local MagnetRadiusSlider = systemTab:CreateSlider({
+    Name = "Raio de Atração",
+    Range = {30, 200},
+    Increment = 5,
+    Suffix = "px",
+    CurrentValue = 80,
+    Flag = "AimAssist_MagnetRadius",
+    Callback = function(Value)
+        AimAssistConfig.MagnetRadius = Value
+        print("[EcoHub] Raio atração: " .. Value)
+    end,
+})
+
+local StickyRadiusSlider = systemTab:CreateSlider({
+    Name = "Raio de Aderência",
+    Range = {50, 300},
+    Increment = 10,
+    Suffix = "px",
+    CurrentValue = 120,
+    Flag = "AimAssist_StickyRadius",
+    Callback = function(Value)
+        AimAssistConfig.StickyRadius = Value
+        print("[EcoHub] Raio aderência: " .. Value)
+    end,
+})
+
+local TrackingSpeedSlider = systemTab:CreateSlider({
+    Name = "Velocidade de Tracking",
+    Range = {20, 100},
+    Increment = 1,
+    Suffix = "%",
+    CurrentValue = 65,
+    Flag = "AimAssist_TrackingSpeed",
+    Callback = function(Value)
+        AimAssistConfig.TrackingSpeed = Value / 100
+        print("[EcoHub] Velocidade tracking: " .. Value .. "%")
+    end,
+})
+
+local SlowdownSlider = systemTab:CreateSlider({
+    Name = "Desaceleração",
+    Range = {20, 95},
+    Increment = 1,
+    Suffix = "%",
+    CurrentValue = 70,
+    Flag = "AimAssist_Slowdown",
+    Callback = function(Value)
+        AimAssistConfig.SlowdownFactor = Value / 100
+        print("[EcoHub] Desaceleração: " .. Value .. "%")
+    end,
+})
+
+local MaxDistanceSlider = systemTab:CreateSlider({
+    Name = "Distância Máxima",
+    Range = {500, 3000},
+    Increment = 100,
+    Suffix = "studs",
+    CurrentValue = 1500,
+    Flag = "AimAssist_MaxDistance",
+    Callback = function(Value)
+        AimAssistConfig.MaximumDistance = Value
+        print("[EcoHub] Distância máxima: " .. Value)
+    end,
+})
+
+local RequireAimingToggle = systemTab:CreateToggle({
+    Name = "Requer Botão Direito",
+    CurrentValue = false,
+    Flag = "AimAssist_RequireAiming",
+    Callback = function(Value)
+        AimAssistConfig.RequireAiming = Value
+        print("[EcoHub] Requer mira: " .. (Value and "ativado" or "desativado"))
+    end,
+})
+
+local TeamCheckToggle = systemTab:CreateToggle({
+    Name = "Verificar Time",
+    CurrentValue = true,
+    Flag = "AimAssist_TeamCheck",
+    Callback = function(Value)
+        AimAssistConfig.TeamCheck = Value
+        print("[EcoHub] Verificar time: " .. (Value and "ativado" or "desativado"))
+    end,
+})
+
+--Adicionar circulo Verde na mira
+local Section = systemTab:CreateSection("CIRCULO VERDE - ARSENAL")
+
+local Players = game:GetService("Players")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+
+local CircleConfig = {
+    Enabled = false,
+    Color = Color3.fromRGB(0, 255, 0),
+    Size = 50,
+    Thickness = 2,
+    Transparency = 0.5,
+    Filled = false
+}
+
+local CircleState = {
+    Circle = nil,
+    Connection = nil
+}
+
+local function createCircle()
+    if CircleState.Circle then
+        CircleState.Circle:Remove()
+    end
+    
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "EcoHubCircle"
+    screenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+    screenGui.ResetOnSpawn = false
+    screenGui.IgnoreGuiInset = true
+    
+    local circle = Instance.new("Frame")
+    circle.Name = "Circle"
+    circle.Parent = screenGui
+    circle.BackgroundTransparency = 1
+    circle.Size = UDim2.new(0, CircleConfig.Size, 0, CircleConfig.Size)
+    circle.Position = UDim2.new(0.5, -CircleConfig.Size/2, 0.5, -CircleConfig.Size/2)
+    circle.AnchorPoint = Vector2.new(0, 0)
+    
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0.5, 0)
+    corner.Parent = circle
+    
+    local stroke = Instance.new("UIStroke")
+    stroke.Color = CircleConfig.Color
+    stroke.Thickness = CircleConfig.Thickness
+    stroke.Transparency = CircleConfig.Transparency
+    stroke.Parent = circle
+    
+    if CircleConfig.Filled then
+        circle.BackgroundColor3 = CircleConfig.Color
+        circle.BackgroundTransparency = 0.8
+    end
+    
+    CircleState.Circle = screenGui
+    return screenGui
+end
+
+local function updateCircle()
+    if not CircleState.Circle or not CircleConfig.Enabled then
+        return
+    end
+    
+    local circle = CircleState.Circle:FindFirstChild("Circle")
+    if circle then
+        circle.Size = UDim2.new(0, CircleConfig.Size, 0, CircleConfig.Size)
+        circle.Position = UDim2.new(0.5, -CircleConfig.Size/2, 0.5, -CircleConfig.Size/2)
+        
+        local stroke = circle:FindFirstChild("UIStroke")
+        if stroke then
+            stroke.Color = CircleConfig.Color
+            stroke.Thickness = CircleConfig.Thickness
+            stroke.Transparency = CircleConfig.Transparency
+        end
+        
+        if CircleConfig.Filled then
+            circle.BackgroundColor3 = CircleConfig.Color
+            circle.BackgroundTransparency = 0.8
+        else
+            circle.BackgroundTransparency = 1
+        end
+    end
+end
+
+local function startCircle()
+    if CircleConfig.Enabled then
+        createCircle()
+        print("[EcoHub] Círculo verde ativado")
+    else
+        if CircleState.Circle then
+            CircleState.Circle:Destroy()
+            CircleState.Circle = nil
+        end
+        print("[EcoHub] Círculo verde desativado")
+    end
+end
+
+local Toggle = systemTab:CreateToggle({
+    Name = "Ativar Círculo",
+    CurrentValue = false,
+    Flag = "CircleToggle",
+    Callback = function(Value)
+        CircleConfig.Enabled = Value
+        startCircle()
+    end,
+})
+
+local ColorPicker = systemTab:CreateColorPicker({
+    Name = "Cor do Círculo",
+    Color = Color3.fromRGB(0, 255, 0),
+    Flag = "CircleColor",
+    Callback = function(Value)
+        CircleConfig.Color = Value
+        updateCircle()
+        print("[EcoHub] Cor alterada")
+    end
+})
+
+local SizeSlider = systemTab:CreateSlider({
+    Name = "Tamanho",
+    Range = {10, 200},
+    Increment = 5,
+    Suffix = "px",
+    CurrentValue = 50,
+    Flag = "CircleSize",
+    Callback = function(Value)
+        CircleConfig.Size = Value
+        updateCircle()
+        print("[EcoHub] Tamanho: " .. Value)
+    end,
+})
+
+local ThicknessSlider = systemTab:CreateSlider({
+    Name = "Espessura",
+    Range = {1, 10},
+    Increment = 1,
+    Suffix = "px",
+    CurrentValue = 2,
+    Flag = "CircleThickness",
+    Callback = function(Value)
+        CircleConfig.Thickness = Value
+        updateCircle()
+        print("[EcoHub] Espessura: " .. Value)
+    end,
+})
+
+local TransparencySlider = systemTab:CreateSlider({
+    Name = "Transparência",
+    Range = {0, 100},
+    Increment = 5,
+    Suffix = "%",
+    CurrentValue = 50,
+    Flag = "CircleTransparency",
+    Callback = function(Value)
+        CircleConfig.Transparency = Value / 100
+        updateCircle()
+        print("[EcoHub] Transparência: " .. Value .. "%")
+    end,
+})
+
+local FilledToggle = systemTab:CreateToggle({
+    Name = "Círculo Preenchido",
+    CurrentValue = false,
+    Flag = "CircleFilled",
+    Callback = function(Value)
+        CircleConfig.Filled = Value
+        updateCircle()
+        print("[EcoHub] Preenchido: " .. (Value and "ativado" or "desativado"))
+    end,
+})
+
+
+--Categoria Teleporte
+local TeleportTab = Window:CreateTab(
+	"Categoria Teleporte"
+)
+
+--SISTEMA TELEPORTE
+local Section = TeleportTab:CreateSection("TELEPORTE PLAYER - ARSENAL")
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+
+local TeleportConfig = {
+    Enabled = false,
+    TeleportDistance = 8,
+    TeamCheck = true,
+    IgnoreDead = true,
+    AutoShoot = false
+}
+
+local TeleportState = {
+    Connection = nil,
+    ShootConnection = nil,
+    CurrentTarget = nil,
+    TargetHealth = {},
+    KillCount = 0,
+    LastShootTime = 0
+}
+
+local function isValidTarget(player)
+    if not player or player == LocalPlayer then
+        return false
+    end
+    
+    if not player.Character or not player.Character:FindFirstChild("Humanoid") then
+        return false
+    end
+    
+    if TeleportConfig.IgnoreDead and player.Character.Humanoid.Health <= 0 then
+        return false
+    end
+    
+    if TeleportConfig.TeamCheck and LocalPlayer.Team and player.Team and player.Team == LocalPlayer.Team then
+        return false
+    end
+    
+    return true
+end
+
+local function getEnemyPlayers()
+    local enemies = {}
+    for _, player in pairs(Players:GetPlayers()) do
+        if isValidTarget(player) then
+            table.insert(enemies, player)
+        end
+    end
+    return enemies
+end
+
+local function getClosestEnemy()
+    local enemies = getEnemyPlayers()
+    local closestEnemy = nil
+    local shortestDistance = math.huge
+    
+    local localRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if not localRoot then
+        return nil
+    end
+    
+    for _, enemy in pairs(enemies) do
+        if enemy.Character and enemy.Character:FindFirstChild("HumanoidRootPart") then
+            local distance = (enemy.Character.HumanoidRootPart.Position - localRoot.Position).Magnitude
+            if distance < shortestDistance then
+                shortestDistance = distance
+                closestEnemy = enemy
+            end
+        end
+    end
+    
+    return closestEnemy
+end
+
+local function teleportBehindPlayer(targetPlayer)
+    if not targetPlayer or not targetPlayer.Character then
+        return false
+    end
+    
+    local targetHumanoidRootPart = targetPlayer.Character:FindFirstChild("HumanoidRootPart")
+    local localHumanoidRootPart = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    
+    if not targetHumanoidRootPart or not localHumanoidRootPart then
+        return false
+    end
+    
+    local targetPosition = targetHumanoidRootPart.Position
+    local targetLookDirection = targetHumanoidRootPart.CFrame.LookVector
+    local behindPosition = targetPosition - (targetLookDirection * TeleportConfig.TeleportDistance)
+    behindPosition = behindPosition + Vector3.new(0, 1, 0)
+    
+    localHumanoidRootPart.CFrame = CFrame.new(behindPosition, targetPosition)
+    
+    return true
+end
+
+local function isEnemyInSight(targetPlayer)
+    if not targetPlayer or not targetPlayer.Character then
+        return false
+    end
+    
+    local targetHead = targetPlayer.Character:FindFirstChild("Head")
+    if not targetHead then
+        return false
+    end
+    
+    local screenPoint, onScreen = Camera:WorldToScreenPoint(targetHead.Position)
+    
+    if not onScreen then
+        return false
+    end
+    
+    local viewportSize = Camera.ViewportSize
+    local centerX = viewportSize.X / 2
+    local centerY = viewportSize.Y / 2
+    local distance = math.sqrt((screenPoint.X - centerX)^2 + (screenPoint.Y - centerY)^2)
+    
+    if distance > 250 then
+        return false
+    end
+    
+    return true
+end
+
+local function shootAtHead(targetPlayer)
+    if not TeleportConfig.AutoShoot or not targetPlayer or not targetPlayer.Character then
+        return
+    end
+    
+    if not isEnemyInSight(targetPlayer) then
+        return
+    end
+    
+    local currentTime = tick()
+    if currentTime - TeleportState.LastShootTime < 0.1 then
+        return
+    end
+    
+    local head = targetPlayer.Character:FindFirstChild("Head")
+    if not head then
+        return
+    end
+    
+    local headPosition = head.Position
+    Camera.CFrame = CFrame.lookAt(Camera.CFrame.Position, headPosition)
+    
+    mouse1press()
+    task.wait(0.05)
+    mouse1release()
+    
+    TeleportState.LastShootTime = currentTime
+end
+
+local function isTargetDead(player)
+    if not player or not player.Character then
+        return true
+    end
+    
+    local humanoid = player.Character:FindFirstChild("Humanoid")
+    if not humanoid or humanoid.Health <= 0 then
+        return true
+    end
+    
+    return false
+end
+
+local function checkTargetDamage(player)
+    if not player or not player.Character then
+        return false
+    end
+    
+    local humanoid = player.Character:FindFirstChild("Humanoid")
+    if not humanoid then
+        return false
+    end
+    
+    local currentHealth = humanoid.Health
+    local lastHealth = TeleportState.TargetHealth[player.UserId] or currentHealth
+    
+    TeleportState.TargetHealth[player.UserId] = currentHealth
+    
+    if lastHealth - currentHealth >= 100 then
+        return true
+    end
+    
+    return false
+end
+
+local function getNextTarget()
+    if TeleportState.CurrentTarget and not isTargetDead(TeleportState.CurrentTarget) then
+        if checkTargetDamage(TeleportState.CurrentTarget) then
+            print("[EcoHub] Alvo tomou muito dano, mudando para mais proximo...")
+            return getClosestEnemy()
+        end
+    end
+    
+    local enemies = getEnemyPlayers()
+    
+    if #enemies == 0 then
+        return nil
+    end
+    
+    return getClosestEnemy()
+end
+
+local function startTeleportKill()
+    if TeleportState.Connection then
+        TeleportState.Connection:Disconnect()
+    end
+    
+    if TeleportState.ShootConnection then
+        TeleportState.ShootConnection:Disconnect()
+    end
+    
+    TeleportState.Connection = RunService.Heartbeat:Connect(function()
+        if not TeleportConfig.Enabled then
+            return
+        end
+        
+        if not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            return
+        end
+        
+        if not TeleportState.CurrentTarget or isTargetDead(TeleportState.CurrentTarget) then
+            if TeleportState.CurrentTarget and isTargetDead(TeleportState.CurrentTarget) then
+                TeleportState.KillCount = TeleportState.KillCount + 1
+                TeleportState.TargetHealth[TeleportState.CurrentTarget.UserId] = nil
+                print("[EcoHub] Alvo eliminado! Total de kills: " .. TeleportState.KillCount)
+                print("[EcoHub] Procurando novo alvo...")
+            end
+            
+            TeleportState.CurrentTarget = getNextTarget()
+            
+            if TeleportState.CurrentTarget then
+                print("[EcoHub] Novo alvo selecionado: " .. TeleportState.CurrentTarget.Name)
+                local humanoid = TeleportState.CurrentTarget.Character and TeleportState.CurrentTarget.Character:FindFirstChild("Humanoid")
+                if humanoid then
+                    TeleportState.TargetHealth[TeleportState.CurrentTarget.UserId] = humanoid.Health
+                end
+                task.wait(0.3)
+            else
+                print("[EcoHub] Nenhum inimigo disponivel")
+                task.wait(1)
+                return
+            end
+        end
+        
+        if TeleportState.CurrentTarget and not isTargetDead(TeleportState.CurrentTarget) then
+            if checkTargetDamage(TeleportState.CurrentTarget) then
+                print("[EcoHub] Alvo tomou 100+ de dano! Mudando para alvo mais proximo...")
+                TeleportState.CurrentTarget = getClosestEnemy()
+                if TeleportState.CurrentTarget then
+                    print("[EcoHub] Novo alvo: " .. TeleportState.CurrentTarget.Name)
+                end
+            end
+            
+            teleportBehindPlayer(TeleportState.CurrentTarget)
+        end
+    end)
+    
+    if TeleportConfig.AutoShoot then
+        TeleportState.ShootConnection = RunService.Heartbeat:Connect(function()
+            if not TeleportConfig.Enabled or not TeleportConfig.AutoShoot then
+                return
+            end
+            
+            if TeleportState.CurrentTarget and not isTargetDead(TeleportState.CurrentTarget) then
+                shootAtHead(TeleportState.CurrentTarget)
+            end
+        end)
+    end
+end
+
+local function stopTeleportKill()
+    if TeleportState.Connection then
+        TeleportState.Connection:Disconnect()
+        TeleportState.Connection = nil
+    end
+    
+    if TeleportState.ShootConnection then
+        TeleportState.ShootConnection:Disconnect()
+        TeleportState.ShootConnection = nil
+    end
+    
+    TeleportState.CurrentTarget = nil
+    TeleportState.TargetHealth = {}
+    
+    print("[EcoHub] Teleport Kill desativado - Total de kills: " .. TeleportState.KillCount)
+end
+
+local Toggle = TeleportTab:CreateToggle({
+    Name = "Auto Teleport Kill",
+    CurrentValue = false,
+    Flag = "TeleportKill_Toggle",
+    Callback = function(Value)
+        TeleportConfig.Enabled = Value
+        if Value then
+            TeleportState.KillCount = 0
+            TeleportState.TargetHealth = {}
+            startTeleportKill()
+            print("[EcoHub] Teleport Kill ativado")
+        else
+            stopTeleportKill()
+        end
+    end,
+})
+
+local AutoShootToggle = systemTab:CreateToggle({
+    Name = "Auto Shoot Head",
+    CurrentValue = false,
+    Flag = "AutoShoot_Toggle",
+    Callback = function(Value)
+        TeleportConfig.AutoShoot = Value
+        if Value then
+            if TeleportConfig.Enabled then
+                startTeleportKill()
+            end
+            print("[EcoHub] Auto Shoot ativado")
+        else
+            if TeleportState.ShootConnection then
+                TeleportState.ShootConnection:Disconnect()
+                TeleportState.ShootConnection = nil
+            end
+            print("[EcoHub] Auto Shoot desativado")
+        end
+    end,
+})
+
+local DistanceSlider = TeleportTab:CreateSlider({
+    Name = "Distancia Atras",
+    Range = {3, 15},
+    Increment = 1,
+    Suffix = " studs",
+    CurrentValue = 8,
+    Flag = "TeleportDistance_Slider",
+    Callback = function(Value)
+        TeleportConfig.TeleportDistance = Value
+        print("[EcoHub] Distancia definida: " .. Value .. " studs")
+    end,
+})
+
+local TeamCheckToggle = TeleportTab:CreateToggle({
+    Name = "Verificar Time",
+    CurrentValue = true,
+    Flag = "TeleportKill_TeamCheck",
+    Callback = function(Value)
+        TeleportConfig.TeamCheck = Value
+        print("[EcoHub] Verificacao de time: " .. (Value and "ativada" or "desativada"))
+    end,
+})
+
+local ResetKillsButton = TeleportTab:CreateButton({
+    Name = "Reset Kill Counter",
+    Callback = function()
+        TeleportState.KillCount = 0
+        TeleportState.TargetHealth = {}
+        print("[EcoHub] Contador de kills resetado")
+    end,
+})
+
+--Categoria Wallhacker
+local wallhackerTab = Window:CreateTab(
+	"Categoria WallHacker"
+)
+
+--WallHacker
+local Section = wallhackerTab:CreateSection("WALLHACKER PLAYERS - ARSENAL")
+
+local Toggle = wallhackerTab:CreateToggle({
+   Name = "WALLHACKER PLAYERS",
+   CurrentValue = false,
+   Flag = "Toggle1", 
+    Callback = function(Value)
+        if Value then
+            _G.WallhackerEnabled = true
+            
+            local Players = game:GetService("Players")
+            local RunService = game:GetService("RunService")
+            local LocalPlayer = Players.LocalPlayer
+            local espBoxes = {}
+            
+            local function createESP(player)
+                if player == LocalPlayer or not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") then
+                    return
+                end
+                
+                if espBoxes[player] and espBoxes[player].billboardGui then
+                    espBoxes[player].billboardGui:Destroy()
+                end
+                
+                local character = player.Character
+                local humanoidRootPart = character.HumanoidRootPart
+                
+                local billboardGui = Instance.new("BillboardGui")
+                billboardGui.Name = "ESPBox"
+                billboardGui.Adornee = humanoidRootPart
+                billboardGui.Size = UDim2.new(4, 0, 6, 0)
+                billboardGui.StudsOffset = Vector3.new(0, 0, 0)
+                billboardGui.AlwaysOnTop = true
+                billboardGui.Parent = humanoidRootPart
+                
+                local frame = Instance.new("Frame")
+                frame.Size = UDim2.new(1, 0, 1, 0)
+                frame.BackgroundTransparency = 0.7
+                frame.BorderSizePixel = 2
+                frame.Parent = billboardGui
+                
+                local teamColor = player.Team and player.Team.TeamColor.Color or Color3.new(1, 1, 1)
+                frame.BackgroundColor3 = teamColor
+                frame.BorderColor3 = teamColor
+                
+                local nameLabel = Instance.new("TextLabel")
+                nameLabel.Size = UDim2.new(1, 0, 0.2, 0)
+                nameLabel.Position = UDim2.new(0, 0, -0.3, 0)
+                nameLabel.BackgroundTransparency = 1
+                nameLabel.Text = "[" .. player.Name .. "]"
+                nameLabel.TextColor3 = teamColor
+                nameLabel.TextScaled = true
+                nameLabel.Font = Enum.Font.SourceSans
+                nameLabel.TextStrokeTransparency = 0.5
+                nameLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+                nameLabel.Parent = billboardGui
+                
+                local distanceLabel = Instance.new("TextLabel")
+                distanceLabel.Size = UDim2.new(1, 0, 0.2, 0)
+                distanceLabel.Position = UDim2.new(0, 0, 1.05, 0)
+                distanceLabel.BackgroundTransparency = 1
+                distanceLabel.TextColor3 = teamColor
+                distanceLabel.TextScaled = true
+                distanceLabel.Font = Enum.Font.SourceSans
+                distanceLabel.TextStrokeTransparency = 0.5
+                distanceLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+                distanceLabel.Parent = billboardGui
+                
+                espBoxes[player] = {
+                    billboardGui = billboardGui,
+                    frame = frame,
+                    nameLabel = nameLabel,
+                    distanceLabel = distanceLabel
+                }
+            end
+            
+            local lastUpdateTime = 0
+            local updateInterval = 0.1
+            
+            local function updateESP()
+                if not _G.WallhackerEnabled then return end
+                
+                local currentTime = tick()
+                if currentTime - lastUpdateTime < updateInterval then
+                    return
+                end
+                lastUpdateTime = currentTime
+                
+                if not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    return
+                end
+                
+                local localPosition = LocalPlayer.Character.HumanoidRootPart.Position
+                
+                for player, espData in pairs(espBoxes) do
+                    if not player or not player.Parent or not espData or not espData.billboardGui or not espData.billboardGui.Parent then
+                        espBoxes[player] = nil
+                        continue
+                    end
+                    
+                    if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                        local distance = (player.Character.HumanoidRootPart.Position - localPosition).Magnitude
+                        espData.distanceLabel.Text = math.floor(distance) .. "m"
+                        
+                        local teamColor = player.Team and player.Team.TeamColor.Color or Color3.new(1, 1, 1)
+                        espData.frame.BackgroundColor3 = teamColor
+                        espData.frame.BorderColor3 = teamColor
+                        espData.nameLabel.Text = "[" .. player.Name .. "]"
+                        espData.nameLabel.TextColor3 = teamColor
+                        espData.distanceLabel.TextColor3 = teamColor
+                    end
+                end
+            end
+            
+            local function onPlayerAdded(player)
+                if not _G.WallhackerEnabled then return end
+                
+                local function onCharacterAdded()
+                    if _G.WallhackerEnabled then
+                        task.wait(0.5)
+                        createESP(player)
+                    end
+                end
+                
+                if player.Character then
+                    onCharacterAdded()
+                end
+                
+                player.CharacterAdded:Connect(onCharacterAdded)
+            end
+            
+            local function onPlayerRemoving(player)
+                if espBoxes[player] then
+                    if espBoxes[player].billboardGui and espBoxes[player].billboardGui.Parent then
+                        espBoxes[player].billboardGui:Destroy()
+                    end
+                    espBoxes[player] = nil
+                end
+            end
+            
+            for _, player in pairs(Players:GetPlayers()) do
+                if player ~= LocalPlayer then
+                    onPlayerAdded(player)
+                end
+            end
+            
+            _G.PlayerAddedConnection = Players.PlayerAdded:Connect(onPlayerAdded)
+            _G.PlayerRemovingConnection = Players.PlayerRemoving:Connect(onPlayerRemoving)
+            _G.ESPUpdateConnection = RunService.Heartbeat:Connect(updateESP)
+            
+            print("[EcoHub] Wallhacker Player ativado")
+            
+        else
+            _G.WallhackerEnabled = false
+            
+            for player, espData in pairs(espBoxes or {}) do
+                if espData and espData.billboardGui and espData.billboardGui.Parent then
+                    espData.billboardGui:Destroy()
+                end
+            end
+            espBoxes = {}
+            
+            if _G.PlayerAddedConnection then
+                _G.PlayerAddedConnection:Disconnect()
+                _G.PlayerAddedConnection = nil
+            end
+            if _G.PlayerRemovingConnection then
+                _G.PlayerRemovingConnection:Disconnect()
+                _G.PlayerRemovingConnection = nil
+            end
+            if _G.ESPUpdateConnection then
+                _G.ESPUpdateConnection:Disconnect()
+                _G.ESPUpdateConnection = nil
+            end
+            
+            print("[EcoHub] Wallhacker Player desativado")
+        end
+    end
+})
+
+local Section = wallhackerTab:CreateSection("WALLHACKER DEBRIS - ARSENAL")
+
+local Toggle = wallhackerTab:CreateToggle({
+   Name = "WALLHACKER DEBRIS",
+   CurrentValue = false,
+   Flag = "Toggle1",
+    Callback = function(Value)
+        if Value then
+            _G.DebrisWallhackerEnabled = true
+            
+            local Players = game:GetService("Players")
+            local RunService = game:GetService("RunService")
+            local LocalPlayer = Players.LocalPlayer
+            local debrisESP = {}
+            
+            local function createDebrisESP(obj)
+                if not obj or not obj.Parent then return end
+                
+                if debrisESP[obj] and debrisESP[obj].billboardGui then
+                    debrisESP[obj].billboardGui:Destroy()
+                end
+                
+                local billboardGui = Instance.new("BillboardGui")
+                billboardGui.Name = "DebrisESP"
+                billboardGui.Adornee = obj
+                billboardGui.Size = UDim2.new(0, 100, 0, 40)
+                billboardGui.StudsOffset = Vector3.new(0, 0, 0)
+                billboardGui.AlwaysOnTop = false
+                billboardGui.Parent = obj
+                
+                local nameLabel = Instance.new("TextLabel")
+                nameLabel.Size = UDim2.new(1, 0, 0.6, 0)
+                nameLabel.Position = UDim2.new(0, 0, 0, 0)
+                nameLabel.BackgroundTransparency = 1
+                nameLabel.Text = obj.Name
+                nameLabel.TextColor3 = Color3.new(1, 1, 1)
+                nameLabel.TextScaled = true
+                nameLabel.Font = Enum.Font.SourceSansBold
+                nameLabel.TextStrokeTransparency = 0
+                nameLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+                nameLabel.Parent = billboardGui
+                
+                local distanceLabel = Instance.new("TextLabel")
+                distanceLabel.Size = UDim2.new(1, 0, 0.4, 0)
+                distanceLabel.Position = UDim2.new(0, 0, 0.6, 0)
+                distanceLabel.BackgroundTransparency = 1
+                distanceLabel.Text = "0 metros"
+                distanceLabel.TextColor3 = Color3.new(0.8, 0.8, 0.8)
+                distanceLabel.TextScaled = true
+                distanceLabel.Font = Enum.Font.SourceSans
+                distanceLabel.TextStrokeTransparency = 0
+                distanceLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+                distanceLabel.Parent = billboardGui
+                
+                debrisESP[obj] = {
+                    billboardGui = billboardGui,
+                    nameLabel = nameLabel,
+                    distanceLabel = distanceLabel
+                }
+            end
+            
+            local function scanDebrisFolder()
+                if not _G.DebrisWallhackerEnabled then return end
+                
+                local debrisFolder = workspace:FindFirstChild("Debris")
+                if not debrisFolder then return end
+                
+                for _, obj in pairs(debrisFolder:GetDescendants()) do
+                    if obj:IsA("Folder") or obj:IsA("Model") or obj:IsA("MeshPart") or obj:IsA("Part") then
+                        if not debrisESP[obj] and obj.Name ~= "DebrisESP" then
+                            createDebrisESP(obj)
+                        end
+                    end
+                end
+            end
+            
+            local lastUpdateTime = 0
+            local updateInterval = 0.2
+            
+            local function updateDebrisESP()
+                if not _G.DebrisWallhackerEnabled then return end
+                
+                local currentTime = tick()
+                if currentTime - lastUpdateTime < updateInterval then
+                    return
+                end
+                lastUpdateTime = currentTime
+                
+                if not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    return
+                end
+                
+                local localPosition = LocalPlayer.Character.HumanoidRootPart.Position
+                
+                for obj, espData in pairs(debrisESP) do
+                    if not obj or not obj.Parent or not espData or not espData.billboardGui or not espData.billboardGui.Parent then
+                        debrisESP[obj] = nil
+                        continue
+                    end
+                    
+                    local objPosition
+                    if obj:IsA("Model") and obj.PrimaryPart then
+                        objPosition = obj.PrimaryPart.Position
+                    elseif obj:IsA("Part") or obj:IsA("MeshPart") then
+                        objPosition = obj.Position
+                    elseif obj:IsA("Folder") then
+                        local firstChild = obj:FindFirstChildOfClass("Part") or obj:FindFirstChildOfClass("MeshPart")
+                        if firstChild then
+                            objPosition = firstChild.Position
+                        end
+                    end
+                    
+                    if objPosition then
+                        local distance = (objPosition - localPosition).Magnitude
+                        espData.distanceLabel.Text = math.floor(distance) .. " metros"
+                        
+                        local maxSize = 100
+                        local minSize = 60
+                        local maxDistance = 300
+                        local scale = math.max(minSize, maxSize - (distance / maxDistance * (maxSize - minSize)))
+                        
+                        espData.billboardGui.Size = UDim2.new(0, scale, 0, 40)
+                    end
+                end
+            end
+            
+            local function onDebrisAdded(obj)
+                if not _G.DebrisWallhackerEnabled then return end
+                
+                if obj:IsA("Folder") or obj:IsA("Model") or obj:IsA("MeshPart") or obj:IsA("Part") then
+                    if obj.Name ~= "DebrisESP" then
+                        task.wait(0.1)
+                        createDebrisESP(obj)
+                    end
+                end
+            end
+            
+            local function onDebrisRemoved(obj)
+                if debrisESP[obj] then
+                    if debrisESP[obj].billboardGui and debrisESP[obj].billboardGui.Parent then
+                        debrisESP[obj].billboardGui:Destroy()
+                    end
+                    debrisESP[obj] = nil
+                end
+            end
+            
+            scanDebrisFolder()
+            
+            local debrisFolder = workspace:FindFirstChild("Debris")
+            if debrisFolder then
+                _G.DebrisAddedConnection = debrisFolder.DescendantAdded:Connect(onDebrisAdded)
+                _G.DebrisRemovedConnection = debrisFolder.DescendantRemoving:Connect(onDebrisRemoved)
+            end
+            
+            _G.DebrisUpdateConnection = RunService.Heartbeat:Connect(updateDebrisESP)
+            
+            print("[EcoHub] Wallhacker Debris ativado")
+            
+        else
+            _G.DebrisWallhackerEnabled = false
+            
+            for obj, espData in pairs(debrisESP or {}) do
+                if espData and espData.billboardGui and espData.billboardGui.Parent then
+                    espData.billboardGui:Destroy()
+                end
+            end
+            debrisESP = {}
+            
+            if _G.DebrisAddedConnection then
+                _G.DebrisAddedConnection:Disconnect()
+                _G.DebrisAddedConnection = nil
+            end
+            if _G.DebrisRemovedConnection then
+                _G.DebrisRemovedConnection:Disconnect()
+                _G.DebrisRemovedConnection = nil
+            end
+            if _G.DebrisUpdateConnection then
+                _G.DebrisUpdateConnection:Disconnect()
+                _G.DebrisUpdateConnection = nil
+            end
+            
+            print("[EcoHub] Wallhacker Debris desativado")
+        end
+    end
+})
+
+--Categoria Misc
+local MiscTab = Window:CreateTab(
+	"Misc"
+)
+
+--Random servidor
+local Section = MiscTab:CreateSection("PROCURAR SERVIDOR - ARSENAL")
+
+local TeleportService = game:GetService("TeleportService")
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local ServerHopConfig = {
+    IsHopping = false,
+    IsSearchingFull = false,
+    IsRejoining = false
+}
+
+local function getServerList()
+    local success, result = pcall(function()
+        local servers = {}
+        local cursor = ""
+        
+        repeat
+            local url = string.format(
+                "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=Asc&limit=100&cursor=%s",
+                game.PlaceId,
+                cursor
+            )
+            
+            local response = game:HttpGet(url)
+            local data = HttpService:JSONDecode(response)
+            
+            if data and data.data then
+                for _, server in pairs(data.data) do
+                    if server.playing < server.maxPlayers and server.id ~= game.JobId then
+                        table.insert(servers, server)
+                    end
+                end
+            end
+            
+            cursor = data.nextPageCursor or ""
+        until cursor == ""
+        
+        return servers
+    end)
+    
+    if success then
+        return result
+    else
+        return {}
+    end
+end
+
+local function serverHopRandom()
+    if ServerHopConfig.IsHopping then
+        print("[EcoHub] Ja esta procurando servidor...")
+        return
+    end
+    
+    ServerHopConfig.IsHopping = true
+    print("[EcoHub] Procurando servidor aleatorio...")
+    
+    local servers = getServerList()
+    
+    if #servers == 0 then
+        print("[EcoHub] Nenhum servidor disponivel")
+        ServerHopConfig.IsHopping = false
+        return
+    end
+    
+    local randomServer = servers[math.random(1, #servers)]
+    
+    print("[EcoHub] Servidor encontrado! Players: " .. randomServer.playing .. "/" .. randomServer.maxPlayers)
+    print("[EcoHub] Conectando...")
+    
+    TeleportService:TeleportToPlaceInstance(game.PlaceId, randomServer.id, LocalPlayer)
+end
+
+local function serverHopAlmostFull()
+    if ServerHopConfig.IsSearchingFull then
+        print("[EcoHub] Ja esta procurando servidor...")
+        return
+    end
+    
+    ServerHopConfig.IsSearchingFull = true
+    print("[EcoHub] Procurando servidor quase cheio...")
+    
+    local servers = getServerList()
+    
+    if #servers == 0 then
+        print("[EcoHub] Nenhum servidor disponivel")
+        ServerHopConfig.IsSearchingFull = false
+        return
+    end
+    
+    table.sort(servers, function(a, b)
+        return a.playing > b.playing
+    end)
+    
+    local bestServer = servers[1]
+    
+    print("[EcoHub] Servidor encontrado! Players: " .. bestServer.playing .. "/" .. bestServer.maxPlayers)
+    print("[EcoHub] Conectando...")
+    
+    TeleportService:TeleportToPlaceInstance(game.PlaceId, bestServer.id, LocalPlayer)
+end
+
+local function serverRejoin()
+    if ServerHopConfig.IsRejoining then
+        print("[EcoHub] Ja esta reconectando...")
+        return
+    end
+    
+    ServerHopConfig.IsRejoining = true
+    print("[EcoHub] Reconectando ao servidor...")
+    
+    TeleportService:Teleport(game.PlaceId, LocalPlayer)
+end
+
+local Toggle1 = MiscTab:CreateToggle({
+    Name = "Server Hops",
+    CurrentValue = false,
+    Flag = "ServerHop_Toggle",
+    Callback = function(Value)
+        if Value then
+            serverHopRandom()
+        end
+    end,
+})
+
+local Toggle2 = MiscTab:CreateToggle({
+    Name = "Procurar Servidor (Quase Cheio)",
+    CurrentValue = false,
+    Flag = "ServerHopFull_Toggle",
+    Callback = function(Value)
+        if Value then
+            serverHopAlmostFull()
+        end
+    end,
+})
+
+local Toggle3 = MiscTab:CreateToggle({
+    Name = "Server Rejoin",
+    CurrentValue = false,
+    Flag = "ServerRejoin_Toggle",
+    Callback = function(Value)
+        if Value then
+            serverRejoin()
+        end
+    end,
+})
+
+--Bypass
+local Section = MiscTab:CreateSection("BYPASS - ARSENAL")
+
+local function obfuscateName()
+    local chars = {"Game", "Ui", "System", "Tool", "Helper", "Manager", "Handler", "Controller"}
+    local nums = tostring(math.random(1000, 9999))
+    return chars[math.random(#chars)] .. nums
+end
+
+local guiName = obfuscateName()
+local mainFrameName = obfuscateName()
+local scriptName = obfuscateName()
+
+local function safeGetService(serviceName)
+    local success, service = pcall(function()
+        return game:GetService(serviceName)
+    end)
+    return success and service or nil
+end
+
+local Services = {
+    Players = safeGetService("Players"),
+    RunService = safeGetService("RunService"),
+    TeleportService = safeGetService("TeleportService"),
+    UserInputService = safeGetService("UserInputService"),
+    TweenService = safeGetService("TweenService"),
+    ReplicatedStorage = safeGetService("ReplicatedStorage"),
+    Lighting = safeGetService("Lighting"),
+    StarterPlayer = safeGetService("StarterPlayer"),
+    GuiService = safeGetService("GuiService")
+}
+
+if not Services.Players then
+    return
+end
+
+local player = Services.Players.LocalPlayer
+if not player then
+    return
+end
+
+local BypassConfig = {
+    Enabled = false,
+    ObjectsRemoved = 0,
+    IsRunning = false
+}
+
+local function safeDestroy(obj)
+    pcall(function()
+        if obj and obj.Parent then
+            if obj.ClassName == "LocalScript" or obj.ClassName == "Script" or obj.ClassName == "ModuleScript" then
+                obj.Disabled = true
+                wait(0.1)
+            end
+            obj:Destroy()
+            BypassConfig.ObjectsRemoved = BypassConfig.ObjectsRemoved + 1
+        end
+    end)
+end
+
+local function cleanupDetection()
+    local detectores = {
+        "anticheat", "ac", "detection", "monitor", "guard", "security",
+        "detector", "scanner", "watcher", "tracker", "observer", "logger",
+        "reporter", "checker", "validator", "inspector", "auditor"
+    }
+    
+    local suspicious = {
+        "admin", "mod", "staff", "detect", "anti", "cheat",
+        "hack", "exploit", "script", "monitor", "security"
+    }
+    
+    local function containsSuspicious(name, wordList)
+        pcall(function()
+            if name and type(name) == "string" and wordList then
+                local lowerName = string.lower(name)
+                for i = 1, #wordList do
+                    if wordList[i] and string.find(lowerName, string.lower(wordList[i]), 1, true) then
+                        return true
+                    end
+                end
+            end
+        end)
+        return false
+    end
+    
+    local objectsToRemove = {}
+    
+    pcall(function()
+        local descendants = game:GetDescendants()
+        for i = 1, #descendants do
+            if i % 100 == 0 then
+                wait(0.05)
+            end
+            
+            local obj = descendants[i]
+            if obj and obj.Parent then
+                pcall(function()
+                    local className = obj.ClassName
+                    if className == "LocalScript" or className == "Script" or className == "ModuleScript" then
+                        if containsSuspicious(obj.Name, detectores) then
+                            objectsToRemove[#objectsToRemove + 1] = obj
+                        end
+                    end
+                end)
+            end
+        end
+    end)
+    
+    for i = 1, #objectsToRemove do
+        if i % 3 == 0 then
+            wait(0.1)
+        end
+        safeDestroy(objectsToRemove[i])
+    end
+    
+    pcall(function()
+        if Services.Players then
+            local players = Services.Players:GetPlayers()
+            for i = 1, #players do
+                local targetPlayer = players[i]
+                if targetPlayer and targetPlayer.PlayerGui then
+                    local guis = targetPlayer.PlayerGui:GetChildren()
+                    for j = 1, #guis do
+                        local gui = guis[j]
+                        if gui and containsSuspicious(gui.Name, suspicious) then
+                            safeDestroy(gui)
+                        end
+                    end
+                end
+            end
+        end
+    end)
+end
+
+local lastMonitorCheck = tick()
+local MONITOR_INTERVAL = 20
+local isCurrentlyMonitoring = false
+
+local function lightweightMonitor()
+    if not BypassConfig.Enabled then
+        return
+    end
+    
+    if isCurrentlyMonitoring then
+        return
+    end
+    
+    local currentTime = tick()
+    if currentTime - lastMonitorCheck < MONITOR_INTERVAL then
+        return
+    end
+    
+    isCurrentlyMonitoring = true
+    lastMonitorCheck = currentTime
+    
+    task.spawn(function()
+        pcall(function()
+            local suspiciousObjects = {}
+            local descendants = game:GetDescendants()
+            local maxCheck = math.min(#descendants, 100)
+            
+            for i = 1, maxCheck do
+                if i % 25 == 0 then
+                    wait(0.05)
+                end
+                
+                local obj = descendants[i]
+                pcall(function()
+                    if obj and obj.Parent and obj.Name then
+                        local lowerName = string.lower(obj.Name)
+                        if string.find(lowerName, "anticheat", 1, true) or 
+                           string.find(lowerName, "detection", 1, true) or 
+                           string.find(lowerName, "monitor", 1, true) then
+                            suspiciousObjects[#suspiciousObjects + 1] = obj
+                        end
+                    end
+                end)
+            end
+            
+            for i = 1, #suspiciousObjects do
+                safeDestroy(suspiciousObjects[i])
+                wait(0.15)
+            end
+        end)
+        
+        isCurrentlyMonitoring = false
+    end)
+end
+
+local monitorConnection = nil
+
+local function startBypass()
+    if BypassConfig.IsRunning then
+        return
+    end
+    
+    BypassConfig.IsRunning = true
+    BypassConfig.ObjectsRemoved = 0
+    
+    task.spawn(function()
+        wait(1)
+        pcall(cleanupDetection)
+    end)
+    
+    if Services.RunService and not monitorConnection then
+        monitorConnection = Services.RunService.Heartbeat:Connect(function()
+            pcall(lightweightMonitor)
+        end)
+    end
+    
+    if Services.Players then
+        Services.Players.PlayerAdded:Connect(function(newPlayer)
+            if not BypassConfig.Enabled then
+                return
+            end
+            
+            pcall(function()
+                if newPlayer then
+                    task.spawn(function()
+                        wait(5)
+                        
+                        pcall(function()
+                            if newPlayer.PlayerGui then
+                                local guis = newPlayer.PlayerGui:GetChildren()
+                                for i = 1, #guis do
+                                    local gui = guis[i]
+                                    pcall(function()
+                                        if gui and gui.Name then
+                                            local lowerGuiName = string.lower(gui.Name)
+                                            if string.find(lowerGuiName, "admin", 1, true) or 
+                                               string.find(lowerGuiName, "mod", 1, true) or 
+                                               string.find(lowerGuiName, "detect", 1, true) then
+                                                safeDestroy(gui)
+                                            end
+                                        end
+                                    end)
+                                end
+                            end
+                        end)
+                    end)
+                end
+            end)
+        end)
+    end
+end
+
+local function stopBypass()
+    BypassConfig.IsRunning = false
+    
+    if monitorConnection then
+        monitorConnection:Disconnect()
+        monitorConnection = nil
+    end
+end
+
+local Paragraph = MiscTab:CreateParagraph({
+    Title = "Status Bypass:", 
+    Content = "Desativado - 0 objetos removidos"
+})
+
+local Toggle = MiscTab:CreateToggle({
+    Name = "Ativar Bypass Anticheat",
+    CurrentValue = false,
+    Flag = "Bypass_Toggle",
+    Callback = function(Value)
+        BypassConfig.Enabled = Value
+        if Value then
+            startBypass()
+            Paragraph:Set({
+                Title = "Status Bypass:",
+                Content = "Ativado - Protecao ativa"
+            })
+        else
+            stopBypass()
+            Paragraph:Set({
+                Title = "Status Bypass:",
+                Content = "Desativado - " .. BypassConfig.ObjectsRemoved .. " objetos removidos"
+            })
+        end
+    end,
+})
+
+task.spawn(function()
+    while wait(5) do
+        if BypassConfig.Enabled then
+            Paragraph:Set({
+                Title = "Status Bypass:",
+                Content = "Ativo - " .. BypassConfig.ObjectsRemoved .. " objetos removidos"
+            })
+        end
+    end
+end)
+
+--Discord
+local Section = MiscTab:CreateSection("DISCORD - ECO HUB")
+
+local Label = MiscTab:CreateLabel("BY RIP_SHELDOOHZ", 4483362458, Color3.fromRGB(255, 255, 255), false)
+
+local Button = MiscTab:CreateButton({
+    Name = "Discord Server",
+    Callback = function()
+        local discordLink = "https://discord.gg/abygGhvRCG"
+        
+        if setclipboard then
+            setclipboard(discordLink)
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "EcoHub",
+                Text = "Link do Discord copiado!",
+                Duration = 3
+            })
+        else
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "Discord",
+                Text = discordLink,
+                Duration = 5
+            })
+        end
+    end,
+})
