@@ -36,7 +36,7 @@ local Window = Rayfield:CreateWindow({
       RememberJoins = true
    },
 
-   KeySystem = true,
+   KeySystem = false,
    KeySettings = {
       Title = "EcoHub - CounterBlox V1",
       Subtitle = "Key System",
