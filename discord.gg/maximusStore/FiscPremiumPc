@@ -1,0 +1,44 @@
+if getgenv().ecohub then warn("Eco Hub : Already executed!") return end
+getgenv().ecohub = true
+
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+local Window = Fluent:CreateWindow({
+    Title = "Maximus - Premium | Fisch",
+    SubTitle = "(discord.gg/maximusStore)",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(550, 350),
+    Acrylic = false,
+    Theme = "Amethyst",
+    MinimizeKey = Enum.KeyCode.LeftControl
+})
+
+--So funciona no pcs
+local UserInputService = game:GetService("UserInputService")
+
+local function IsUsingMobile()
+    if UserInputService:GetLastInputType() == Enum.UserInputType.Touch then
+        return true
+    end
+    if UserInputService:GetLastInputType() == Enum.UserInputType.MouseButton1 or 
+       UserInputService:GetLastInputType() == Enum.UserInputType.MouseButton2 then
+        return false
+    end
+    return #UserInputService:GetConnectedGamepads() > 0
+end
+
+if IsUsingMobile() then
+    Library:Notification({
+        Title = "Erro",
+        Content = "Script não funciona em Mobile",
+        SubContent = "Use apenas em PC",
+        Duration = 5
+    })
+    return
+end
