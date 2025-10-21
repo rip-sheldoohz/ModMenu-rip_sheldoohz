@@ -19,26 +19,38 @@ local Window = Fluent:CreateWindow({
     MinimizeKey = Enum.KeyCode.LeftControl
 })
 
---So funciona no pcs
+-- ⚠️ Este script funciona apenas em PCs
+local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 
+local player = Players.LocalPlayer
+
+-- Função para detectar dispositivo
 local function IsUsingMobile()
+    -- Se o último tipo de entrada foi toque, é mobile
     if UserInputService:GetLastInputType() == Enum.UserInputType.Touch then
         return true
     end
-    if UserInputService:GetLastInputType() == Enum.UserInputType.MouseButton1 or 
-       UserInputService:GetLastInputType() == Enum.UserInputType.MouseButton2 then
-        return false
+    -- Se houver gamepad conectado, também é mobile/console
+    if #UserInputService:GetConnectedGamepads() > 0 then
+        return true
     end
-    return #UserInputService:GetConnectedGamepads() > 0
+    return false
 end
 
+-- Verificação
 if IsUsingMobile() then
-    Library:Notification({
-        Title = "Erro",
-        Content = "Script não funciona em Mobile",
-        SubContent = "Use apenas em PC",
-        Duration = 5
-    })
+    -- Notificação (se estiver usando alguma biblioteca de UI)
+    if Library and Library.Notification then
+        Library:Notification({
+            Title = "Erro",
+            Content = "Script não funciona em Mobile",
+            SubContent = "Use apenas em PC",
+            Duration = 5
+        })
+    end
+
+    -- Kicka o jogador do jogo
+    player:Kick("❌ Este script só pode ser usado em PC. Acesse via computador.")
     return
 end
